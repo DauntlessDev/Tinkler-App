@@ -19,7 +19,6 @@ class ChatViewModel extends FutureViewModel {
 
   Future<void> currentUser() async {
     _user = await _auth.currentUser();
-    print('THIS IS WHAT YOUR LOOKING :$_user');
   }
 
   Future<void> signOut() async {
