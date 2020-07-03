@@ -20,15 +20,10 @@ class LoginView extends StatelessWidget {
                 padding: const EdgeInsets.all(40.0),
                 child: Column(
                   children: <Widget>[
-                    Spacer(
+                    Expanded(
                       flex: 2,
-                    ),
-                    Text(
-                      'TINKLER',
-                      style: TextStyle(
-                        color: blueColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                      child: Image(
+                        image: AssetImage('assets/images/top_background.png'),
                       ),
                     ),
                     Spacer(flex: 2),
