@@ -1,6 +1,7 @@
 //main class
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:tinkler/constants.dart';
 
 import 'app/locator.dart';
 import 'app/router.gr.dart';
@@ -17,6 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tinkler',
+      theme: ThemeData(
+          fontFamily: 'Montserrat',
+          primaryColor: darkBlueColor,
+          accentColor: lightBlueColor),
       // initialRoute: Routes.startupViewRoute,
       home: LandingView(),
       onGenerateRoute: Router().onGenerateRoute,

@@ -25,65 +25,65 @@ class MainContent extends ViewModelWidget<SignupViewModel> {
   @override
   Widget build(BuildContext context, SignupViewModel model) {
     return ModalProgressHUD(
-          inAsyncCall: model.isBusy,
-          child: Scaffold(
+      inAsyncCall: model.isBusy,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Column(
-                children: <Widget>[
-                  Spacer(
-                    flex: 2,
-                  ),
-                  Text(
-                    'TINKLER',
-                    style: TextStyle(
-                      color: blueColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  Spacer(flex: 2),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Sign up to \nTinkler!',
-                      style: TextStyle(
-                        color: blackColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28,
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 1),
-                  LoginForm(),
-                  SizedBox(height: 20),
-                  RoundedButton(
-                    onPressed: model.signUpWithEmail,
-                    text: 'Create Account',
-                    color: blueColor,
-                  ),
-                  SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: model.navigateToLogin,
-                    child: RichText(
-                      text: TextSpan(
-                        style: TextStyle(color: blackColor, fontSize: 15),
-                        children: [
-                          TextSpan(text: 'Already have an account? '),
-                          TextSpan(
-                            text: 'Login',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 3),
-                ],
+          child: Stack(
+            children: [
+              Image(
+                image: AssetImage('assets/images/top_background.png'),
+                fit: BoxFit.fill,
+                width: double.infinity,
+                height: double.infinity,
               ),
-            ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Column(
+                    children: <Widget>[
+                      Spacer(flex: 10),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Sign up to \nTinkler!',
+                          style: TextStyle(
+                            color: blackColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28,
+                          ),
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                      LoginForm(),
+                      SizedBox(height: 20),
+                      RoundedButton(
+                        onPressed: model.signUpWithEmail,
+                        text: 'Create Account',
+                        color: blueColor,
+                      ),
+                      SizedBox(height: 10),
+                      GestureDetector(
+                        onTap: model.navigateToLogin,
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(color: blackColor, fontSize: 15),
+                            children: [
+                              TextSpan(text: 'Already have an account? '),
+                              TextSpan(
+                                text: 'Login',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Spacer(flex: 4),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
