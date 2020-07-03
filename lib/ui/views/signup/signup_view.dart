@@ -1,0 +1,130 @@
+//view class
+import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:stacked/stacked.dart';
+import 'package:tinkler/ui/components/rounded_button.dart';
+
+import '../../../constants.dart';
+import 'signup_viewmodel.dart';
+
+class SignupView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<SignupViewModel>.reactive(
+      builder: (context, model, child) => MainContent(),
+      viewModelBuilder: () => SignupViewModel(),
+    );
+  }
+}
+
+class MainContent extends ViewModelWidget<SignupViewModel> {
+  const MainContent({
+    Key key,
+  }) : super(key: key, reactive: true);
+
+  @override
+  Widget build(BuildContext context, SignupViewModel model) {
+    return ModalProgressHUD(
+          inAsyncCall: model.isBusy,
+          child: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Column(
+                children: <Widget>[
+                  Spacer(
+                    flex: 2,
+                  ),
+                  Text(
+                    'TINKLER',
+                    style: TextStyle(
+                      color: blueColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Spacer(flex: 2),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Sign up to \nTinkler!',
+                      style: TextStyle(
+                        color: blackColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                      ),
+                    ),
+                  ),
+                  Spacer(flex: 1),
+                  LoginForm(),
+                  SizedBox(height: 20),
+                  RoundedButton(
+                    onPressed: model.signUpWithEmail,
+                    text: 'Create Account',
+                    color: blueColor,
+                  ),
+                  SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: model.navigateToLogin,
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(color: blackColor, fontSize: 15),
+                        children: [
+                          TextSpan(text: 'Already have an account? '),
+                          TextSpan(
+                            text: 'Login',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Spacer(flex: 3),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LoginForm extends ViewModelWidget<SignupViewModel> {
+  const LoginForm({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, SignupViewModel model) {
+    return Form(
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+              hintText: 'Enter email',
+              icon: Icon(Icons.person),
+            ),
+            onChanged: model.setEmail,
+          ),
+          TextFormField(
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: 'Enter password',
+                icon: Icon(Icons.lock),
+              ),
+              onChanged: model.setPassword),
+          TextFormField(
+            obscureText: true,
+            decoration: InputDecoration(
+              hintText: 'Confirm password',
+              icon: Icon(Icons.phone_locked),
+            ),
+            onChanged: model.setConfirmPassword,
+          ),
+        ],
+      ),
+    );
+  }
+}
