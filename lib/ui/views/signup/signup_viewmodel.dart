@@ -18,7 +18,7 @@ class SignupViewModel extends BaseViewModel {
   String _password = "";
   String _confirmPassword = "";
 
-  String get username => _email;
+  String get email => _email;
   String get password => _password;
   String get confirmPassword => _confirmPassword;
 
@@ -27,22 +27,21 @@ class SignupViewModel extends BaseViewModel {
   void setConfirmPassword(String input) => _confirmPassword = input;
 
   Future signUpWithEmail() async {
-    setBusy(true);
+    print('$_email, $_password, $_confirmPassword');
     try {
-      if (_email.isNotEmpty &&
-          _password.isNotEmpty &&
-          _confirmPassword.isNotEmpty) {
-        return await _auth.createWithEmailAndPassword(
-            email: _email, password: _password);
+      if (_email.isEmpty || _password.isEmpty || _confirmPassword.isEmpty) {
+        throw PlatformException(
+            code: 'EMPTY_FIELDS', message: 'Please fill out all fields.');
       } else if (_password != _confirmPassword) {
         throw PlatformException(
             code: 'PASSWORD_NOT_EQUAL', message: 'Password does not match.');
       } else {
-        throw PlatformException(
-            code: 'EMPTY_FIELDS', message: 'Please fill out all fields.');
+        setBusy(true);
+        await _auth.createWithEmailAndPassword(
+            email: _email, password: _password);
       }
     } on PlatformException catch (e) {
-      _dialog.showDialog(
+      await _dialog.showDialog(
         title: 'Sign-up Failed',
         description: e.message,
       );

@@ -1,4 +1,3 @@
-//view class
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
@@ -10,7 +9,7 @@ import 'signup_viewmodel.dart';
 class SignupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SignupViewModel>.reactive(
+    return ViewModelBuilder<SignupViewModel>.nonReactive(
       builder: (context, model, child) => MainContent(),
       viewModelBuilder: () => SignupViewModel(),
     );
@@ -69,7 +68,7 @@ class MainContent extends ViewModelWidget<SignupViewModel> {
                       RoundedButton(
                         onPressed: model.signUpWithEmail,
                         text: 'Create Account',
-                        color: blueColor,
+                        color: darkBlueColor,
                       ),
                       SizedBox(height: 10),
                       GestureDetector(
@@ -111,6 +110,7 @@ class LoginForm extends ViewModelWidget<SignupViewModel> {
       child: Column(
         children: [
           TextFormField(
+            initialValue: model.email,
             decoration: InputDecoration(
               hintText: 'Enter email',
               icon: Icon(Icons.person),
@@ -118,6 +118,7 @@ class LoginForm extends ViewModelWidget<SignupViewModel> {
             onChanged: model.setEmail,
           ),
           TextFormField(
+              initialValue: model.password,
               obscureText: true,
               decoration: InputDecoration(
                 hintText: 'Enter password',
@@ -125,6 +126,7 @@ class LoginForm extends ViewModelWidget<SignupViewModel> {
               ),
               onChanged: model.setPassword),
           TextFormField(
+            initialValue: model.confirmPassword,
             obscureText: true,
             decoration: InputDecoration(
               hintText: 'Confirm password',

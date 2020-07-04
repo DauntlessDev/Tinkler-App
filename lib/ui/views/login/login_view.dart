@@ -10,7 +10,7 @@ import 'login_viewmodel.dart';
 class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<LoginViewModel>.reactive(
+    return ViewModelBuilder<LoginViewModel>.nonReactive(
       builder: (context, model, child) => ModalProgressHUD(
         inAsyncCall: model.isBusy,
         child: Scaffold(
@@ -55,6 +55,7 @@ class LoginView extends StatelessWidget {
                           child: Column(
                             children: [
                               TextFormField(
+                                initialValue: model.email,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   hintText: 'Enter email',
@@ -63,6 +64,7 @@ class LoginView extends StatelessWidget {
                                 onChanged: model.setEmail,
                               ),
                               TextFormField(
+                                initialValue: model.password,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   hintText: 'Enter password',
@@ -77,37 +79,30 @@ class LoginView extends StatelessWidget {
                         RoundedButton(
                           onPressed: model.signInWithEmail,
                           text: 'Continue',
-                          color: blueColor,
+                          color: darkBlueColor,
                         ),
                         RoundedButton(
                           onPressed: () {},
                           text: 'Continue with Facebook',
-                          color: darkBlueColor,
+                          color: blueColor,
                         ),
                         SizedBox(height: 10),
                         GestureDetector(
                           onTap: model.navigateToSignup,
                           child: RichText(
                             text: TextSpan(
-                              style:
-                                  TextStyle(color: blackColor, fontSize: 15),
+                              style: TextStyle(color: blackColor, fontSize: 15),
                               children: [
                                 TextSpan(text: 'Don\'t have an account? '),
                                 TextSpan(
                                   text: 'Create one.',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                           ),
                         ),
                         Spacer(flex: 3),
-                        Text(
-                          'By continuing you agree to Terms & Conditions',
-                          style:
-                              TextStyle(color: Colors.black45, fontSize: 11),
-                        ),
                       ],
                     ),
                   ),

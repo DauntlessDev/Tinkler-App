@@ -43,8 +43,8 @@ class CupertinoHomeScaffold extends StatelessWidget {
       tabBar: CupertinoTabBar(
         items: [
           _buildItem(TabItem.chat),
-          _buildItem(TabItem.people),
           _buildItem(TabItem.random),
+          _buildItem(TabItem.people),
         ],
         onTap: (index) => onSelectTab(TabItem.values[index]),
       ),
@@ -63,7 +63,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
 
   BottomNavigationBarItem _buildItem(TabItem tabItem) {
     final itemData = TabItemData.allData[tabItem];
-    final color = currentTab == tabItem ? blueColor : greyColor;
+    final color = currentTab == tabItem ? darkBlueColor : greyColor;
 
     return BottomNavigationBarItem(
       icon: Icon(
@@ -87,15 +87,15 @@ class TabItemData {
   static const Map<TabItem, TabItemData> allData = {
     TabItem.chat: TabItemData(
       title: 'Chat',
-      icon: Icons.chat_bubble,
-    ),
-    TabItem.people: TabItemData(
-      title: 'People',
-      icon: Icons.person,
+      icon: Icons.chat_bubble_outline,
     ),
     TabItem.random: TabItemData(
       title: 'Random',
-      icon: Icons.question_answer,
+      icon: Icons.people_outline,
+    ),
+    TabItem.people: TabItemData(
+      title: 'People',
+      icon: Icons.person_outline,
     ),
   };
 }

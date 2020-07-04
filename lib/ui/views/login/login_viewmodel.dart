@@ -17,24 +17,24 @@ class LoginViewModel extends BaseViewModel {
   String _email = "";
   String _password = "";
 
-  String get username => _email;
+  String get email => _email;
   String get password => _password;
 
   void setEmail(String input) => _email = input;
   void setPassword(String input) => _password = input;
 
   Future signInWithEmail() async {
-    setBusy(true);
     try {
       if (_email.isNotEmpty && _password.isNotEmpty) {
-        return await _auth.signInWithEmailAndPassword(
+        setBusy(true);
+        await _auth.signInWithEmailAndPassword(
             email: _email, password: _password);
       } else {
         throw PlatformException(
             code: 'EMPTY_FIELDS', message: 'Please fill out all fields.');
       }
     } on PlatformException catch (e) {
-      _dialog.showDialog(title: 'Login Failed', description: e.message);
+      await _dialog.showDialog(title: 'Login Failed', description: e.message);
     } finally {
       setBusy(false);
     }

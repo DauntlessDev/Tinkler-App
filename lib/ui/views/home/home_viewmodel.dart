@@ -5,7 +5,6 @@ import 'chat/chat_view.dart';
 import 'people/people_view.dart';
 import 'random/random_view.dart';
 
-
 class HomeViewModel extends BaseViewModel {
   TabItem _currentTab = TabItem.chat;
   TabItem get currentTab => _currentTab;
@@ -22,18 +21,18 @@ class HomeViewModel extends BaseViewModel {
   Map<TabItem, GlobalKey<NavigatorState>> get navigatorKey {
     return {
       TabItem.chat: ChatView.navigatorKey,
-      TabItem.people: PeopleView.navigatorKey,
       TabItem.random: RandomView.navigatorKey,
+      TabItem.people: PeopleView.navigatorKey,
     };
   }
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
       TabItem.chat: (_) => ChatView(),
-      TabItem.people: (context) => PeopleView(),
       TabItem.random: (_) => RandomView(),
+      TabItem.people: (context) => PeopleView(),
     };
   }
 }
 
-enum TabItem { chat, people, random }
+enum TabItem { chat, random, people }
