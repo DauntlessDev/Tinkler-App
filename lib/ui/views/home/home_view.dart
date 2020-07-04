@@ -1,6 +1,7 @@
 //view class
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/constants.dart';
 
@@ -28,7 +29,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
   final Map<TabItem, WidgetBuilder> widgetBuilders;
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKey;
 
-  const CupertinoHomeScaffold(
+  CupertinoHomeScaffold(
       {Key key,
       @required this.currentTab,
       @required this.onSelectTab,
@@ -41,21 +42,20 @@ class CupertinoHomeScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
+        currentIndex: 1,
+        backgroundColor: whiteColor,
         items: [
+          _buildItem(TabItem.posts),
           _buildItem(TabItem.chat),
-          _buildItem(TabItem.random),
-          _buildItem(TabItem.people),
+          _buildItem(TabItem.profile),
         ],
         onTap: (index) => onSelectTab(TabItem.values[index]),
       ),
       tabBuilder: (BuildContext context, int index) {
         final item = TabItem.values[index];
-        return Padding(
-          padding: EdgeInsets.only(bottom: 50),
-          child: CupertinoTabView(
-            navigatorKey: navigatorKey[item],
-            builder: (context) => widgetBuilders[item](context),
-          ),
+        return CupertinoTabView(
+          navigatorKey: navigatorKey[item],
+          builder: (context) => widgetBuilders[item](context),
         );
       },
     );
@@ -70,10 +70,6 @@ class CupertinoHomeScaffold extends StatelessWidget {
         itemData.icon,
         color: color,
       ),
-      title: Text(
-        itemData.title,
-        style: TextStyle(color: color),
-      ),
     );
   }
 }
@@ -85,17 +81,17 @@ class TabItemData {
   final IconData icon;
 
   static const Map<TabItem, TabItemData> allData = {
+    TabItem.posts: TabItemData(
+      title: 'Home',
+      icon: MdiIcons.homeOutline,
+    ),
     TabItem.chat: TabItemData(
       title: 'Chat',
-      icon: Icons.chat_bubble_outline,
+      icon: MdiIcons.chatOutline,
     ),
-    TabItem.random: TabItemData(
-      title: 'Random',
-      icon: Icons.people_outline,
-    ),
-    TabItem.people: TabItemData(
-      title: 'People',
-      icon: Icons.person_outline,
+    TabItem.profile: TabItemData(
+      title: 'Profile',
+      icon: MdiIcons.accountOutline
     ),
   };
 }

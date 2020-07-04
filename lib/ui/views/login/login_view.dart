@@ -35,6 +35,7 @@ class LoginView extends StatelessWidget {
                           'Welcome to \nTinkler!',
                           style: TextStyle(
                             color: blackColor,
+                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
                             fontSize: 28,
                           ),

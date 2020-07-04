@@ -2,15 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'random_viewmodel.dart';
+import 'posts_viewmodel.dart';
 
-class RandomView extends StatelessWidget {
+class PostsView extends StatelessWidget {
   static final navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<RandomViewModel>.nonReactive(
+    return ViewModelBuilder<PostsViewModel>.nonReactive(
       builder: (context, model, child) => Scaffold(),
-      viewModelBuilder: () => RandomViewModel(),
+      viewModelBuilder: () => PostsViewModel(),
     );
   }
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:tinkler/ui/views/home/posts/posts_view.dart';
 import 'chat/chat_view.dart';
-import 'people/people_view.dart';
-import 'random/random_view.dart';
+import 'profile/profile_view.dart';
 
 class HomeViewModel extends BaseViewModel {
   TabItem _currentTab = TabItem.chat;
@@ -20,19 +19,19 @@ class HomeViewModel extends BaseViewModel {
 
   Map<TabItem, GlobalKey<NavigatorState>> get navigatorKey {
     return {
+      TabItem.posts: PostsView.navigatorKey,
       TabItem.chat: ChatView.navigatorKey,
-      TabItem.random: RandomView.navigatorKey,
-      TabItem.people: PeopleView.navigatorKey,
+      TabItem.profile: ProfileView.navigatorKey,
     };
   }
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
+      TabItem.posts: (_) => PostsView(),
       TabItem.chat: (_) => ChatView(),
-      TabItem.random: (_) => RandomView(),
-      TabItem.people: (context) => PeopleView(),
+      TabItem.profile: (context) => ProfileView(),
     };
   }
 }
 
-enum TabItem { chat, random, people }
+enum TabItem { posts, chat, profile }

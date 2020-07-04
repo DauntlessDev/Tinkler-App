@@ -32,9 +32,10 @@ class SignupView extends StatelessWidget {
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Sign up to \nTinkler!',
+                          'Sign up to \nTinkler!', 
                           style: TextStyle(
                             color: blackColor,
+                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
                             fontSize: 28,
                           ),

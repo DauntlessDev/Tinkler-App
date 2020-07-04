@@ -3,7 +3,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/services/auth_service.dart';
 
-class PeopleViewModel extends FutureViewModel {
+class ProfileViewModel extends FutureViewModel {
   final _auth = locator<AuthService>();
   final _dialog = locator<DialogService>();
 

@@ -1,8 +1,8 @@
 
 import 'package:stacked/stacked.dart';
 
-class  RandomViewModel extends BaseViewModel {
-  String _title = 'Random View';
+class  PostsViewModel extends BaseViewModel {
+  String _title = 'Posts View';
   String get title => '$_title : $_counter';
 
   int _counter = 0;
