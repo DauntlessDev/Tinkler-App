@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
@@ -8,6 +9,7 @@ class ProfileViewModel extends FutureViewModel {
   final _dialog = locator<DialogService>();
 
   User get user => data;
+  String get userPhotoUrl => user != null ? user.photoUrl : '';
 
   Future<User> currentUser() async {
     return await _auth.currentUser();
@@ -26,4 +28,20 @@ class ProfileViewModel extends FutureViewModel {
 
   @override
   Future<User> futureToRun() => currentUser();
+}
+
+
+class Option {
+  final String title;
+  final Icon icon;
+  final String subTitle;
+  final String category;
+  final Function onTap;
+
+  Option(
+      {@required this.title,
+      @required this.icon,
+      this.subTitle,
+      this.category,
+      @required this.onTap});
 }

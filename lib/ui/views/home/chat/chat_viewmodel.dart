@@ -37,28 +37,35 @@ class ChatViewModel extends FutureViewModel {
   @override
   Future<void> futureToRun() => currentUser();
 
-  List<UserChat> chatList = [
+  List<UserChat> _chatList = [
     UserChat(
         name: 'Rom Braveheart P. Leuterio',
         latestMessage: 'Hello! how are you?',
-        time: '4:26'),
+        time: '4:26',
+        photoUrl: 'assets/images/profile_1.jpg'),
     UserChat(
-        name: 'Rom Braveheart P. Leuterio',
+        name: 'Bryan Chong S. Salazar',
         latestMessage: 'Hello! how are you?',
-        time: '4:26'),
+        time: '4:26',
+        photoUrl: 'assets/images/profile_2.jpg'),
     UserChat(
-        name: 'Rom Braveheart P. Leuterio',
+        name: 'Kyle Chester M. Makapagal',
         latestMessage: 'Hello! how are you?',
-        time: '4:26'),
+        time: '4:26',
+        photoUrl: 'assets/images/profile_3.jpg'),
     UserChat(
-        name: 'Rom Braveheart P. Leuterio',
+        name: 'Ryan Michael P. Caluag',
         latestMessage: 'Hello! how are you?',
-        time: '4:26'),
+        time: '4:26',
+        photoUrl: 'assets/images/profile_1.jpg'),
     UserChat(
-        name: 'Rom Braveheart P. Leuterio',
+        name: 'Zeus Roy P. Sambilay',
         latestMessage: 'Hello! how are you?',
-        time: '4:26'),
+        time: '4:26',
+        photoUrl: 'assets/images/profile_2.jpg'),
   ];
+
+  List<UserChat> get chatList => _chatList;
 }
 
 class UserChat {
@@ -69,7 +76,7 @@ class UserChat {
 
   const UserChat({
     @required this.name,
-    this.photoUrl,
+    @required this.photoUrl,
     @required this.latestMessage,
     @required this.time,
   });

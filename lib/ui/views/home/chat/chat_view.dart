@@ -1,7 +1,6 @@
 //view class
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../constants.dart';
@@ -13,7 +12,7 @@ class ChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChatViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: whiteColor,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: whiteColor,
@@ -36,7 +35,9 @@ class ChatView extends StatelessWidget {
           ),
           actions: <Widget>[
             FlatButton(
-              onPressed: model.signOut,
+              onPressed: () {
+                //TODO: Add search
+              },
               child: const Icon(
                 Icons.search,
                 color: blackColor,
@@ -88,7 +89,12 @@ class MessageTile extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         radius: 25,
-        child: Icon(Icons.person),
+        child: ClipOval(
+          child: Image(
+            image: AssetImage(userChat.photoUrl),
+            fit: BoxFit.contain,
+          ),
+        ),
       ),
       title: Text(
         userChat.name,

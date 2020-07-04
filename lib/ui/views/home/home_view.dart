@@ -87,11 +87,11 @@ class TabItemData {
     ),
     TabItem.chat: TabItemData(
       title: 'Chat',
-      icon: MdiIcons.chatOutline,
+      icon: MdiIcons.chatOutline
     ),
     TabItem.profile: TabItemData(
       title: 'Profile',
-      icon: MdiIcons.accountOutline
+      icon: MdiIcons.accountOutline,
     ),
   };
 }

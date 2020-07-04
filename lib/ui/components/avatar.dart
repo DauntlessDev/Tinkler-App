@@ -16,8 +16,15 @@ class Avatar extends StatelessWidget {
       child: CircleAvatar(
         radius: radius,
         backgroundColor: Colors.black12,
-        backgroundImage: photoUrl.isNotEmpty ? NetworkImage(photoUrl) : null,
-        child: photoUrl.isEmpty ? Icon(Icons.person, size: radius) : null,
+        //TODO: to be removed for ui designing only
+        child: ClipOval(
+          child: Image(
+            image: AssetImage('assets/images/profile_1.jpg'),
+            fit: BoxFit.contain,
+          ),
+        ),
+        // backgroundImage: photoUrl.isNotEmpty ? NetworkImage(photoUrl) : null,
+        // child: photoUrl.isEmpty ? Icon(Icons.person, size: radius) : null,
       ),
     );
   }
