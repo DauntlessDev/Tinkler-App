@@ -100,9 +100,12 @@ class MainContent extends ViewModelWidget<SignupViewModel> {
 }
 
 class LoginForm extends ViewModelWidget<SignupViewModel> {
-  const LoginForm({
+  LoginForm({
     Key key,
   }) : super(key: key);
+
+  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _confirmPasswordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context, SignupViewModel model) {
@@ -111,27 +114,36 @@ class LoginForm extends ViewModelWidget<SignupViewModel> {
         children: [
           TextFormField(
             initialValue: model.email,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: 'Enter email',
               icon: Icon(Icons.person),
             ),
+            onEditingComplete: _passwordFocusNode.requestFocus,
             onChanged: model.setEmail,
           ),
           TextFormField(
               initialValue: model.password,
+              textInputAction: TextInputAction.next,
               obscureText: true,
               decoration: InputDecoration(
                 hintText: 'Enter password',
                 icon: Icon(Icons.lock),
               ),
+              onEditingComplete: _confirmPasswordFocusNode.requestFocus,
+              focusNode: _passwordFocusNode,
               onChanged: model.setPassword),
           TextFormField(
             initialValue: model.confirmPassword,
+            textInputAction: TextInputAction.done,
             obscureText: true,
             decoration: InputDecoration(
               hintText: 'Confirm password',
               icon: Icon(Icons.phone_locked),
             ),
+            onEditingComplete: model.signUpWithEmail,
+            focusNode: _confirmPasswordFocusNode,
             onChanged: model.setConfirmPassword,
           ),
         ],

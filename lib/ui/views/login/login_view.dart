@@ -8,7 +8,9 @@ import 'package:tinkler/ui/components/rounded_button.dart';
 import 'login_viewmodel.dart';
 
 class LoginView extends StatelessWidget {
-  @override
+  // final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.nonReactive(
       builder: (context, model, child) => ModalProgressHUD(
@@ -57,20 +59,26 @@ class LoginView extends StatelessWidget {
                               TextFormField(
                                 initialValue: model.email,
                                 keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                   hintText: 'Enter email',
                                   icon: Icon(Icons.person),
                                 ),
                                 onChanged: model.setEmail,
+                                onEditingComplete:
+                                    _passwordFocusNode.requestFocus,
                               ),
                               TextFormField(
                                 initialValue: model.password,
+                                textInputAction: TextInputAction.done,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   hintText: 'Enter password',
                                   icon: Icon(Icons.lock),
                                 ),
+                                focusNode: _passwordFocusNode,
                                 onChanged: model.setPassword,
+                                onEditingComplete: model.signInWithEmail,
                               ),
                             ],
                           ),
