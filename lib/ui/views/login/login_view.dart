@@ -18,13 +18,22 @@ class LoginView extends StatelessWidget {
           body: SafeArea(
             child: Stack(
               children: <Widget>[
-                Image(
-                  image: AssetImage('assets/images/top_background.png'),
-                  fit: BoxFit.fill,
-                  width: double.infinity,
-                  height: double.infinity,
+                AnimatedOpacity(
+                  opacity:
+                      MediaQuery.of(context).viewInsets.bottom < 50 ? 1.0 : 0.0,
+                  duration: Duration(milliseconds: 250),
+                  child: Image(
+                    image: AssetImage('assets/images/top_background.png'),
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
                 ),
-                Center(
+                AnimatedPadding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                  duration: Duration(milliseconds: 220),
                   child: Padding(
                     padding: const EdgeInsets.all(40.0),
                     child: Column(
