@@ -1,6 +1,7 @@
 //view class
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/ui/components/centered_circular_indicator.dart';
 
 import 'home/home_view.dart';
 import 'landing_viewmodel.dart';
@@ -18,7 +19,7 @@ class LandingView extends StatelessWidget {
             return HomeView();
           }
         } else {
-          return Center(child: CircularProgressIndicator());
+          return CenteredCircularIndicator();
         }
       },
       viewModelBuilder: () => LandingViewModel(),

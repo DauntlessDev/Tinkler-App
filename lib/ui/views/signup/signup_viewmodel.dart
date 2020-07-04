@@ -39,15 +39,16 @@ class SignupViewModel extends BaseViewModel {
         setBusy(true);
         await _auth.createWithEmailAndPassword(
             email: _email, password: _password);
+        setBusy(false);
+
+        _navigation.back();
       }
     } on PlatformException catch (e) {
+      setBusy(false);
       await _dialog.showDialog(
         title: 'Sign-up Failed',
         description: e.message,
       );
-    } finally {
-      setBusy(false);
-      _navigation.back();
     }
   }
 }
