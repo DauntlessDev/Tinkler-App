@@ -12,7 +12,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
-        body: CupertinoHomeScaffold(
+        body: _CupertinoHomeScaffold(
             currentTab: model.currentTab,
             onSelectTab: model.select,
             widgetBuilders: model.widgetBuilders,
@@ -23,13 +23,13 @@ class HomeView extends StatelessWidget {
   }
 }
 
-class CupertinoHomeScaffold extends StatelessWidget {
+class _CupertinoHomeScaffold extends StatelessWidget {
   final TabItem currentTab;
   final ValueChanged<TabItem> onSelectTab;
   final Map<TabItem, WidgetBuilder> widgetBuilders;
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKey;
 
-  CupertinoHomeScaffold(
+  _CupertinoHomeScaffold(
       {Key key,
       @required this.currentTab,
       @required this.onSelectTab,
@@ -62,7 +62,7 @@ class CupertinoHomeScaffold extends StatelessWidget {
   }
 
   BottomNavigationBarItem _buildItem(TabItem tabItem) {
-    final itemData = TabItemData.allData[tabItem];
+    final itemData = _TabItemData.allData[tabItem];
     final color = currentTab == tabItem ? darkBlueColor : greyColor;
 
     return BottomNavigationBarItem(
@@ -74,22 +74,22 @@ class CupertinoHomeScaffold extends StatelessWidget {
   }
 }
 
-class TabItemData {
-  const TabItemData({@required this.title, @required this.icon});
+class _TabItemData {
+  const _TabItemData({@required this.title, @required this.icon});
 
   final String title;
   final IconData icon;
 
-  static const Map<TabItem, TabItemData> allData = {
-    TabItem.posts: TabItemData(
+  static const Map<TabItem, _TabItemData> allData = {
+    TabItem.posts: _TabItemData(
       title: 'Home',
       icon: MdiIcons.homeOutline,
     ),
-    TabItem.chat: TabItemData(
+    TabItem.chat: _TabItemData(
       title: 'Chat',
       icon: MdiIcons.chatOutline
     ),
-    TabItem.profile: TabItemData(
+    TabItem.profile: _TabItemData(
       title: 'Profile',
       icon: MdiIcons.accountOutline,
     ),
