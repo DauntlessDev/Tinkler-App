@@ -1,19 +1,22 @@
+import 'dart:convert';
 
+import 'package:meta/meta.dart';
 
 //view model class
 import 'package:stacked/stacked.dart';
 
-class SearchViewModel extends BaseViewModel {
-  String _title = 'Search View';
-  String get title => '$_title : $_counter';
+class SearchViewModel extends StreamViewModel {
+  Stream<Search> searchName() {}
 
-  int _counter = 0;
-  int get counter => _counter;
-
-  void updateCounter() {
-    _counter++;
-    notifyListeners();
-  }
+  @override
+  Stream get stream => throw UnimplementedError();
 }
 
-
+class Search {
+  final String name;
+  final String photoUrl;
+  Search({
+    @required this.name,
+    @required this.photoUrl,
+  });
+}

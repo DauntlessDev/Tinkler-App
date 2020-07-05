@@ -11,17 +11,20 @@ import 'package:tinkler/ui/views/landing_view.dart';
 import 'package:tinkler/ui/views/home/home_view.dart';
 import 'package:tinkler/ui/views/login/login_view.dart';
 import 'package:tinkler/ui/views/signup/signup_view.dart';
+import 'package:tinkler/ui/views/home/chat/search/search_view.dart';
 
 abstract class Routes {
   static const landingViewRoute = '/';
   static const homeViewRoute = '/home-view-route';
   static const loginViewRoute = '/login-view-route';
   static const signupViewRoute = '/signup-view-route';
+  static const searchViewRoute = '/search-view-route';
   static const all = {
     landingViewRoute,
     homeViewRoute,
     loginViewRoute,
     signupViewRoute,
+    searchViewRoute,
   };
 }
 
@@ -54,6 +57,11 @@ class Router extends RouterBase {
       case Routes.signupViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => SignupView(),
+          settings: settings,
+        );
+      case Routes.searchViewRoute:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => SearchView(),
           settings: settings,
         );
       default:

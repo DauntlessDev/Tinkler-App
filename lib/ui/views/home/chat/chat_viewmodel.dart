@@ -3,6 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/auth_service.dart';
 
 class ChatViewModel extends FutureViewModel {
@@ -37,44 +38,44 @@ class ChatViewModel extends FutureViewModel {
   @override
   Future<void> futureToRun() => currentUser();
 
-  List<UserChat> _chatList = [
-    UserChat(
+  List<Chat> _chatList = [
+    Chat(
         name: 'Rom Braveheart P. Leuterio',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
         photoUrl: 'assets/images/profile_1.jpg'),
-    UserChat(
+    Chat(
         name: 'Bryan Chong S. Salazar',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
         photoUrl: 'assets/images/profile_2.jpg'),
-    UserChat(
+    Chat(
         name: 'Kyle Chester M. Makapagal',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
         photoUrl: 'assets/images/profile_3.jpg'),
-    UserChat(
+    Chat(
         name: 'Ryan Michael P. Caluag',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
         photoUrl: 'assets/images/profile_1.jpg'),
-    UserChat(
+    Chat(
         name: 'Zeus Roy P. Sambilay',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
         photoUrl: 'assets/images/profile_2.jpg'),
   ];
 
-  List<UserChat> get chatList => _chatList;
+  List<Chat> get chatList => _chatList;
 }
 
-class UserChat {
+class Chat {
   final String name;
   final String photoUrl;
   final String latestMessage;
   final String time;
 
-  const UserChat({
+  const Chat({
     @required this.name,
     @required this.photoUrl,
     @required this.latestMessage,

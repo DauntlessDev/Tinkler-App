@@ -1,5 +1,6 @@
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/auth_service.dart';
 
 class LandingViewModel extends StreamViewModel<User> {

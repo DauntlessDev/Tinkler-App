@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:tinkler/ui/views/home/chat/search/search_view.dart';
 import 'package:tinkler/ui/views/home/home_view.dart';
 import 'package:tinkler/ui/views/landing_view.dart';
 import 'package:tinkler/ui/views/login/login_view.dart';
@@ -11,4 +12,5 @@ class $Router {
   HomeView homeViewRoute;
   LoginView loginViewRoute;
   SignupView signupViewRoute;
+  SearchView searchViewRoute;
 }

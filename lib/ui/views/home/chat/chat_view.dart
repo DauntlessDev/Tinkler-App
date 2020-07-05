@@ -78,7 +78,7 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
           if (index == 0 || index == model.chatList.length + 1) {
             return Container();
           }
-          return MessageTile(userChat: model.chatList[index - 1]);
+          return MessageTile(chat: model.chatList[index - 1]);
         },
         separatorBuilder: (context, index) => Divider(),
         itemCount: model.chatList.length + 2);
@@ -88,10 +88,10 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
 class MessageTile extends StatelessWidget {
   const MessageTile({
     Key key,
-    @required this.userChat,
+    @required this.chat,
   }) : super(key: key);
 
-  final UserChat userChat;
+  final Chat chat;
 
   @override
   Widget build(BuildContext context) {
@@ -100,22 +100,22 @@ class MessageTile extends StatelessWidget {
         radius: 25,
         child: ClipOval(
           child: Image(
-            image: AssetImage(userChat.photoUrl),
+            image: AssetImage(chat.photoUrl),
             fit: BoxFit.contain,
           ),
         ),
       ),
       title: Text(
-        userChat.name,
+        chat.name,
         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
       ),
       subtitle: RichText(
         text: TextSpan(
           style: TextStyle(fontSize: 12, color: Colors.black54),
           children: [
-            TextSpan(text: userChat.latestMessage),
+            TextSpan(text: chat.latestMessage),
             TextSpan(
-              text: ' • ${userChat.time}',
+              text: ' • ${chat.time}',
               style: TextStyle(color: greyColor),
             )
           ],

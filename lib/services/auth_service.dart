@@ -1,21 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:tinkler/model/user.dart';
 
-class User {
-  User(
-      {@required this.displayName,
-      @required this.photoUrl,
-      @required this.uid});
-  final String uid;
-  final String displayName;
-  final String photoUrl;
-
-  @override
-  String toString() {
-    return '$uid , $displayName, $photoUrl';
-  }
-}
 
 @lazySingleton
 class AuthService {
