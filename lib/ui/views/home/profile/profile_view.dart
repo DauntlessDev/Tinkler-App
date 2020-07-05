@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/components/avatar.dart';
+import 'package:tinkler/ui/shared/avatar.dart';
 
 import '../../../../constants.dart';
 import 'profile_viewmodel.dart';

@@ -1,7 +1,7 @@
 //view class
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/components/centered_circular_indicator.dart';
+import 'package:tinkler/ui/shared/centered_circular_indicator.dart';
 
 import 'home/home_view.dart';
 import 'landing_viewmodel.dart';

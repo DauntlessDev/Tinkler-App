@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/constants.dart';
-import 'package:tinkler/ui/components/centered_circular_indicator.dart';
-import 'package:tinkler/ui/components/rounded_button.dart';
-import 'package:tinkler/ui/components/tappable_richtext.dart';
-import 'package:tinkler/ui/components/top_background.dart';
+import 'package:tinkler/ui/shared/centered_circular_indicator.dart';
+import 'package:tinkler/ui/shared/rounded_button.dart';
+import 'package:tinkler/ui/shared/tappable_richtext.dart';
+import 'package:tinkler/ui/shared/top_background.dart';
 
 import 'login_viewmodel.dart';
 
