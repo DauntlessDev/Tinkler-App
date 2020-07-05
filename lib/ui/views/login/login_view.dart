@@ -77,10 +77,7 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
             TappableRichText(
               firstString: 'Don\'t have an account? ',
               secondString: 'Create one.',
-              onTap: () {
-              model.signInWithEmail();
-              _passwordFocusNode.unfocus();
-            },
+              onTap: model.navigateToSignup,
             ),
             const Spacer(flex: 3),
           ],
