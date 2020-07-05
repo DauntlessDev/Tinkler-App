@@ -76,7 +76,7 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5),
-            const Text('Flutter developer'),
+            const Text('Flutter developer', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
             const SizedBox(height: 50),
           ],
         ),

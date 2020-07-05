@@ -9,9 +9,9 @@ const blackColor = Colors.black;
 const greyColor = Colors.grey;
 
 // TextStyles
-const  greyTextStyle = TextStyle(color: Colors.grey);
-const  whiteTextStyle = TextStyle(color: Colors.white);
-const  blackTextStyle = TextStyle(color: Colors.black);
+const greyTextStyle = TextStyle(color: Colors.grey);
+const whiteTextStyle = TextStyle(color: Colors.white);
+const blackTextStyle = TextStyle(color: Colors.black);
 
 const boldTextStyle = TextStyle(fontWeight: FontWeight.bold);
 
@@ -21,3 +21,5 @@ const welcomeStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 28,
 );
+
+const postHeaderStyle = TextStyle(fontSize: 16, color: blackColor);

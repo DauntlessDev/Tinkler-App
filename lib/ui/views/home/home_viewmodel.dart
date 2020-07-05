@@ -29,7 +29,7 @@ class HomeViewModel extends BaseViewModel {
     return {
       TabItem.posts: (_) => PostsView(),
       TabItem.chat: (_) => ChatView(),
-      TabItem.profile: (context) => ProfileView(),
+      TabItem.profile: (_) => ProfileView(),
     };
   }
 }
