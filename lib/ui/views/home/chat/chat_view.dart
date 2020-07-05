@@ -107,11 +107,11 @@ class MessageTile extends StatelessWidget {
       ),
       title: Text(
         userChat.name,
-        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
       ),
       subtitle: RichText(
         text: TextSpan(
-          style: TextStyle(fontSize: 11, color: Colors.black54),
+          style: TextStyle(fontSize: 12, color: Colors.black54),
           children: [
             TextSpan(text: userChat.latestMessage),
             TextSpan(

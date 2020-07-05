@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               const TopBackground(),
-              const _MainContent(),
+              _MainContent(),
               const _BusyView(),
             ],
           ),
@@ -30,9 +30,11 @@ class LoginView extends StatelessWidget {
 }
 
 class _MainContent extends ViewModelWidget<LoginViewModel> {
-  const _MainContent({
+  _MainContent({
     Key key,
   }) : super(key: key, reactive: false);
+
+  final FocusNode _passwordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context, LoginViewModel model) {
@@ -59,7 +61,7 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
               ),
             ),
             const Spacer(flex: 1),
-            _LoginForm(),
+            _LoginForm(passwordFocusNode: _passwordFocusNode),
             const SizedBox(height: 20),
             RoundedButton(
               onPressed: model.signInWithEmail,
@@ -75,7 +77,10 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
             TappableRichText(
               firstString: 'Don\'t have an account? ',
               secondString: 'Create one.',
-              onTap: model.navigateToSignup,
+              onTap: () {
+              model.signInWithEmail();
+              _passwordFocusNode.unfocus();
+            },
             ),
             const Spacer(flex: 3),
           ],
@@ -86,11 +91,11 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
 }
 
 class _LoginForm extends ViewModelWidget<LoginViewModel> {
-  _LoginForm({
+  const _LoginForm({
     Key key,
+    @required this.passwordFocusNode,
   }) : super(key: key);
-
-  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode passwordFocusNode;
 
   @override
   Widget build(BuildContext context, LoginViewModel model) {
@@ -98,6 +103,7 @@ class _LoginForm extends ViewModelWidget<LoginViewModel> {
       child: Column(
         children: [
           TextFormField(
+            autofocus: true,
             initialValue: model.email,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
@@ -106,7 +112,7 @@ class _LoginForm extends ViewModelWidget<LoginViewModel> {
               icon: Icon(Icons.person),
             ),
             onChanged: model.setEmail,
-            onEditingComplete: _passwordFocusNode.requestFocus,
+            onEditingComplete: passwordFocusNode.requestFocus,
           ),
           TextFormField(
             initialValue: model.password,
@@ -116,9 +122,12 @@ class _LoginForm extends ViewModelWidget<LoginViewModel> {
               hintText: 'Enter password',
               icon: Icon(Icons.lock),
             ),
-            focusNode: _passwordFocusNode,
+            focusNode: passwordFocusNode,
             onChanged: model.setPassword,
-            onEditingComplete: model.signInWithEmail,
+            onEditingComplete: () {
+              model.signInWithEmail();
+              passwordFocusNode.unfocus();
+            },
           ),
         ],
       ),
