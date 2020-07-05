@@ -15,13 +15,13 @@ class PostsView extends StatelessWidget {
   }
 }
 
-class _MainContent extends StatelessWidget {
+class _MainContent extends ViewModelWidget<PostsViewModel> {
   const _MainContent({
     Key key,
-  }) : super(key: key);
+  }) : super(key: key, reactive: false);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, PostsViewModel model) {
     return Scaffold();
   }
 }

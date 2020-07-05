@@ -5,7 +5,6 @@
 // **************************************************************************
 
 import 'package:tinkler/services/auth_service.dart';
-import 'package:tinkler/services/template_service.dart';
 import 'package:tinkler/services/third_party_services_module.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:get_it/get_it.dart';
@@ -13,7 +12,6 @@ import 'package:get_it/get_it.dart';
 void $initGetIt(GetIt g, {String environment}) {
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
   g.registerLazySingleton<AuthService>(() => AuthService());
-  g.registerLazySingleton<CounterService>(() => CounterService());
   g.registerLazySingleton<DialogService>(
       () => thirdPartyServicesModule.dialogService);
   g.registerLazySingleton<NavigationService>(
