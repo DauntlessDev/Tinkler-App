@@ -4,7 +4,7 @@ A Flutter Social Media app inspired from Facebook.
 
 ## UI
 
-<img src 'screenshots/login.jpg'>
-<img src 'screenshots/posts.jpg'>
-<img src 'screenshots/chat.jpg'>
-<img src 'screenshots/profile.jpg'>
+<img src= 'screenshots/login.jpg' width=300>
+<img src='screenshots/posts.jpg' width= 300>
+<img src='screenshots/chat.jpg' width= 300>
+<img src='screenshots/profile.jpg' width= 300>
