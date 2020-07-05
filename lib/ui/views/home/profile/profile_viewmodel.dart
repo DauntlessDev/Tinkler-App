@@ -17,7 +17,14 @@ class ProfileViewModel extends FutureViewModel {
 
   Future<void> signOut() async {
     try {
-      await _auth.signOut();
+      DialogResponse decision = await _dialog.showConfirmationDialog(
+        title: 'Log-out',
+        description: 'Are you sure in logging out?',
+        confirmationTitle: 'Confirm',
+        cancelTitle: 'Cancel',
+      );
+
+      if (decision.confirmed) await _auth.signOut();
     } catch (e) {
       _dialog.showDialog(
         title: 'Sign-up Failed',
@@ -30,17 +37,16 @@ class ProfileViewModel extends FutureViewModel {
   Future<User> futureToRun() => currentUser();
 }
 
-
 class Option {
   final String title;
-  final Icon icon;
+  final IconData iconData;
   final String subTitle;
   final String category;
   final Function onTap;
 
   Option(
       {@required this.title,
-      @required this.icon,
+      @required this.iconData,
       this.subTitle,
       this.category,
       @required this.onTap});

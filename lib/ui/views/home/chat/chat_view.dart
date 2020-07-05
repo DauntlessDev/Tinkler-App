@@ -11,47 +11,56 @@ class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChatViewModel>.reactive(
-      builder: (context, model, child) => Scaffold(
+      builder: (context, model, child) => _MainContent(),
+      viewModelBuilder: () => ChatViewModel(),
+    );
+  }
+}
+
+class _MainContent extends ViewModelWidget<ChatViewModel> {
+  const _MainContent({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, ChatViewModel model) {
+    return Scaffold(
+      backgroundColor: whiteColor,
+      appBar: AppBar(
+        elevation: 0,
         backgroundColor: whiteColor,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: whiteColor,
-          title: Row(
-            children: [
-              const Text(
-                'Messages',
-                style: TextStyle(
-                    color: blackColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-              const RotatedBox(
-                  quarterTurns: 1,
-                  child: Icon(
-                    Icons.chevron_right,
-                    color: blackColor,
-                  )),
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () {
-                //TODO: Add search
-              },
-              child: const Icon(
-                Icons.search,
-                color: blackColor,
-              ),
-            )
+        title: Row(
+          children: [
+            const Text(
+              'Messages',
+              style: TextStyle(
+                  color: blackColor, fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            const RotatedBox(
+                quarterTurns: 1,
+                child: Icon(
+                  Icons.chevron_right,
+                  color: blackColor,
+                )),
           ],
         ),
-        body: MessageList(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.message),
-        ),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              //TODO: Add search
+            },
+            child: const Icon(
+              Icons.search,
+              color: blackColor,
+            ),
+          ),
+        ],
       ),
-      viewModelBuilder: () => ChatViewModel(),
+      body: MessageList(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.message),
+      ),
     );
   }
 }

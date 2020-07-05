@@ -19,8 +19,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tinkler',
       debugShowCheckedModeBanner: false,
-      theme:
-          ThemeData(primaryColor: darkBlueColor, accentColor: darkBlueColor),
+      theme: ThemeData(
+        primaryColor: darkBlueColor,
+        accentColor: darkBlueColor,
+      ),
       // initialRoute: Routes.startupViewRoute,
       home: LandingView(),
       onGenerateRoute: Router().onGenerateRoute,
