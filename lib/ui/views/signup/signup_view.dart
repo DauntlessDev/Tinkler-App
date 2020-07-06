@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/shared/centered_circular_indicator.dart';
-import 'package:tinkler/ui/shared/rounded_button.dart';
-import 'package:tinkler/ui/shared/tappable_richtext.dart';
-import 'package:tinkler/ui/shared/top_background.dart';
+import 'package:tinkler/ui/widgets/centered_circular_indicator.dart';
+import 'package:tinkler/ui/widgets/rounded_button.dart';
+import 'package:tinkler/ui/widgets/tappable_richtext.dart';
+import 'package:tinkler/ui/widgets/top_background.dart';
 
 import '../../../constants.dart';
 import 'signup_viewmodel.dart';

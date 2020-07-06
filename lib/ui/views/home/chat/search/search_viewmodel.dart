@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
@@ -6,7 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:stacked/stacked.dart';
 
 class SearchViewModel extends StreamViewModel {
-  Stream<Search> searchName() {}
+  // Stream<Search> searchName() {}
 
   @override
   Stream get stream => throw UnimplementedError();

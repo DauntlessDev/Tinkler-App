@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/shared/avatar.dart';
+import 'package:tinkler/ui/widgets/avatar.dart';
 
 import '../../../../constants.dart';
 import 'profile_viewmodel.dart';
@@ -76,13 +76,29 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5),
-            const Text('Flutter developer', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
+            const Text('Flutter developer',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
             const SizedBox(height: 50),
           ],
         ),
       ),
     );
   }
+}
+
+class Option {
+  final String title;
+  final IconData iconData;
+  final String subTitle;
+  final String category;
+  final Function onTap;
+
+  Option(
+      {@required this.title,
+      @required this.iconData,
+      this.subTitle,
+      this.category,
+      @required this.onTap});
 }
 
 class _OptionTile extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
@@ -36,19 +35,4 @@ class ProfileViewModel extends FutureViewModel {
 
   @override
   Future<User> futureToRun() => currentUser();
-}
-
-class Option {
-  final String title;
-  final IconData iconData;
-  final String subTitle;
-  final String category;
-  final Function onTap;
-
-  Option(
-      {@required this.title,
-      @required this.iconData,
-      this.subTitle,
-      this.category,
-      @required this.onTap});
 }

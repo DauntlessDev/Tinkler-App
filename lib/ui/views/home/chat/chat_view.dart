@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/ui/shared/list_item_builder.dart';
 
 import '../../../../constants.dart';
 import 'chat_viewmodel.dart';
@@ -72,16 +73,12 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
 
   @override
   Widget build(BuildContext context, ChatViewModel model) {
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          print('$index created in messagelist');
-          if (index == 0 || index == model.chatList.length + 1) {
-            return Container();
-          }
-          return MessageTile(chat: model.chatList[index - 1]);
-        },
-        separatorBuilder: (context, index) => Divider(),
-        itemCount: model.chatList.length + 2);
+    return ListItemBuilder<Chat>(
+      model: model,
+      itemBuilder: (context, chat) => MessageTile(chat: chat),
+      divider: Divider(),
+      items: model.list,
+    );
   }
 }
 

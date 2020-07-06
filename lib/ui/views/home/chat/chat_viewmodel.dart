@@ -6,7 +6,7 @@ import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/auth_service.dart';
 
-class ChatViewModel extends FutureViewModel {
+class ChatViewModel extends BaseViewModel {
   final _auth = locator<AuthService>();
   final _dialog = locator<DialogService>();
 
@@ -20,10 +20,6 @@ class ChatViewModel extends FutureViewModel {
     }
   }
 
-  Future<void> currentUser() async {
-    _user = await _auth.currentUser();
-  }
-
   Future<void> signOut() async {
     try {
       await _auth.signOut();
@@ -34,9 +30,6 @@ class ChatViewModel extends FutureViewModel {
       );
     }
   }
-
-  @override
-  Future<void> futureToRun() => currentUser();
 
   List<Chat> _chatList = [
     Chat(
@@ -66,7 +59,8 @@ class ChatViewModel extends FutureViewModel {
         photoUrl: 'assets/images/profile_2.jpg'),
   ];
 
-  List<Chat> get chatList => _chatList;
+  List<dynamic> get list => _chatList;
+
 }
 
 class Chat {
