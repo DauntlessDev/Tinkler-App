@@ -12,15 +12,10 @@ class LandingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<LandingViewModel>.reactive(
       builder: (context, model, child) {
-        if (!model.isBusy) {
-          if (model.user == null) {
-            return LoginView();
-          } else {
-            return HomeView();
-          }
-        } else {
+        if (!model.isBusy)
+          return (model.user == null) ? LoginView() : HomeView();
+        else
           return CenteredCircularIndicator();
-        }
       },
       viewModelBuilder: () => LandingViewModel(),
     );

@@ -5,7 +5,7 @@ import 'package:tinkler/model/user.dart';
 
 
 @lazySingleton
-class AuthService {
+class AuthenticationService {
   final _firebaseAuth = FirebaseAuth.instance;
 
   User _userFromFirebase(FirebaseUser user) {

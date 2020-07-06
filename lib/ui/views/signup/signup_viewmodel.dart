@@ -2,10 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
-import 'package:tinkler/services/auth_service.dart';
+import 'package:tinkler/services/authentication_service.dart';
 
 class SignupViewModel extends BaseViewModel {
-  final _auth = locator<AuthService>();
+  final _auth = locator<AuthenticationService>();
   final _dialog = locator<DialogService>();
   final _navigation = locator<NavigationService>();
 
