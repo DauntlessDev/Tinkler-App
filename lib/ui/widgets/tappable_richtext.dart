@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
-
 class TappableRichText extends StatelessWidget {
   const TappableRichText({
     Key key,
@@ -19,12 +17,15 @@ class TappableRichText extends StatelessWidget {
       onTap: onTap,
       child: RichText(
         text: TextSpan(
-          style: TextStyle(color: blackColor, fontSize: 15),
+          style: TextStyle(fontSize: 15),
           children: [
-            TextSpan(text: firstString),
+            TextSpan(
+              text: firstString,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
             TextSpan(
               text: secondString,
-              style: boldTextStyle,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ],
         ),

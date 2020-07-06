@@ -1,11 +1,11 @@
 //main class
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tinkler/constants.dart';
+import 'package:tinkler/theme/app_theme.dart';
+import 'package:tinkler/theme/app_theme_service.dart';
 
 import 'app/locator.dart';
 import 'app/router.gr.dart';
-import 'ui/views/landing_view.dart';
 
 void main() {
   setupLocator();
@@ -19,12 +19,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tinkler',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: darkBlueColor,
-        accentColor: darkBlueColor,
-      ),
-      // initialRoute: Routes.startupViewRoute,
-      home: LandingView(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode:
+          AppThemeService.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
       onGenerateRoute: Router().onGenerateRoute,
       navigatorKey: locator<NavigationService>().navigatorKey,
     );

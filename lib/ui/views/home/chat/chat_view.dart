@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/chat.dart';
 import 'package:tinkler/ui/shared/list_item_builder.dart';
 
-import '../../../../constants.dart';
 import 'chat_viewmodel.dart';
 
 class ChatView extends StatelessWidget {
@@ -27,22 +26,20 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
   @override
   Widget build(BuildContext context, ChatViewModel model) {
     return Scaffold(
-      backgroundColor: whiteColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: whiteColor,
         title: Row(
           children: [
             const Text(
               'Messages',
               style: TextStyle(
-                  color: blackColor, fontWeight: FontWeight.bold, fontSize: 20),
+                  color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
             ),
             const RotatedBox(
                 quarterTurns: 1,
                 child: Icon(
                   Icons.chevron_right,
-                  color: blackColor,
+                  color: Colors.black,
                 )),
           ],
         ),
@@ -53,7 +50,7 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
             },
             child: const Icon(
               Icons.search,
-              color: blackColor,
+              color: Colors.black
             ),
           ),
         ],
@@ -114,7 +111,7 @@ class MessageTile extends StatelessWidget {
             TextSpan(text: chat.latestMessage),
             TextSpan(
               text: ' • ${chat.time}',
-              style: TextStyle(color: greyColor),
+              style: TextStyle(color: Colors.grey),
             )
           ],
         ),
@@ -122,14 +119,14 @@ class MessageTile extends StatelessWidget {
       trailing: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: darkBlueColor,
+          color: Colors.blue[900],
           border: Border.all(color: Colors.black12, width: 3),
         ),
         child: Padding(
           padding: const EdgeInsets.all(2.0),
           child: Text(
             '12',
-            style: TextStyle(color: whiteColor, fontSize: 9),
+            style: TextStyle(color: Colors.white, fontSize: 9),
           ),
         ),
       ),

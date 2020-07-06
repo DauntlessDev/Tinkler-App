@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/constants.dart';
 
 import 'home_viewmodel.dart';
 
@@ -43,7 +42,7 @@ class _CupertinoHomeScaffold extends StatelessWidget {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         currentIndex: 1,
-        backgroundColor: whiteColor,
+        backgroundColor: Colors.white,
         items: [
           _buildItem(TabItem.posts),
           _buildItem(TabItem.chat),
@@ -63,7 +62,7 @@ class _CupertinoHomeScaffold extends StatelessWidget {
 
   BottomNavigationBarItem _buildItem(TabItem tabItem) {
     final itemData = _TabItemData.allData[tabItem];
-    final color = currentTab == tabItem ? darkBlueColor : greyColor;
+    final color = currentTab == tabItem ? Colors.blue[900] : Colors.grey;
 
     return BottomNavigationBarItem(
       icon: Icon(
@@ -85,10 +84,7 @@ class _TabItemData {
       title: 'Home',
       icon: MdiIcons.homeOutline,
     ),
-    TabItem.chat: _TabItemData(
-      title: 'Chat',
-      icon: MdiIcons.chatOutline
-    ),
+    TabItem.chat: _TabItemData(title: 'Chat', icon: MdiIcons.chatOutline),
     TabItem.profile: _TabItemData(
       title: 'Profile',
       icon: MdiIcons.accountOutline,

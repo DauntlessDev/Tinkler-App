@@ -4,7 +4,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
-import '../../../../constants.dart';
 import 'profile_viewmodel.dart';
 
 class ProfileView extends StatelessWidget {
@@ -29,23 +28,15 @@ class _MainContent extends ViewModelWidget<ProfileViewModel> {
   @override
   Widget build(BuildContext context, ProfileViewModel model) {
     return Scaffold(
-      backgroundColor: whiteColor,
       appBar: AppBar(
           elevation: 1,
-          backgroundColor: whiteColor,
           title: Row(
             children: [
-              const Text(
+              Text(
                 'Profile ',
-                style: TextStyle(
-                    color: blackColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
+                style: Theme.of(context).appBarTheme.textTheme.headline1,
               ),
-              const Icon(
-                Icons.person,
-                color: blackColor,
-              ),
+              const Icon(Icons.person),
             ],
           ),
           bottom: PreferredSize(
@@ -71,9 +62,9 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
           children: <Widget>[
             Avatar(photoUrl: model.userPhotoUrl, radius: 60),
             const SizedBox(height: 15),
-            const Text(
+            Text(
               'Rom Braveheart P. Leuterio',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             const SizedBox(height: 5),
             const Text('Flutter developer',
@@ -110,7 +101,7 @@ class _OptionTile extends StatelessWidget {
     return ListTile(
       leading: Icon(
         option.iconData,
-        color: darkBlueColor,
+        // color: Colors.red
       ),
       title: Text(option.title),
       onTap: option.onTap,

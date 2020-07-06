@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../../constants.dart';
 import 'posts_viewmodel.dart';
 
 class PostsView extends StatelessWidget {
@@ -52,7 +51,7 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
     ];
 
     return Scaffold(
-        backgroundColor: whiteColor,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 30.0, top: 40),
@@ -60,7 +59,8 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('Moments', style: postHeaderStyle),
+                Text('Moments',
+                    style: TextStyle(fontSize: 16, color: Colors.black)),
                 SizedBox(height: 15),
                 Container(
                   height: 50,
@@ -76,7 +76,9 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text('Latest Posts', style: postHeaderStyle),
+                        Text('Latest Posts',
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.black)),
                         SizedBox(height: 20),
                         Expanded(
                           flex: 1,
@@ -105,7 +107,7 @@ class MomentAvatar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: darkBlueColor, width: 3),
+        border: Border.all(color: Colors.blue[900], width: 3),
       ),
       child: CircleAvatar(
         radius: 25,
@@ -152,7 +154,7 @@ class PostTile extends StatelessWidget {
                     children: <Widget>[
                       Text('Brave Leuterio',
                           style: TextStyle(fontWeight: FontWeight.w700)),
-                      Text('4 mins ago', style: greyTextStyle),
+                      Text('4 mins ago', style: TextStyle(color: Colors.grey)),
                     ],
                   ),
                   Spacer(flex: 1),
@@ -213,7 +215,7 @@ class PostTile extends StatelessWidget {
                     ),
                     SizedBox(width: 8),
                     Text('Connie and others like it.',
-                        style: TextStyle(color: greyColor, fontSize: 10))
+                        style: TextStyle(color: Colors.grey, fontSize: 10))
                   ],
                 ),
               ),
@@ -228,10 +230,10 @@ class PostTile extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Icon(MdiIcons.heart, color: darkBlueColor, size: 18),
+                        Icon(MdiIcons.heart, color: Colors.blue[900], size: 18),
                         Text(' 25 Likes',
-                            style:
-                                TextStyle(color: darkBlueColor, fontSize: 10)),
+                            style: TextStyle(
+                                color: Colors.blue[900], fontSize: 10)),
                       ],
                     ),
                   ),
@@ -240,9 +242,10 @@ class PostTile extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Icon(MdiIcons.chatOutline, color: greyColor, size: 18),
+                        Icon(MdiIcons.chatOutline,
+                            color: Colors.grey, size: 18),
                         Text('13 Comments',
-                            style: TextStyle(color: greyColor, fontSize: 10)),
+                            style: TextStyle(color: Colors.grey, fontSize: 10)),
                       ],
                     ),
                   ),

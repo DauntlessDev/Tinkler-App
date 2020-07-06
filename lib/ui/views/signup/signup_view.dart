@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/widgets/centered_circular_indicator.dart';
 import 'package:tinkler/ui/widgets/rounded_button.dart';
 import 'package:tinkler/ui/widgets/tappable_richtext.dart';
 import 'package:tinkler/ui/widgets/top_background.dart';
 
-import '../../../constants.dart';
 import 'signup_viewmodel.dart';
 
 class SignupView extends StatelessWidget {
@@ -48,11 +48,11 @@ class _MainContent extends ViewModelWidget<SignupViewModel> {
         child: Column(
           children: <Widget>[
             Spacer(flex: 10),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Sign up to \nTinkler!',
-                style: welcomeStyle,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             const Spacer(flex: 1),
@@ -61,11 +61,11 @@ class _MainContent extends ViewModelWidget<SignupViewModel> {
             RoundedButton(
               onPressed: model.signUpWithEmail,
               text: 'Continue',
-              color: darkBlueColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(height: 10),
             TappableRichText(
-              firstString: 'Already have an account?',
+              firstString: 'Already have an account? ',
               secondString: 'Login.',
               onTap: model.navigateToLogin,
             ),
@@ -95,19 +95,8 @@ class _SignupForm extends ViewModelWidget<SignupViewModel> {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             decoration: const InputDecoration(
-              hintText: 'Enter email',
-              icon: Icon(Icons.person),
-            ),
-            onEditingComplete: _passwordFocusNode.requestFocus,
-            onChanged: model.setEmail,
-          ),
-          TextFormField(
-            initialValue: model.email,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(
-              hintText: 'Enter email',
-              icon: Icon(Icons.person),
+              hintText: 'Enter full name',
+              icon: Icon(MdiIcons.accountBox),
             ),
             onEditingComplete: _passwordFocusNode.requestFocus,
             onChanged: model.setEmail,

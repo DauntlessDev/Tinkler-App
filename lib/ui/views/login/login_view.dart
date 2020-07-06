@@ -1,7 +1,6 @@
 //view class
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/constants.dart';
 import 'package:tinkler/ui/widgets/centered_circular_indicator.dart';
 import 'package:tinkler/ui/widgets/rounded_button.dart';
 import 'package:tinkler/ui/widgets/tappable_richtext.dart';
@@ -48,16 +47,11 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
         child: Column(
           children: [
             const Spacer(flex: 10),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Welcome to \nTinkler!',
-                style: TextStyle(
-                  color: blackColor,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                ),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             const Spacer(flex: 1),
@@ -66,12 +60,12 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
             RoundedButton(
               onPressed: model.signInWithEmail,
               text: 'Continue',
-              color: darkBlueColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
             RoundedButton(
               onPressed: () {},
               text: 'Continue with Facebook',
-              color: blueColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             const SizedBox(height: 10),
             TappableRichText(
@@ -121,10 +115,7 @@ class _LoginForm extends ViewModelWidget<LoginViewModel> {
             ),
             focusNode: passwordFocusNode,
             onChanged: model.setPassword,
-            onEditingComplete: () {
-              model.signInWithEmail();
-              passwordFocusNode.unfocus();
-            },
+            onEditingComplete: model.signInWithEmail,
           ),
         ],
       ),
