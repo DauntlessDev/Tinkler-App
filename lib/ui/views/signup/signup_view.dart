@@ -81,6 +81,7 @@ class _SignupForm extends ViewModelWidget<SignupViewModel> {
   _SignupForm({
     Key key,
   }) : super(key: key, reactive: false);
+  final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _confirmPasswordFocusNode = FocusNode();
 
@@ -89,6 +90,28 @@ class _SignupForm extends ViewModelWidget<SignupViewModel> {
     return Form(
       child: Column(
         children: [
+          TextFormField(
+            initialValue: model.email,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(
+              hintText: 'Enter email',
+              icon: Icon(Icons.person),
+            ),
+            onEditingComplete: _passwordFocusNode.requestFocus,
+            onChanged: model.setEmail,
+          ),
+          TextFormField(
+            initialValue: model.email,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(
+              hintText: 'Enter email',
+              icon: Icon(Icons.person),
+            ),
+            onEditingComplete: _passwordFocusNode.requestFocus,
+            onChanged: model.setEmail,
+          ),
           TextFormField(
             initialValue: model.email,
             keyboardType: TextInputType.emailAddress,

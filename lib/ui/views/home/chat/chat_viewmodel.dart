@@ -3,6 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/chat.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/auth_service.dart';
 
@@ -61,18 +62,4 @@ class ChatViewModel extends BaseViewModel {
 
   List<dynamic> get list => _chatList;
 
-}
-
-class Chat {
-  final String name;
-  final String photoUrl;
-  final String latestMessage;
-  final String time;
-
-  const Chat({
-    @required this.name,
-    @required this.photoUrl,
-    @required this.latestMessage,
-    @required this.time,
-  });
 }

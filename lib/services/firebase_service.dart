@@ -36,6 +36,7 @@ class FirestoreService {
           .map((snapshot) => builder(snapshot.data, snapshot.documentID))
           .where((value) => value != null)
           .toList();
+
       if (sort != null) {
         result.sort(sort);
       }
@@ -49,6 +50,7 @@ class FirestoreService {
   }) {
     final DocumentReference reference = Firestore.instance.document(path);
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
+    
     return snapshots
         .map((snapshot) => builder(snapshot.data, snapshot.documentID));
   }

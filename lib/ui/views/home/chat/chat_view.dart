@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/model/chat.dart';
 import 'package:tinkler/ui/shared/list_item_builder.dart';
 
 import '../../../../constants.dart';

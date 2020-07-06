@@ -14,6 +14,7 @@ class SignupViewModel extends BaseViewModel {
     _navigationService.back();
   }
 
+  String _displayName = "";
   String _email = "";
   String _password = "";
   String _confirmPassword = "";
@@ -27,18 +28,25 @@ class SignupViewModel extends BaseViewModel {
   void setConfirmPassword(String input) => _confirmPassword = input;
 
   Future signUpWithEmail() async {
-    print('$_email, $_password, $_confirmPassword');
     try {
-      if (_email.isEmpty || _password.isEmpty || _confirmPassword.isEmpty) {
+      if (_displayName.isEmpty ||
+          _email.isEmpty ||
+          _password.isEmpty ||
+          _confirmPassword.isEmpty) {
         throw PlatformException(
             code: 'EMPTY_FIELDS', message: 'Please fill out all fields.');
       } else if (_password != _confirmPassword) {
         throw PlatformException(
             code: 'PASSWORD_NOT_EQUAL', message: 'Password does not match.');
+      } else if (_displayName.length < 5) {
+        throw PlatformException(
+            code: 'NAME_TOO_SHORT',
+            message: 'Name is too short, please change.');
       } else {
         setBusy(true);
         await _auth.createWithEmailAndPassword(
             email: _email, password: _password);
+
         setBusy(false);
 
         _navigation.back();
