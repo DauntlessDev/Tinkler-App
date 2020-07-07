@@ -8,6 +8,7 @@ import 'package:tinkler/theme/app_theme_service.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/third_party_services_module.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:tinkler/services/user_service.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
@@ -18,6 +19,7 @@ void $initGetIt(GetIt g, {String environment}) {
       () => thirdPartyServicesModule.dialogService);
   g.registerLazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
+  g.registerLazySingleton<UserService>(() => UserService());
 }
 
 class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {

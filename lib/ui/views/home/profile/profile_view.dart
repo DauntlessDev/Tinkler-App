@@ -60,7 +60,7 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
       child: Center(
         child: Column(
           children: <Widget>[
-            Avatar(photoUrl: model.userPhotoUrl, radius: 60),
+            Avatar(photoUrl: 'assets/images/profile_1.jpg', radius: 60),
             const SizedBox(height: 15),
             Text(
               'Rom Braveheart P. Leuterio',

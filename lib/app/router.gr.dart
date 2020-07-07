@@ -9,8 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:tinkler/ui/views/landing_view.dart';
 import 'package:tinkler/ui/views/home/home_view.dart';
-import 'package:tinkler/ui/views/login/login_view.dart';
-import 'package:tinkler/ui/views/signup/signup_view.dart';
+import 'package:tinkler/ui/views/auth/login/login_view.dart';
+import 'package:tinkler/ui/views/auth/signup/signup_view.dart';
 import 'package:tinkler/ui/views/home/chat/search/search_view.dart';
 
 abstract class Routes {

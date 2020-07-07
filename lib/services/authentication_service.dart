@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/model/user.dart';
 
-
 @lazySingleton
 class AuthenticationService {
   final _firebaseAuth = FirebaseAuth.instance;
@@ -13,9 +12,9 @@ class AuthenticationService {
       return null;
     }
     return User(
-        uid: user.uid,
-        displayName: user.displayName,
-        photoUrl: user.photoUrl ?? '');
+      uid: user.uid,
+      email: user.email,
+    );
   }
 
   Stream<User> get onAuthStateChanged {
@@ -45,7 +44,7 @@ class AuthenticationService {
   // @override
   // Future<User> signInWithFacebook() async {
   //   final facebookLogin = FacebookLogin();
-  //   final result = await facebookLogin.logIn(['public_profile']);
+  //   final result = await facebookLogin.logIn(['public_User']);
 
   //   if (result != null) {
   //     final authResult = await _firebaseAuth.signInWithCredential(

@@ -1,7 +1,12 @@
 import 'package:flutter/foundation.dart';
+import 'package:tinkler/model/profile.dart';
+import 'package:tinkler/model/user.dart';
+
+import 'api_path.dart';
+import 'firebase_service.dart';
 
 abstract class Database {
-  // Future<void> setJob(Job job);
+  Future<void> addProfile(Profile profile);
   // Future<void> deleteJob(Job job);
   // Stream<List<Job>> jobsStream();
   // Stream<Job> jobStream({@required String jobId});
@@ -13,17 +18,23 @@ abstract class Database {
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
 
-class FirestoreDatabase implements Database {
-  FirestoreDatabase({@required this.uid}) : assert(uid != null);
+class DatabaseService implements Database {
+  DatabaseService({@required this.uid}) : assert(uid != null);
   final String uid;
 
-  // final _service = FirestoreService.instance;
+  final _service = FirebaseService.instance;
 
-  // @override
-  // Future<void> setJob(Job job) async => await _service.setData(
-  //       path: APIPath.job(uid, job.id),
-  //       data: job.toMap(),
-  //     );
+  @override
+  Future<void> addProfile(Profile profile) async => await _service.setData(
+        path: APIPath.profile(uid),
+        data: profile.toMap(),
+      );
+
+  @override
+  Stream<Profile> profileStream({@required String uid}) => _service.userStream(
+        path: APIPath.profile(uid),
+        builder: (data) => Profile.fromMap(data),
+      );
 
   // @override
   // Future<void> deleteJob(Job job) async {

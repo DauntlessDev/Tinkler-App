@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
-class FirestoreService {
-  FirestoreService._();
-  static final instance = FirestoreService._();
+class FirebaseService {
+  FirebaseService._();
+  static final instance = FirebaseService._();
 
   Future<void> setData({
     @required String path,
@@ -50,8 +50,18 @@ class FirestoreService {
   }) {
     final DocumentReference reference = Firestore.instance.document(path);
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
-    
+
     return snapshots
         .map((snapshot) => builder(snapshot.data, snapshot.documentID));
+  }
+
+  Stream<T> userStream<T>({
+    @required String path,
+    @required T builder(Map<String, dynamic> data),
+  }) {
+    final DocumentReference reference = Firestore.instance.document(path);
+    final Stream<DocumentSnapshot> snapshots = reference.snapshots();
+
+    return snapshots.map((snapshot) => builder(snapshot.data));
   }
 }
