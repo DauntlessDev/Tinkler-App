@@ -3,10 +3,11 @@ import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 
 @lazySingleton
-class UserService extends ChangeNotifier {
-  static String uid;
+class UserService {
+  String _uid;
+  String get uid => _uid;
+
   void updateUserUid(String uid) {
-    uid = uid;
-    notifyListeners();
+    _uid = uid;
   }
 }
