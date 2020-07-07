@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/widgets/centered_circular_indicator.dart';
 import 'package:tinkler/ui/widgets/rounded_button.dart';
 import 'package:tinkler/ui/widgets/tappable_richtext.dart';
 import 'package:tinkler/ui/widgets/top_background.dart';
@@ -13,15 +13,17 @@ class SignupView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignupViewModel>.nonReactive(
       builder: (context, model, child) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SafeArea(
-            child: Stack(
-              children: [
-                const TopBackground(),
-                const _MainContent(),
-                const _BusyView(),
-              ],
+        return ModalProgressHUD(
+          inAsyncCall: model.isBusy,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: SafeArea(
+              child: Stack(
+                children: [
+                  const TopBackground(),
+                  const _MainContent(),
+                ],
+              ),
             ),
           ),
         );
@@ -138,19 +140,5 @@ class _SignupForm extends ViewModelWidget<SignupViewModel> {
         ],
       ),
     );
-  }
-}
-
-class _BusyView extends ViewModelWidget<SignupViewModel> {
-  const _BusyView({
-    Key key,
-  }) : super(key: key, reactive: true);
-
-  @override
-  Widget build(BuildContext context, SignupViewModel model) {
-    if (model.isBusy) {
-      return CenteredCircularIndicator();
-    }
-    return Container();
   }
 }

@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 
 @lazySingleton
-class AppThemeService extends BaseViewModel {
+class AppThemeService extends ChangeNotifier {
   static bool isDarkModeOn = false;
   void updateTheme(bool isdarkmodeon) {
     isDarkModeOn = isdarkmodeon;

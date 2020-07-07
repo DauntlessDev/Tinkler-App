@@ -1,7 +1,7 @@
 //view class
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/widgets/centered_circular_indicator.dart';
 import 'package:tinkler/ui/widgets/rounded_button.dart';
 import 'package:tinkler/ui/widgets/tappable_richtext.dart';
 import 'package:tinkler/ui/widgets/top_background.dart';
@@ -11,15 +11,20 @@ import 'login_viewmodel.dart';
 class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.nonReactive(
-      builder: (context, model, child) => Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Stack(
-            children: <Widget>[
-              const TopBackground(),
-              _MainContent(),
-              const _BusyView(),
-            ],
+      builder: (context, model, child) => ModalProgressHUD(
+        inAsyncCall: model.isBusy,
+        child: ModalProgressHUD(
+          inAsyncCall: model.isBusy,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: SafeArea(
+              child: Stack(
+                children: <Widget>[
+                  const TopBackground(),
+                  _MainContent(),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -120,19 +125,5 @@ class _LoginForm extends ViewModelWidget<LoginViewModel> {
         ],
       ),
     );
-  }
-}
-
-class _BusyView extends ViewModelWidget<LoginViewModel> {
-  const _BusyView({
-    Key key,
-  }) : super(key: key, reactive: true);
-
-  @override
-  Widget build(BuildContext context, LoginViewModel model) {
-    if (model.isBusy) {
-      return CenteredCircularIndicator();
-    }
-    return Container();
   }
 }

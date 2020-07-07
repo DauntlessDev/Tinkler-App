@@ -12,9 +12,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileViewModel>.nonReactive(
-      builder: (context, model, child) {
-        return const _MainContent();
-      },
+      builder: (context, model, child) => const _MainContent(),
       viewModelBuilder: () => ProfileViewModel(),
     );
   }
@@ -118,18 +116,14 @@ class _OptionListBuilder extends ViewModelWidget<ProfileViewModel> {
   Widget build(BuildContext context, ProfileViewModel model) {
     final List<Option> _optionList = [
       Option(title: 'Story', iconData: MdiIcons.collage, onTap: () {}),
-      Option(
-          title: 'Notifications & Sounds',
-          iconData: MdiIcons.bell,
-          onTap: () {}),
+      Option(title: 'Notifications', iconData: MdiIcons.bell, onTap: () {}),
       Option(title: 'App Updates', iconData: Icons.file_download, onTap: () {}),
-      Option(
-          title: 'Logout', iconData: Icons.exit_to_app, onTap: model.signOut),
+      Option(title: 'Logout', iconData: Icons.exit_to_app, onTap: model.signOut)
     ];
+
     return ListView.builder(
-        itemBuilder: (context, index) {
-          return _OptionTile(option: _optionList[index]);
-        },
+        itemBuilder: (context, index) =>
+            _OptionTile(option: _optionList[index]),
         itemCount: _optionList.length);
   }
 }
