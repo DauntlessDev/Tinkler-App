@@ -61,11 +61,11 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
             Avatar(photoUrl: 'assets/images/profile_1.jpg', radius: 60),
             const SizedBox(height: 15),
             Text(
-              'Rom Braveheart P. Leuterio',
+              model.profile.displayName,
               style: Theme.of(context).textTheme.bodyText2,
             ),
             const SizedBox(height: 5),
-            const Text('Flutter developer',
+            Text(model.profile.email,
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
             const SizedBox(height: 50),
           ],

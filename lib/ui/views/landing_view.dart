@@ -12,7 +12,6 @@ class LandingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<LandingViewModel>.reactive(
         viewModelBuilder: () => LandingViewModel(),
-        // onModelReady: (model) => model.initialise(),
         builder: (context, model, child) =>
             model.user == null ? LoginView() : HomeView());
   }

@@ -10,17 +10,6 @@ class LandingViewModel extends StreamViewModel<User> {
   final _user = locator<UserService>();
   final _auth = locator<AuthenticationService>();
 
-  // void initialize() {
-  //   _auth.onAuthStateChanged.listen((user) {
-  //     if (user != null) {
-  //       _user.updateUserUid(user.uid);
-  //     } else {
-  //       _user.updateUserUid('');
-  //     }
-  //     notifyListeners();
-  //   });
-  // }
-
   User get user => data;
   Stream<User> onAuthStateChanged() {
     return _auth.onAuthStateChanged;
