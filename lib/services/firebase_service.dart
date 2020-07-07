@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
+@lazySingleton
 class FirebaseService {
-  FirebaseService._();
-  static final instance = FirebaseService._();
-
   Future<void> setData({
     @required String path,
     @required Map<String, dynamic> data,

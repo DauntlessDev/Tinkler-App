@@ -36,27 +36,27 @@ class ChatViewModel extends BaseViewModel {
         name: 'Rom Braveheart P. Leuterio',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
-        photoUrl: 'assets/images/User_1.jpg'),
+        photoUrl: 'assets/images/profile_1.jpg'),
     Chat(
         name: 'Bryan Chong S. Salazar',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
-        photoUrl: 'assets/images/User_2.jpg'),
+        photoUrl: 'assets/images/profile_2.jpg'),
     Chat(
         name: 'Kyle Chester M. Makapagal',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
-        photoUrl: 'assets/images/User_3.jpg'),
+        photoUrl: 'assets/images/profile_3.jpg'),
     Chat(
         name: 'Ryan Michael P. Caluag',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
-        photoUrl: 'assets/images/User_1.jpg'),
+        photoUrl: 'assets/images/profile_1.jpg'),
     Chat(
         name: 'Zeus Roy P. Sambilay',
         latestMessage: 'Hello! how are you?',
         time: '4:26',
-        photoUrl: 'assets/images/User_2.jpg'),
+        photoUrl: 'assets/images/profile_2.jpg'),
   ];
 
   List<dynamic> get list => _chatList;

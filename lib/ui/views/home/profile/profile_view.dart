@@ -12,8 +12,8 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileViewModel>.nonReactive(
-      builder: (context, model, child) => const _MainContent(),
       viewModelBuilder: () => ProfileViewModel(),
+      builder: (context, model, child) => const _MainContent(),
     );
   }
 }

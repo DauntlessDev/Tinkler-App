@@ -6,20 +6,26 @@ import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/user_service.dart';
 
-class LandingViewModel extends BaseViewModel {
-  final _auth = locator<AuthenticationService>();
-  final _navigation = locator<NavigationService>();
+class LandingViewModel extends StreamViewModel<User> {
   final _user = locator<UserService>();
+  final _auth = locator<AuthenticationService>();
 
-  void subscribeToAuthStateChanged() {
-    _auth.onAuthStateChanged.listen((user) {
-      if (user != null) {
-        _user.updateUserUid(user.uid);
-        _navigation.navigateTo(Routes.homeViewRoute);
-      } else {
-        _user.updateUserUid('');
-        _navigation.navigateTo(Routes.loginViewRoute);
-      }
-    });
+  // void initialize() {
+  //   _auth.onAuthStateChanged.listen((user) {
+  //     if (user != null) {
+  //       _user.updateUserUid(user.uid);
+  //     } else {
+  //       _user.updateUserUid('');
+  //     }
+  //     notifyListeners();
+  //   });
+  // }
+
+  User get user => data;
+  Stream<User> onAuthStateChanged() {
+    return _auth.onAuthStateChanged;
   }
+
+  @override
+  Stream<User> get stream => onAuthStateChanged();
 }

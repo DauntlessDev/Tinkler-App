@@ -1,41 +1,34 @@
 import 'package:flutter/foundation.dart';
+import 'package:injectable/injectable.dart';
+import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
-import 'package:tinkler/model/user.dart';
+import 'package:tinkler/services/user_service.dart';
 
 import 'api_path.dart';
 import 'firebase_service.dart';
 
-abstract class Database {
-  Future<void> addProfile(Profile profile);
-  // Future<void> deleteJob(Job job);
-  // Stream<List<Job>> jobsStream();
-  // Stream<Job> jobStream({@required String jobId});
+@lazySingleton
+class DatabaseService {
+  final _service = locator<FirebaseService>();
+  final _user = locator<UserService>();
 
-  // Future<void> setEntry(Entry entry);
-  // Future<void> deleteEntry(Entry entry);
-  // Stream<List<Entry>> entriesStream({Job job});
-}
+  // DatabaseService({@required this.uid}) : assert(uid != null);
 
-String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
+  Future<void> addProfile(Profile profile) async {
+    String _uid = _user.uid;
+    await _service.setData(
+      path: APIPath.profile(_uid),
+      data: profile.toMap(),
+    );
+  }
 
-class DatabaseService implements Database {
-  DatabaseService({@required this.uid}) : assert(uid != null);
-  final String uid;
-
-  final _service = FirebaseService.instance;
-
-  @override
-  Future<void> addProfile(Profile profile) async => await _service.setData(
-        path: APIPath.profile(uid),
-        data: profile.toMap(),
-      );
-
-  @override
-  Stream<Profile> profileStream({@required String uid}) => _service.userStream(
-        path: APIPath.profile(uid),
-        builder: (data) => Profile.fromMap(data),
-      );
-
+  Stream<Profile> profileStream() {
+    String _uid = _user.uid;
+    return _service.userStream(
+      path: APIPath.profile(_uid),
+      builder: (data) => Profile.fromMap(data),
+    );
+  }
   // @override
   // Future<void> deleteJob(Job job) async {
   //   // delete where entry.jobId == job.jobId

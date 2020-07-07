@@ -12,8 +12,8 @@ class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChatViewModel>.reactive(
-      builder: (context, model, child) => _MainContent(),
       viewModelBuilder: () => ChatViewModel(),
+      builder: (context, model, child) => _MainContent(),
     );
   }
 }

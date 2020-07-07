@@ -11,7 +11,8 @@ import 'signup_viewmodel.dart';
 class SignupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SignupViewModel>.nonReactive(
+    return ViewModelBuilder<SignupViewModel>.reactive(
+      viewModelBuilder: () => SignupViewModel(),
       builder: (context, model, child) {
         return ModalProgressHUD(
           inAsyncCall: model.isBusy,
@@ -28,7 +29,6 @@ class SignupView extends StatelessWidget {
           ),
         );
       },
-      viewModelBuilder: () => SignupViewModel(),
     );
   }
 }
@@ -93,15 +93,15 @@ class _SignupForm extends ViewModelWidget<SignupViewModel> {
       child: Column(
         children: [
           TextFormField(
-            initialValue: model.email,
+            initialValue: model.displayName,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             decoration: const InputDecoration(
               hintText: 'Enter full name',
               icon: Icon(MdiIcons.accountBox),
             ),
-            onEditingComplete: _passwordFocusNode.requestFocus,
-            onChanged: model.setEmail,
+            onEditingComplete: _emailFocusNode.requestFocus,
+            onChanged: model.setDisplayName,
           ),
           TextFormField(
             initialValue: model.email,
@@ -111,6 +111,7 @@ class _SignupForm extends ViewModelWidget<SignupViewModel> {
               hintText: 'Enter email',
               icon: Icon(Icons.person),
             ),
+            focusNode: _emailFocusNode,
             onEditingComplete: _passwordFocusNode.requestFocus,
             onChanged: model.setEmail,
           ),

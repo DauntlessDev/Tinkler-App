@@ -10,7 +10,8 @@ import 'login_viewmodel.dart';
 
 class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
-    return ViewModelBuilder<LoginViewModel>.nonReactive(
+    return ViewModelBuilder<LoginViewModel>.reactive(
+      viewModelBuilder: () => LoginViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
         inAsyncCall: model.isBusy,
         child: ModalProgressHUD(
@@ -28,7 +29,6 @@ class LoginView extends StatelessWidget {
           ),
         ),
       ),
-      viewModelBuilder: () => LoginViewModel(),
     );
   }
 }

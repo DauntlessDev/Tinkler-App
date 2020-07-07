@@ -3,28 +3,47 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/ui/views/home/posts/posts_view.dart';
+import 'package:tinkler/ui/views/home/profile/profile_view.dart';
 
+import 'chat/chat_view.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatelessWidget {
+  Map<TabItem, GlobalKey<NavigatorState>> get navigatorKey {
+    return {
+      TabItem.posts: PostsView.navigatorKey,
+      TabItem.chat: ChatView.navigatorKey,
+      TabItem.profile: ProfileView.navigatorKey,
+    };
+  }
+
+  Map<TabItem, WidgetBuilder> get widgetBuilders {
+    return {
+      TabItem.posts: (_) => PostsView(),
+      TabItem.chat: (_) => ChatView(),
+      TabItem.profile: (_) => ProfileView(),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
+      viewModelBuilder: () => HomeViewModel(),
       builder: (context, model, child) => Scaffold(
         body: _CupertinoHomeScaffold(
             currentTab: model.currentTab,
             onSelectTab: model.select,
-            widgetBuilders: model.widgetBuilders,
-            navigatorKey: model.navigatorKey),
+            widgetBuilders: widgetBuilders,
+            navigatorKey: navigatorKey),
       ),
-      viewModelBuilder: () => HomeViewModel(),
     );
   }
 }
 
 class _CupertinoHomeScaffold extends StatelessWidget {
   final TabItem currentTab;
-  final ValueChanged<TabItem> onSelectTab;
+  final Function onSelectTab;
   final Map<TabItem, WidgetBuilder> widgetBuilders;
   final Map<TabItem, GlobalKey<NavigatorState>> navigatorKey;
 
@@ -48,7 +67,8 @@ class _CupertinoHomeScaffold extends StatelessWidget {
           _buildItem(TabItem.chat),
           _buildItem(TabItem.profile),
         ],
-        onTap: (index) => onSelectTab(TabItem.values[index]),
+        onTap: (index) =>
+            onSelectTab(TabItem.values[index], navigatorKey[index]),
       ),
       tabBuilder: (BuildContext context, int index) {
         final item = TabItem.values[index];

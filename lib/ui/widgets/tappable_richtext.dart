@@ -21,11 +21,11 @@ class TappableRichText extends StatelessWidget {
           children: [
             TextSpan(
               text: firstString,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             TextSpan(
               text: secondString,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ],
         ),

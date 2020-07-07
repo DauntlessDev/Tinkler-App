@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'empty_content.dart';
 
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
