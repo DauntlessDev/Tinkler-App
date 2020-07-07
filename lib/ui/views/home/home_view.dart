@@ -42,7 +42,7 @@ class _CupertinoHomeScaffold extends StatelessWidget {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         currentIndex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         items: [
           _buildItem(TabItem.posts),
           _buildItem(TabItem.chat),

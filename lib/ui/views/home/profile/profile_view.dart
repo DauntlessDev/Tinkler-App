@@ -101,7 +101,7 @@ class _OptionTile extends StatelessWidget {
     return ListTile(
       leading: Icon(
         option.iconData,
-        // color: Colors.red
+        color: Theme.of(context).primaryColor,
       ),
       title: Text(option.title),
       onTap: option.onTap,

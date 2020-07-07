@@ -30,17 +30,9 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
         elevation: 0,
         title: Row(
           children: [
-            const Text(
-              'Messages',
-              style: TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            const RotatedBox(
-                quarterTurns: 1,
-                child: Icon(
-                  Icons.chevron_right,
-                  color: Colors.black,
-                )),
+            Text('Messages',
+                style: Theme.of(context).appBarTheme.textTheme.headline1),
+            const RotatedBox(quarterTurns: 1, child: Icon(Icons.chevron_right)),
           ],
         ),
         actions: <Widget>[
@@ -50,7 +42,6 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
             },
             child: const Icon(
               Icons.search,
-              color: Colors.black
             ),
           ),
         ],
@@ -106,7 +97,7 @@ class MessageTile extends StatelessWidget {
       ),
       subtitle: RichText(
         text: TextSpan(
-          style: TextStyle(fontSize: 12, color: Colors.black54),
+          style: Theme.of(context).primaryTextTheme.subtitle1,
           children: [
             TextSpan(text: chat.latestMessage),
             TextSpan(
@@ -120,7 +111,6 @@ class MessageTile extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.blue[900],
-          border: Border.all(color: Colors.black12, width: 3),
         ),
         child: Padding(
           padding: const EdgeInsets.all(2.0),

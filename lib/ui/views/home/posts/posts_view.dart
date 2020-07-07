@@ -51,49 +51,45 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
     ];
 
     return Scaffold(
-        backgroundColor: Colors.white,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30.0, top: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text('Moments',
-                    style: TextStyle(fontSize: 16, color: Colors.black)),
-                SizedBox(height: 15),
-                Container(
-                  height: 50,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: momentList,
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 30, 30, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text('Latest Posts',
-                            style:
-                                TextStyle(fontSize: 16, color: Colors.black)),
-                        SizedBox(height: 20),
-                        Expanded(
-                          flex: 1,
-                          child: ListView(
-                            children: postList,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30.0, top: 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text('Moments', style: TextStyle(fontSize: 16)),
+            SizedBox(height: 15),
+            Container(
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: momentList,
+              ),
             ),
-          ),
-        ));
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 30, 30, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('Latest Posts', style: TextStyle(fontSize: 16)),
+                    SizedBox(height: 20),
+                    Expanded(
+                      flex: 1,
+                      child: ListView(
+                        children: postList,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }
 
@@ -107,7 +103,7 @@ class MomentAvatar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.blue[900], width: 3),
+        border: Border.all(color: Theme.of(context).primaryColor, width: 3),
       ),
       child: CircleAvatar(
         radius: 25,
@@ -132,7 +128,7 @@ class PostTile extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
-        color: Colors.grey.shade100,
+        color: Theme.of(context).colorScheme.onSurface,
         child: Padding(
           padding: const EdgeInsets.all(25.0),
           child: Column(
@@ -230,10 +226,12 @@ class PostTile extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Icon(MdiIcons.heart, color: Colors.blue[900], size: 18),
+                        Icon(MdiIcons.heart,
+                            color: Theme.of(context).iconTheme.color, size: 18),
                         Text(' 25 Likes',
                             style: TextStyle(
-                                color: Colors.blue[900], fontSize: 10)),
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 10)),
                       ],
                     ),
                   ),
@@ -243,9 +241,13 @@ class PostTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Icon(MdiIcons.chatOutline,
-                            color: Colors.grey, size: 18),
+                            color: Theme.of(context).colorScheme.onSecondary,
+                            size: 18),
                         Text('13 Comments',
-                            style: TextStyle(color: Colors.grey, fontSize: 10)),
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
+                                fontSize: 10)),
                       ],
                     ),
                   ),
