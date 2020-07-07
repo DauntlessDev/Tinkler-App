@@ -3,7 +3,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
-import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/database_service.dart';
 import 'package:tinkler/services/user_service.dart';

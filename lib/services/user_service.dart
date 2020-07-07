@@ -8,7 +8,7 @@ class UserService extends ChangeNotifier {
 
   void updateUserUid(String uid) {
     _uid = uid;
-    print('current user id : ${_uid}');
+    print('current user id : $_uid');
 
     notifyListeners();
   }
