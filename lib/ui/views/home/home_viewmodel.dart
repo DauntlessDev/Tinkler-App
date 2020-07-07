@@ -1,20 +1,15 @@
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/user_service.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _user = locator<UserService>();
   final _auth = locator<AuthenticationService>();
-  void initialize() {
-    _auth.onAuthStateChanged.listen((user) {
-      if (user != null) {
-        _user.updateUserUid(user.uid);
-      } else {
-        _user.updateUserUid('');
-      }
-      notifyListeners();
-    });
+  Future<void> initialize() async {
+    User user = await _auth.currentUser();
+    _user.updateUserUid(user.uid);
   }
 
   TabItem _currentTab = TabItem.chat;

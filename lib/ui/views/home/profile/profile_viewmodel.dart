@@ -1,7 +1,9 @@
+import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/database_service.dart';
 import 'package:tinkler/services/user_service.dart';
@@ -44,7 +46,7 @@ import 'package:tinkler/services/user_service.dart';
 class ProfileViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   // final _database = locator<DatabaseService>();
-  // final _user = locator<UserService>();
+  final _user = locator<UserService>();
   final _dialog = locator<DialogService>();
 
   Future<void> signOut() async {
@@ -56,8 +58,12 @@ class ProfileViewModel extends BaseViewModel {
         cancelTitle: 'Cancel',
       );
 
-      if (decision.confirmed) await _auth.signOut();
-    } catch (e) {
+      if (decision.confirmed) {
+        await _auth.signOut();
+        User user = await _auth.currentUser();
+        _user.updateUserUid('');
+      }
+    } on PlatformException catch (e) {
       _dialog.showDialog(
         title: 'Sign-up Failed',
         description: e.message,

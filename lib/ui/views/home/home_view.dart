@@ -10,32 +10,17 @@ import 'chat/chat_view.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatelessWidget {
-  Map<TabItem, GlobalKey<NavigatorState>> get navigatorKey {
-    return {
-      TabItem.posts: PostsView.navigatorKey,
-      TabItem.chat: ChatView.navigatorKey,
-      TabItem.profile: ProfileView.navigatorKey,
-    };
-  }
-
-  Map<TabItem, WidgetBuilder> get widgetBuilders {
-    return {
-      TabItem.posts: (_) => PostsView(),
-      TabItem.chat: (_) => ChatView(),
-      TabItem.profile: (_) => ProfileView(),
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) => model.initialize(),
       builder: (context, model, child) => Scaffold(
         body: _CupertinoHomeScaffold(
             currentTab: model.currentTab,
             onSelectTab: model.select,
-            widgetBuilders: widgetBuilders,
-            navigatorKey: navigatorKey),
+            widgetBuilders: _TabItemData.widgetBuilders,
+            navigatorKey: _TabItemData.navigatorKey),
       ),
     );
   }
@@ -110,4 +95,20 @@ class _TabItemData {
       icon: MdiIcons.accountOutline,
     ),
   };
+
+  static Map<TabItem, GlobalKey<NavigatorState>> get navigatorKey {
+    return {
+      TabItem.posts: PostsView.navigatorKey,
+      TabItem.chat: ChatView.navigatorKey,
+      TabItem.profile: ProfileView.navigatorKey,
+    };
+  }
+
+  static Map<TabItem, WidgetBuilder> get widgetBuilders {
+    return {
+      TabItem.posts: (_) => PostsView(),
+      TabItem.chat: (_) => ChatView(),
+      TabItem.profile: (_) => ProfileView(),
+    };
+  }
 }
