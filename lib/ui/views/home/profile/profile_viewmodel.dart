@@ -13,7 +13,19 @@ class ProfileViewModel extends StreamViewModel<Profile> {
   final _user = locator<UserService>();
   final _dialog = locator<DialogService>();
 
-  Profile get profile => data;
+  Profile get profile {
+    if (data == null) {
+      return Profile(
+          photoUrl: '', displayName: '', email: '', isDarkMode: false);
+    } else {
+      return Profile(
+          photoUrl: data.displayName,
+          displayName: data.displayName ?? '',
+          email: data.email ?? '',
+          isDarkMode: data.isDarkMode);
+    }
+  }
+
   Stream<Profile> profileStream() => _database.profileStream();
 
   Future<void> signOut() async {

@@ -1,6 +1,7 @@
 //view class
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
@@ -11,9 +12,10 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<ProfileViewModel>.nonReactive(
+    return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
-      builder: (context, model, child) => const _MainContent(),
+      builder: (context, model, child) => ModalProgressHUD(
+          inAsyncCall: model.profile == null, child: _MainContent()),
     );
   }
 }
@@ -21,7 +23,7 @@ class ProfileView extends StatelessWidget {
 class _MainContent extends ViewModelWidget<ProfileViewModel> {
   const _MainContent({
     Key key,
-  }) : super(key: key, reactive: false);
+  }) : super(key: key, reactive: true);
 
   @override
   Widget build(BuildContext context, ProfileViewModel model) {
@@ -49,7 +51,7 @@ class _MainContent extends ViewModelWidget<ProfileViewModel> {
 class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
   const _BottomAppBarProfile({
     Key key,
-  }) : super(key: key, reactive: false);
+  }) : super(key: key, reactive: true);
 
   @override
   Widget build(BuildContext context, ProfileViewModel model) {
@@ -61,7 +63,7 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
             Avatar(photoUrl: 'assets/images/profile_1.jpg', radius: 60),
             const SizedBox(height: 15),
             Text(
-              model.profile.displayName,
+              model.profile.displayName ?? '',
               style: Theme.of(context).textTheme.bodyText2,
             ),
             const SizedBox(height: 5),
