@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/theme/app_theme_service.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'profile_viewmodel.dart';
@@ -82,6 +83,7 @@ class Option {
   final IconData iconData;
   final String subTitle;
   final String category;
+  final bool isSwitch;
   final Function onTap;
 
   Option(
@@ -89,6 +91,7 @@ class Option {
       @required this.iconData,
       this.subTitle,
       this.category,
+      this.isSwitch = false,
       @required this.onTap});
 }
 
@@ -98,14 +101,24 @@ class _OptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(
-        option.iconData,
-        color: Theme.of(context).primaryColor,
-      ),
-      title: Text(option.title),
-      onTap: option.onTap,
-    );
+    return option.isSwitch
+        ? SwitchListTile(
+            secondary: Icon(
+              option.iconData,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text(option.title),
+            onChanged: option.onTap,
+            value: AppThemeService.isDarkModeOn,
+          )
+        : ListTile(
+            leading: Icon(
+              option.iconData,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text(option.title),
+            onTap: option.onTap,
+          );
   }
 }
 
@@ -117,6 +130,11 @@ class _OptionListBuilder extends ViewModelWidget<ProfileViewModel> {
   @override
   Widget build(BuildContext context, ProfileViewModel model) {
     final List<Option> _optionList = [
+      Option(
+          title: 'Dark Mode',
+          iconData: MdiIcons.moonWaningCrescent,
+          onTap: model.toggleDarkMode,
+          isSwitch: true),
       Option(title: 'Story', iconData: MdiIcons.collage, onTap: () {}),
       Option(title: 'Notifications', iconData: MdiIcons.bell, onTap: () {}),
       Option(title: 'App Updates', iconData: Icons.file_download, onTap: () {}),
