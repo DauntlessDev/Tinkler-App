@@ -69,6 +69,7 @@ class AppTheme {
           button: TextStyle(color: Colors.black),
         ),
     primaryTextTheme: TextTheme(
+      //used for email textstyle in profile
       subtitle1: TextStyle(fontSize: 12, color: Colors.black54),
     ),
     dialogTheme: DialogTheme(
@@ -107,7 +108,7 @@ class AppTheme {
     ),
     primaryIconTheme: IconThemeData(color: primary),
     iconTheme: IconThemeData(color: primary),
-    colorScheme: ColorScheme.light(
+    colorScheme: ColorScheme.dark(
       //used in buttons
       primary: primary,
       secondary: secondary,
@@ -118,7 +119,7 @@ class AppTheme {
 
       background: Colors.grey.shade300,
       //used for posts
-      onSurface: Colors.grey[700],
+      onSurface: Colors.grey[850],
       onBackground: Colors.grey[600],
     ),
     textTheme: ThemeData.dark().textTheme.copyWith(
@@ -143,8 +144,11 @@ class AppTheme {
           button: TextStyle(color: Colors.white),
         ),
     primaryTextTheme: TextTheme(
+      //used for email textstyle in profile
       subtitle1: TextStyle(fontSize: 12, color: Colors.white54),
     ),
+    // for inputtextfield icon theme
+    accentIconTheme: IconThemeData(color: Colors.grey),
     dialogTheme: DialogTheme(
       backgroundColor: Colors.grey[400],
       titleTextStyle: TextStyle(color: Colors.black),

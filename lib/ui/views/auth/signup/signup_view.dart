@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/ui/widgets/auth_textforfield.dart';
 import 'package:tinkler/ui/widgets/rounded_button.dart';
 import 'package:tinkler/ui/widgets/tappable_richtext.dart';
 import 'package:tinkler/ui/widgets/top_background.dart';
@@ -83,6 +84,7 @@ class _SignupForm extends ViewModelWidget<SignupViewModel> {
   _SignupForm({
     Key key,
   }) : super(key: key, reactive: false);
+  final FocusNode _displayFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _confirmPasswordFocusNode = FocusNode();
@@ -92,51 +94,44 @@ class _SignupForm extends ViewModelWidget<SignupViewModel> {
     return Form(
       child: Column(
         children: [
-          TextFormField(
+          AuthTextFormField(
             initialValue: model.displayName,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(
-              hintText: 'Enter full name',
-              icon: Icon(MdiIcons.accountBox),
-            ),
-            onEditingComplete: _emailFocusNode.requestFocus,
+            hintString: 'Enter full name',
             onChanged: model.setDisplayName,
-          ),
-          TextFormField(
-            initialValue: model.email,
-            keyboardType: TextInputType.emailAddress,
+            focusNode: _displayFocusNode,
+            onEditingComplete: _emailFocusNode.requestFocus,
             textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(
-              hintText: 'Enter email',
-              icon: Icon(Icons.person),
-            ),
+            iconData: MdiIcons.accountBox,
+          ),
+          AuthTextFormField(
+            initialValue: model.email,
+            hintString: 'Enter email',
+            keyBoardType: TextInputType.emailAddress,
+            onChanged: model.setEmail,
             focusNode: _emailFocusNode,
             onEditingComplete: _passwordFocusNode.requestFocus,
-            onChanged: model.setEmail,
+            textInputAction: TextInputAction.next,
+            iconData: Icons.person,
           ),
-          TextFormField(
-              initialValue: model.password,
-              textInputAction: TextInputAction.next,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Enter password',
-                icon: Icon(Icons.lock),
-              ),
-              onEditingComplete: _confirmPasswordFocusNode.requestFocus,
-              focusNode: _passwordFocusNode,
-              onChanged: model.setPassword),
-          TextFormField(
-            initialValue: model.confirmPassword,
-            textInputAction: TextInputAction.done,
+          AuthTextFormField(
+            initialValue: model.password,
+            hintString: 'Enter password',
+            onChanged: model.setPassword,
+            focusNode: _passwordFocusNode,
+            onEditingComplete: _confirmPasswordFocusNode.requestFocus,
+            textInputAction: TextInputAction.next,
+            iconData: Icons.lock,
             obscureText: true,
-            decoration: const InputDecoration(
-              hintText: 'Confirm password',
-              icon: Icon(Icons.phone_locked),
-            ),
-            onEditingComplete: model.signUpWithEmail,
-            focusNode: _confirmPasswordFocusNode,
+          ),
+          AuthTextFormField(
+            initialValue: model.confirmPassword,
+            hintString: 'Confirm password',
             onChanged: model.setConfirmPassword,
+            focusNode: _confirmPasswordFocusNode,
+            onEditingComplete: model.signUpWithEmail,
+            textInputAction: TextInputAction.done,
+            iconData: Icons.phone_locked,
+            obscureText: true,
           ),
         ],
       ),

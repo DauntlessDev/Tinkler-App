@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/ui/widgets/auth_textforfield.dart';
 import 'package:tinkler/ui/widgets/rounded_button.dart';
 import 'package:tinkler/ui/widgets/tappable_richtext.dart';
 import 'package:tinkler/ui/widgets/top_background.dart';
@@ -87,40 +88,37 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
 }
 
 class _LoginForm extends ViewModelWidget<LoginViewModel> {
-  const _LoginForm({
+  _LoginForm({
     Key key,
     @required this.passwordFocusNode,
   }) : super(key: key);
   final FocusNode passwordFocusNode;
+  final FocusNode emailFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context, LoginViewModel model) {
     return Form(
       child: Column(
         children: [
-          TextFormField(
-            autofocus: true,
+          AuthTextFormField(
             initialValue: model.email,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(
-              hintText: 'Enter email',
-              icon: Icon(Icons.person),
-            ),
+            hintString: 'Enter email',
+            keyBoardType: TextInputType.emailAddress,
             onChanged: model.setEmail,
+            focusNode: emailFocusNode,
             onEditingComplete: passwordFocusNode.requestFocus,
+            textInputAction: TextInputAction.next,
+            iconData: Icons.person,
           ),
-          TextFormField(
+          AuthTextFormField(
             initialValue: model.password,
-            textInputAction: TextInputAction.done,
-            obscureText: true,
-            decoration: const InputDecoration(
-              hintText: 'Enter password',
-              icon: Icon(Icons.lock),
-            ),
-            focusNode: passwordFocusNode,
+            hintString: 'Enter password',
             onChanged: model.setPassword,
+            focusNode: passwordFocusNode,
             onEditingComplete: model.signInWithEmail,
+            textInputAction: TextInputAction.next,
+            iconData: Icons.lock,
+            obscureText: true,
           ),
         ],
       ),
