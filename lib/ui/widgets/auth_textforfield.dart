@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AuthTextFormField extends StatelessWidget {
-  AuthTextFormField({
+  const AuthTextFormField({
     Key key,
     this.focusNode,
     this.keyBoardType = TextInputType.text,

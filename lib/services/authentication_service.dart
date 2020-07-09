@@ -14,6 +14,8 @@ class AuthenticationService {
     return User(
       uid: user.uid,
       email: user.email,
+      displayName: user.displayName,
+      photoUrl: user.photoUrl,
     );
   }
 
@@ -25,6 +27,16 @@ class AuthenticationService {
   Future<User> currentUser() async {
     final user = await _firebaseAuth.currentUser();
     return _userFromFirebase(user);
+  }
+
+  Future updateUserInfo(
+      {@required String displayName, @required String photoUrl}) async {
+    final user = await _firebaseAuth.currentUser();
+    UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+    userUpdateInfo.displayName = displayName;
+    userUpdateInfo.photoUrl = photoUrl;
+
+    user.updateProfile(userUpdateInfo);
   }
 
   Future<User> signInWithEmailAndPassword(

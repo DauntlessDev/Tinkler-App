@@ -3,15 +3,15 @@ import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/chat.dart';
-import 'package:tinkler/model/profile.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 
 class ChatViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   final _dialog = locator<DialogService>();
 
-  Profile _user;
-  Profile get user => _user;
+  User _user;
+  User get user => _user;
   String get userPhotoUrl {
     try {
       return _user.photoUrl;
@@ -60,5 +60,4 @@ class ChatViewModel extends BaseViewModel {
   ];
 
   List<dynamic> get list => _chatList;
-
 }

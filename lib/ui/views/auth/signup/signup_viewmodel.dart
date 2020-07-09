@@ -2,15 +2,12 @@ import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
-import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
-import 'package:tinkler/services/database_service.dart';
 import 'package:tinkler/services/user_service.dart';
 
 class SignupViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
-  final _database = locator<DatabaseService>();
   final _dialog = locator<DialogService>();
   final _navigation = locator<NavigationService>();
   final _user = locator<UserService>();
@@ -65,12 +62,9 @@ class SignupViewModel extends BaseViewModel {
             email: _email, password: _password);
         _user.updateUserUid(user.uid);
 
-        await _database.addProfile(
-          Profile(
-            email: _email,
-            displayName: _displayName,
-            photoUrl: '',
-          ),
+        await _auth.updateUserInfo(
+          displayName: _displayName,
+          photoUrl: 'none',
         );
         clearInputs();
         setBusy(false);

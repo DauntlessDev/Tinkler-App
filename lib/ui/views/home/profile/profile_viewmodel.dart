@@ -1,28 +1,31 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
-import 'package:tinkler/model/profile.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/database_service.dart';
 import 'package:tinkler/services/user_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 
-class ProfileViewModel extends StreamViewModel<Profile> {
+class ProfileViewModel extends FutureViewModel<User> {
   final _auth = locator<AuthenticationService>();
   final _database = locator<DatabaseService>();
   final _user = locator<UserService>();
   final _dialog = locator<DialogService>();
   final _theme = locator<AppThemeService>();
 
-  Profile get profile {
+  User get profile {
+    print(data.toString());
     if (data == null) {
-      return Profile(photoUrl: '', displayName: '', email: '');
+      return User(photoUrl: '', displayName: '', email: '');
     } else {
-      return Profile(
+      return User(  
           photoUrl: data.displayName,
-          displayName: data.displayName ?? '',
-          email: data.email ?? '');
+          displayName: data.displayName,
+          email: data.email);
     }
   }
 
@@ -31,7 +34,11 @@ class ProfileViewModel extends StreamViewModel<Profile> {
     notifyListeners();
   }
 
-  Stream<Profile> profileStream() => _database.profileStream();
+  Future<void> changeProfile() async {
+    File _image = await _database.getImage();
+    _database.uploadProfilePic(image: _image, onComplete: null);
+    notifyListeners();
+  }
 
   Future<void> signOut() async {
     print('profile stream: ${profile.toString()}');
@@ -56,5 +63,5 @@ class ProfileViewModel extends StreamViewModel<Profile> {
   }
 
   @override
-  Stream<Profile> get stream => profileStream();
+  Future<User> futureToRun() => _auth.currentUser();
 }

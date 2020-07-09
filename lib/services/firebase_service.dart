@@ -68,13 +68,13 @@ class FirebaseService {
     return snapshots.map((snapshot) => builder(snapshot.data));
   }
 
-  Future getImage(File image) async {
+  Future<File> getImage() async {
     ImagePicker _imagePicker = ImagePicker();
     PickedFile pickImage =
         await _imagePicker.getImage(source: ImageSource.gallery);
 
-    image = pickImage as File;
     print('Image Path $pickImage');
+    return pickImage as File;
   }
 
   Future uploadPic(
@@ -84,6 +84,6 @@ class FirebaseService {
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(path);
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(image);
-    uploadTask.onComplete.then((value) => null);
+    uploadTask.onComplete.then((value) => onComplete(value));
   }
 }
