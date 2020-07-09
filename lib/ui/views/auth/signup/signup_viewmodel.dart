@@ -70,7 +70,6 @@ class SignupViewModel extends BaseViewModel {
             email: _email,
             displayName: _displayName,
             photoUrl: '',
-            isDarkMode: false,
           ),
         );
         clearInputs();

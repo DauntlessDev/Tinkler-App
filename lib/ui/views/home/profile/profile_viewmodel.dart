@@ -17,14 +17,12 @@ class ProfileViewModel extends StreamViewModel<Profile> {
 
   Profile get profile {
     if (data == null) {
-      return Profile(
-          photoUrl: '', displayName: '', email: '', isDarkMode: false);
+      return Profile(photoUrl: '', displayName: '', email: '');
     } else {
       return Profile(
           photoUrl: data.displayName,
           displayName: data.displayName ?? '',
-          email: data.email ?? '',
-          isDarkMode: data.isDarkMode);
+          email: data.email ?? '');
     }
   }
 

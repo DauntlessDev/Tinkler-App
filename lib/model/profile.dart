@@ -5,25 +5,21 @@ import 'package:flutter/foundation.dart';
 class Profile {
   Profile({
     @required this.email,
-    @required this.isDarkMode,
     @required this.displayName,
     this.photoUrl,
   });
 
   final String email;
-  final bool isDarkMode;
   final String displayName;
   final String photoUrl;
 
   Profile copyWith({
     String email,
-    bool isDarkMode,
     String displayName,
     String photoUrl,
   }) {
     return Profile(
       email: email ?? this.email,
-      isDarkMode: isDarkMode ?? this.isDarkMode,
       displayName: displayName ?? this.displayName,
       photoUrl: photoUrl ?? this.photoUrl,
     );
@@ -32,7 +28,6 @@ class Profile {
   Map<String, dynamic> toMap() {
     return {
       'email': email,
-      'isDarkMode': isDarkMode,
       'displayName': displayName,
       'photoUrl': photoUrl,
     };
@@ -43,7 +38,6 @@ class Profile {
   
     return Profile(
       email: map['email'],
-      isDarkMode: map['isDarkMode'],
       displayName: map['displayName'],
       photoUrl: map['photoUrl'],
     );
@@ -54,9 +48,7 @@ class Profile {
   static Profile fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  String toString() {
-    return 'Profile(email: $email, isDarkMode: $isDarkMode, displayName: $displayName, photoUrl: $photoUrl)';
-  }
+  String toString() => 'Profile(email: $email, displayName: $displayName, photoUrl: $photoUrl)';
 
   @override
   bool operator ==(Object o) {
@@ -64,16 +56,10 @@ class Profile {
   
     return o is Profile &&
       o.email == email &&
-      o.isDarkMode == isDarkMode &&
       o.displayName == displayName &&
       o.photoUrl == photoUrl;
   }
 
   @override
-  int get hashCode {
-    return email.hashCode ^
-      isDarkMode.hashCode ^
-      displayName.hashCode ^
-      photoUrl.hashCode;
-  }
+  int get hashCode => email.hashCode ^ displayName.hashCode ^ photoUrl.hashCode;
 }

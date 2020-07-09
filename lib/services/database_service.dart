@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
@@ -10,8 +13,6 @@ import 'firebase_service.dart';
 class DatabaseService {
   final _service = locator<FirebaseService>();
   final _user = locator<UserService>();
-
-  // DatabaseService({@required this.uid}) : assert(uid != null);
 
   Future<void> addProfile(Profile profile) async {
     String _uid = _user.uid;
@@ -28,6 +29,18 @@ class DatabaseService {
       builder: (data) => Profile.fromMap(data),
     );
   }
+
+  Future getImage(File image) async {
+    return _service.getImage(image);
+  }
+
+  Future uploadProfilePic(
+      {@required File image, @required Function onComplete}) async {
+    String _uid = _user.uid;
+    return _service.uploadPic(
+        image: image, path: APIPath.profilePic(_uid), onComplete: onComplete);
+  }
+
   // @override
   // Future<void> deleteJob(Job job) async {
   //   // delete where entry.jobId == job.jobId

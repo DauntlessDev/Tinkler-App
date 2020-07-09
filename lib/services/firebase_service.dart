@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
@@ -62,5 +66,24 @@ class FirebaseService {
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
 
     return snapshots.map((snapshot) => builder(snapshot.data));
+  }
+
+  Future getImage(File image) async {
+    ImagePicker _imagePicker = ImagePicker();
+    PickedFile pickImage =
+        await _imagePicker.getImage(source: ImageSource.gallery);
+
+    image = pickImage as File;
+    print('Image Path $pickImage');
+  }
+
+  Future uploadPic(
+      {@required File image,
+      @required String path,
+      Function onComplete}) async {
+    StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child(path);
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(image);
+    uploadTask.onComplete.then((value) => null);
   }
 }
