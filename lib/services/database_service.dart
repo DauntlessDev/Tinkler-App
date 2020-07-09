@@ -17,11 +17,11 @@ class DatabaseService {
     return await _service.getImage();
   }
 
-  Future uploadProfilePic(
-      {@required File image, @required Function onComplete}) async {
+  Future<String> uploadProfilePic(
+      {@required File image}) async {
     String _uid = _user.uid;
     return _service.uploadPic(
-        image: image, path: APIPath.profilePic(_uid), onComplete: onComplete);
+        image: image, path: APIPath.profilePic(_uid));
   }
 
   // Future<void> addProfile(Profile profile) async {

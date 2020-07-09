@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -22,8 +23,8 @@ class ProfileViewModel extends FutureViewModel<User> {
     if (data == null) {
       return User(photoUrl: '', displayName: '', email: '');
     } else {
-      return User(  
-          photoUrl: data.displayName,
+      return User(
+          photoUrl: data.photoUrl ?? '',
           displayName: data.displayName,
           email: data.email);
     }
@@ -35,9 +36,22 @@ class ProfileViewModel extends FutureViewModel<User> {
   }
 
   Future<void> changeProfile() async {
-    File _image = await _database.getImage();
-    _database.uploadProfilePic(image: _image, onComplete: null);
-    notifyListeners();
+    setBusy(true);
+    try {
+      File _image = await _database.getImage();
+      String downloadUrl = await _database.uploadProfilePic(image: _image);
+
+      print('upload complete');
+      await _auth.updateProfile(downloadUrl);
+      print('update profile complete, $downloadUrl');
+      await futureToRun();
+
+      print('reruncomplete');
+      notifyListeners();
+    } on PlatformException catch (e) {
+      _dialog.showDialog(title: 'Profile', description: e.message);
+    } catch (e) {}
+    setBusy(false);
   }
 
   Future<void> signOut() async {

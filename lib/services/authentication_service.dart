@@ -39,6 +39,17 @@ class AuthenticationService {
     user.updateProfile(userUpdateInfo);
   }
 
+  Future updateProfile(String photoUrl) async {
+    final user = await _firebaseAuth.currentUser();
+    UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+    userUpdateInfo.photoUrl = photoUrl;
+
+    await user.updateProfile(userUpdateInfo);
+    await user.reload();
+
+    print('reloaded ${user.photoUrl}');
+  }
+
   Future<User> signInWithEmailAndPassword(
       {@required email, @required password}) async {
     final authResult = await _firebaseAuth.signInWithEmailAndPassword(

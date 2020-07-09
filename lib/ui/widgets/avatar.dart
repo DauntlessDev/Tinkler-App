@@ -11,20 +11,16 @@ class Avatar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
+        color: Colors.grey[800],
         border: Border.all(color: Colors.black12, width: 1),
       ),
       child: CircleAvatar(
         radius: radius,
         backgroundColor: Colors.black12,
-        //TODO: to be removed for ui designing only
-        child: ClipOval(
-          child: Image(
-            image: AssetImage('assets/images/profile_1.jpg'),
-            fit: BoxFit.contain,
-          ),
-        ),
-        // backgroundImage: photoUrl.isNotEmpty ? NetworkImage(photoUrl) : null,
-        // child: photoUrl.isEmpty ? Icon(Icons.person, size: radius) : null,
+        backgroundImage: photoUrl.isNotEmpty ? NetworkImage(photoUrl) : null,
+        child: photoUrl.isEmpty
+            ? Icon(Icons.person, color: Colors.grey, size: radius)
+            : null,
       ),
     );
   }

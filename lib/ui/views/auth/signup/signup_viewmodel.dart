@@ -64,7 +64,7 @@ class SignupViewModel extends BaseViewModel {
 
         await _auth.updateUserInfo(
           displayName: _displayName,
-          photoUrl: 'none',
+          photoUrl: '',
         );
         clearInputs();
         setBusy(false);

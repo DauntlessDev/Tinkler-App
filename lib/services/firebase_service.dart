@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart';
 
 @lazySingleton
 class FirebaseService {
@@ -74,16 +75,21 @@ class FirebaseService {
         await _imagePicker.getImage(source: ImageSource.gallery);
 
     print('Image Path $pickImage');
-    return pickImage as File;
+    File image = File(pickImage.path);
+    return image;
   }
 
-  Future uploadPic(
-      {@required File image,
-      @required String path,
-      Function onComplete}) async {
+  Future<String> uploadPic({
+    @required File image,
+    @required String path,
+  }) async {
+    String fileName = basename(image.path);
     StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(path);
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(image);
-    uploadTask.onComplete.then((value) => onComplete(value));
+        FirebaseStorage.instance.ref().child(fileName);
+    firebaseStorageRef.putFile(image);
+    // StorageReference firebaseStorageRef = await
+    //     FirebaseStorage.instance.ref().child(path);
+    // firebaseStorageRef.putFile(image);
+    return await FirebaseStorage.instance.ref().child(path).getDownloadURL();
   }
 }

@@ -16,7 +16,7 @@ class ProfileView extends StatelessWidget {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.profile == null, child: _MainContent()),
+          inAsyncCall: model.profile == null || model.isBusy, child: _MainContent()),
     );
   }
 }
@@ -61,7 +61,20 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
       child: Center(
         child: Column(
           children: <Widget>[
-            Avatar(photoUrl: 'assets/images/profile_1.jpg', radius: 60),
+            Stack(children: [
+              Avatar(photoUrl: model.profile.photoUrl, radius: 60),
+              Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: model.changeProfile,
+                    child: Icon(
+                      MdiIcons.camera,
+                      size: 35,
+                      color: AppThemeService.isDarkModeOn? Colors.white : Colors.grey
+                    ),
+                  ))
+            ]),
             const SizedBox(height: 15),
             Text(
               model.profile.displayName ?? '',
