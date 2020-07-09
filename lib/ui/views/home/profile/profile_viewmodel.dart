@@ -44,7 +44,8 @@ class ProfileViewModel extends FutureViewModel<User> {
       print('upload complete');
       await _auth.updateProfile(downloadUrl);
       print('update profile complete, $downloadUrl');
-      await futureToRun();
+
+      await initialise();
 
       print('reruncomplete');
       notifyListeners();
@@ -77,5 +78,8 @@ class ProfileViewModel extends FutureViewModel<User> {
   }
 
   @override
-  Future<User> futureToRun() => _auth.currentUser();
+  Future<User> futureToRun() {
+    print('run future to run');
+    return _auth.currentUser();
+  }
 }

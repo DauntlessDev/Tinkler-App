@@ -83,13 +83,14 @@ class FirebaseService {
     @required File image,
     @required String path,
   }) async {
-    String fileName = basename(image.path);
     StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
-    firebaseStorageRef.putFile(image);
-    // StorageReference firebaseStorageRef = await
-    //     FirebaseStorage.instance.ref().child(path);
-    // firebaseStorageRef.putFile(image);
-    return await FirebaseStorage.instance.ref().child(path).getDownloadURL();
+        FirebaseStorage.instance.ref().child('$path.jpg');
+    StorageUploadTask task = firebaseStorageRef.putFile(image);
+
+    await task.onComplete.then((value) => null);
+    return await FirebaseStorage.instance
+        .ref()
+        .child('$path.jpg')
+        .getDownloadURL();
   }
 }
