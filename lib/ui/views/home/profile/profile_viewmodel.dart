@@ -1,29 +1,27 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
-import 'package:tinkler/model/user.dart';
+import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/database_service.dart';
 import 'package:tinkler/services/user_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 
-class ProfileViewModel extends FutureViewModel<User> {
+class ProfileViewModel extends StreamViewModel<Profile> {
   final _auth = locator<AuthenticationService>();
   final _database = locator<DatabaseService>();
   final _user = locator<UserService>();
   final _dialog = locator<DialogService>();
   final _theme = locator<AppThemeService>();
 
-  User get profile {
-    print(data.toString());
+  Profile get profile {
     if (data == null) {
-      return User(photoUrl: '', displayName: '', email: '');
+      return Profile(photoUrl: '', displayName: '', email: '');
     } else {
-      return User(
+      return Profile(
           photoUrl: data.photoUrl ?? '',
           displayName: data.displayName,
           email: data.email);
@@ -41,13 +39,7 @@ class ProfileViewModel extends FutureViewModel<User> {
       File _image = await _database.getImage();
       String downloadUrl = await _database.uploadProfilePic(image: _image);
 
-      print('upload complete');
-      await _auth.updateProfile(downloadUrl);
-      print('update profile complete, $downloadUrl');
-
-      await initialise();
-
-      print('reruncomplete');
+      await _database.addProfile(profile.copyWith(photoUrl: downloadUrl));
       notifyListeners();
     } on PlatformException catch (e) {
       _dialog.showDialog(title: 'Profile', description: e.message);
@@ -56,7 +48,6 @@ class ProfileViewModel extends FutureViewModel<User> {
   }
 
   Future<void> signOut() async {
-    print('profile stream: ${profile.toString()}');
     try {
       DialogResponse decision = await _dialog.showConfirmationDialog(
         title: 'Log-out',
@@ -77,9 +68,8 @@ class ProfileViewModel extends FutureViewModel<User> {
     }
   }
 
+  Stream<Profile> profileStream() => _database.profileStream();
+
   @override
-  Future<User> futureToRun() {
-    print('run future to run');
-    return _auth.currentUser();
-  }
+  Stream<Profile> get stream => profileStream();
 }

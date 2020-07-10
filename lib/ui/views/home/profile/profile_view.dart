@@ -16,7 +16,8 @@ class ProfileView extends StatelessWidget {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.profile == null || model.isBusy, child: _MainContent()),
+          inAsyncCall: model.profile == null || model.isBusy,
+          child: _MainContent()),
     );
   }
 }
@@ -68,11 +69,11 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
                   right: 0,
                   child: GestureDetector(
                     onTap: model.changeProfile,
-                    child: Icon(
-                      MdiIcons.camera,
-                      size: 35,
-                      color: AppThemeService.isDarkModeOn? Colors.white : Colors.grey
-                    ),
+                    child: Icon(MdiIcons.camera,
+                        size: 25,
+                        color: AppThemeService.isDarkModeOn
+                            ? Colors.white
+                            : Colors.black),
                   ))
             ]),
             const SizedBox(height: 15),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/user_service.dart';
 
 import 'api_path.dart';
@@ -24,21 +25,21 @@ class DatabaseService {
         image: image, path: APIPath.profilePic(_uid));
   }
 
-  // Future<void> addProfile(Profile profile) async {
-  //   String _uid = _user.uid;
-  //   await _service.setData(
-  //     path: APIPath.profile(_uid),
-  //     data: profile.toMap(),
-  //   );
-  // }
+  Future<void> addProfile(Profile profile) async {
+    String _uid = _user.uid;
+    await _service.setData(
+      path: APIPath.profile(_uid),
+      data: profile.toMap(),
+    );
+  }
 
-  // Stream<Profile> profileStream() {
-  //   String _uid = _user.uid;
-  //   return _service.userStream(
-  //     path: APIPath.profile(_uid),
-  //     builder: (data) => Profile.fromMap(data),
-  //   );
-  // }
+  Stream<Profile> profileStream() {
+    String _uid = _user.uid;
+    return _service.userStream(
+      path: APIPath.profile(_uid),
+      builder: (data) => Profile.fromMap(data),
+    );
+  }
 
   // @override
   // Future<void> deleteJob(Job job) async {

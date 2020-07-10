@@ -11,12 +11,7 @@ class AuthenticationService {
     if (user == null) {
       return null;
     }
-    return User(
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoUrl: user.photoUrl,
-    );
+    return User(uid: user.uid);
   }
 
   Stream<User> get onAuthStateChanged {
@@ -27,27 +22,6 @@ class AuthenticationService {
   Future<User> currentUser() async {
     final user = await _firebaseAuth.currentUser();
     return _userFromFirebase(user);
-  }
-
-  Future updateUserInfo(
-      {@required String displayName, @required String photoUrl}) async {
-    final user = await _firebaseAuth.currentUser();
-    UserUpdateInfo userUpdateInfo = UserUpdateInfo();
-    userUpdateInfo.displayName = displayName;
-    userUpdateInfo.photoUrl = photoUrl;
-
-    user.updateProfile(userUpdateInfo);
-  }
-
-  Future updateProfile(String photoUrl) async {
-    final user = await _firebaseAuth.currentUser();
-    UserUpdateInfo userUpdateInfo = UserUpdateInfo();
-    userUpdateInfo.photoUrl = photoUrl;
-
-    await user.updateProfile(userUpdateInfo);
-    await user.reload();
-
-    print('reloaded ${user.photoUrl}');
   }
 
   Future<User> signInWithEmailAndPassword(
