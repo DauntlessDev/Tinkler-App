@@ -2,6 +2,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/app/router.gr.dart';
 import 'package:tinkler/model/chat.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/authentication_service.dart';
@@ -9,6 +10,7 @@ import 'package:tinkler/services/authentication_service.dart';
 class ChatViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   final _dialog = locator<DialogService>();
+  final _navigation = locator<NavigationService>();
 
   Profile _user;
   Profile get user => _user;
@@ -18,6 +20,10 @@ class ChatViewModel extends BaseViewModel {
     } catch (e) {
       return '';
     }
+  }
+
+  void navigateToSearch() {
+    _navigation.navigateTo(Routes.searchViewRoute);
   }
 
   Future<void> signOut() async {

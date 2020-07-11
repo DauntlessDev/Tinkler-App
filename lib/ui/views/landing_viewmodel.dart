@@ -1,6 +1,5 @@
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
-import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 

@@ -5,7 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart';
 
 @lazySingleton
 class FirebaseService {
@@ -46,6 +45,55 @@ class FirebaseService {
     });
   }
 
+  Stream<List<T>> collectionStreamNoID<T>({
+    @required String path,
+    @required T builder(Map<String, dynamic> data),
+    Query queryBuilder(Query query),
+    int sort(T lhs, T rhs),
+  }) {
+    Query query = Firestore.instance.collection(path);
+    if (queryBuilder != null) {
+      query = queryBuilder(query);
+    }
+    final Stream<QuerySnapshot> snapshots = query.snapshots();
+    return snapshots.map((snapshot) {
+      final result = snapshot.documents
+          .map((snapshot) => builder(snapshot.data))
+          .where((value) => value != null)
+          .toList();
+
+      if (sort != null) {
+        result.sort(sort);
+      }
+      return result;
+    });
+  }
+
+  
+  Future<List<T>> collectionFuture<T>({
+    @required String path,
+    @required T builder(Map<String, dynamic> data),
+    Query queryBuilder(Query query),
+    int sort(T lhs, T rhs),
+  }) {
+    Query query = Firestore.instance.collection(path);
+    if (queryBuilder != null) {
+      query = queryBuilder(query);
+    }
+    final Future<QuerySnapshot> snapshots = query.getDocuments();
+    return snapshots.then((snapshot) {
+      final result = snapshot.documents
+          .map((snapshot) => builder(snapshot.data))
+          .where((value) => value != null)
+          .toList();
+
+      if (sort != null) {
+        result.sort(sort);
+      }
+      return result;
+    });
+  }
+
   Stream<T> documentStream<T>({
     @required String path,
     @required T builder(Map<String, dynamic> data, String documentID),
@@ -57,7 +105,7 @@ class FirebaseService {
         .map((snapshot) => builder(snapshot.data, snapshot.documentID));
   }
 
-  Stream<T> userStream<T>({
+  Stream<T> documentStreamNoID<T>({
     @required String path,
     @required T builder(Map<String, dynamic> data),
   }) {
@@ -65,6 +113,16 @@ class FirebaseService {
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
 
     return snapshots.map((snapshot) => builder(snapshot.data));
+  }
+
+  Future<T> documentFuture<T>({
+    @required String path,
+    @required T builder(Map<String, dynamic> data),
+  }) {
+    final DocumentReference reference = Firestore.instance.document(path);
+    final Future<DocumentSnapshot> snapshot = reference.get();
+
+    return snapshot.then((snapshot) => builder(snapshot.data));
   }
 
   Future<File> getImage() async {

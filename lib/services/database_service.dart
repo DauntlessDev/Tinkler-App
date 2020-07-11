@@ -18,11 +18,9 @@ class DatabaseService {
     return await _service.getImage();
   }
 
-  Future<String> uploadProfilePic(
-      {@required File image}) async {
+  Future<String> uploadProfilePic({@required File image}) async {
     String _uid = _user.uid;
-    return _service.uploadPic(
-        image: image, path: APIPath.profilePic(_uid));
+    return _service.uploadPic(image: image, path: APIPath.profilePic(_uid));
   }
 
   Future<void> addProfile(Profile profile) async {
@@ -35,10 +33,24 @@ class DatabaseService {
 
   Stream<Profile> profileStream() {
     String _uid = _user.uid;
-    return _service.userStream(
+    return _service.documentStreamNoID(
       path: APIPath.profile(_uid),
       builder: (data) => Profile.fromMap(data),
     );
+  }
+
+  Future<List<Profile>> usersFuture({String displayName}) {
+    // String _uid = _user.uid;
+    return _service.collectionFuture<Profile>(
+        path: APIPath.users(), builder: (data) => Profile.fromMap(data));
+  }
+
+
+
+  Stream<List<Profile>> usersStream({String displayName}) {
+    // String _uid = _user.uid;
+    return _service.collectionStreamNoID<Profile>(
+        path: APIPath.users(), builder: (data) => Profile.fromMap(data));
   }
 
   // @override

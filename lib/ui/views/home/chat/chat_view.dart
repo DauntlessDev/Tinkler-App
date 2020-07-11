@@ -37,16 +37,15 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
         ),
         actions: <Widget>[
           FlatButton(
-            onPressed: () {
-              //TODO: Add search
-            },
+            onPressed: model.navigateToSearch,
             child: const Icon(
               Icons.search,
             ),
           ),
         ],
       ),
-      body: MessageList(),
+      body: Container(),
+      // body: MessageList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(Icons.message),
@@ -62,12 +61,12 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
 
   @override
   Widget build(BuildContext context, ChatViewModel model) {
-    return ListItemBuilder<Chat>(
-      model: model,
-      itemBuilder: (context, chat) => MessageTile(chat: chat),
-      divider: Divider(),
-      items: model.list,
-    );
+  //   return ListItemBuilder<Chat>(
+  //     model: model,
+  //     itemBuilder: (context, chat) => MessageTile(chat: chat),
+  //     divider: Divider(),
+  //     items: model.list,
+  //   );
   }
 }
 
