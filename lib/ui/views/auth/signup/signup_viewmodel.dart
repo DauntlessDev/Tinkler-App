@@ -63,7 +63,7 @@ class SignupViewModel extends BaseViewModel {
 
         User user = await _auth.createWithEmailAndPassword(
             email: _email, password: _password);
-        _user.updateUserUid(user.uid);
+        _user.updateCurrentUserInfo(user);
 
         await _database.addProfile(
           Profile(

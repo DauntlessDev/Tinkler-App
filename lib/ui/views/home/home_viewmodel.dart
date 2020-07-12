@@ -9,7 +9,7 @@ class HomeViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   Future<void> initialize() async {
     User user = await _auth.currentUser();
-    _user.updateUserUid(user.uid);
+    _user.updateCurrentUserInfo(user);
   }
 
   TabItem _currentTab = TabItem.chat;
