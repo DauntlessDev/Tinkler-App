@@ -37,6 +37,7 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
         ),
         actions: <Widget>[
           FlatButton(
+            // padding: EdgeInsets.only(left: 10),
             onPressed: model.navigateToSearch,
             child: const Icon(
               Icons.search,

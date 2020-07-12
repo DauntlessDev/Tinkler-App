@@ -39,8 +39,7 @@ class DatabaseService {
     );
   }
 
-  Future<List<Profile>> usersFuture({String displayName}) {
-    // String _uid = _user.uid;
+  Future<List<Profile>> usersFuture() {
     return _service.collectionFuture<Profile>(
         path: APIPath.users(), builder: (data) => Profile.fromMap(data));
   }
@@ -48,7 +47,6 @@ class DatabaseService {
 
 
   Stream<List<Profile>> usersStream({String displayName}) {
-    // String _uid = _user.uid;
     return _service.collectionStreamNoID<Profile>(
         path: APIPath.users(), builder: (data) => Profile.fromMap(data));
   }
