@@ -17,6 +17,7 @@ class SearchView extends StatelessWidget {
           title: TextField(
             decoration: InputDecoration(hintText: 'Enter name'),
             onChanged: model.setInput,
+            onEditingComplete: model.searchUsers,
           ),
           actions: <Widget>[
             FlatButton(

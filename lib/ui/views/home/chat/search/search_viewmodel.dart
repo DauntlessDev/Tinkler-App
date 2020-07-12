@@ -18,7 +18,7 @@ class SearchViewModel extends BaseViewModel {
     setBusy(true);
     listOfUsers = await _database.usersFuture().then((listOfProfile) =>
         listOfProfile
-            .where((profile) => profile.displayName.contains(_input))
+            .where((profile) => profile.displayName.toLowerCase().contains(_input.toLowerCase()))
             .toList());
 
     setBusy(false);
