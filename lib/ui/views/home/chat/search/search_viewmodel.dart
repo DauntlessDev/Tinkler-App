@@ -4,8 +4,8 @@ import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/app/router.gr.dart';
 import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/profile.dart';
-import 'package:tinkler/services/database_service.dart';
-import 'package:tinkler/services/current_user_service.dart';
+import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/current_user_service.dart';
 
 class SearchViewModel extends BaseViewModel {
   final _database = locator<DatabaseService>();
@@ -45,6 +45,7 @@ class SearchViewModel extends BaseViewModel {
       users: [_user.email, email],
       chatroomID: getChatRoomId(_user.email, email),
     ));
+
     setBusy(false);
 
     _navigation.navigateTo(Routes.chatroomView);

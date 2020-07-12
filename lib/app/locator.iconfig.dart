@@ -5,25 +5,28 @@
 // **************************************************************************
 
 import 'package:tinkler/theme/app_theme_service.dart';
-import 'package:tinkler/services/authentication_service.dart';
-import 'package:tinkler/services/database_service.dart';
-import 'package:tinkler/services/third_party_services_module.dart';
+import 'package:tinkler/services/functional_services/authentication_service.dart';
+import 'package:tinkler/services/state_services/current_chatroom_service.dart';
+import 'package:tinkler/services/state_services/current_user_service.dart';
+import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/functional_services/third_party_services_module.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tinkler/services/firebase_service.dart';
-import 'package:tinkler/services/current_user_service.dart';
+import 'package:tinkler/services/functional_services/firebase_service.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
   g.registerLazySingleton<AppThemeService>(() => AppThemeService());
   g.registerLazySingleton<AuthenticationService>(() => AuthenticationService());
+  g.registerLazySingleton<CurrentChatroomService>(
+      () => CurrentChatroomService());
+  g.registerLazySingleton<CurrentUserService>(() => CurrentUserService());
   g.registerLazySingleton<DatabaseService>(() => DatabaseService());
   g.registerLazySingleton<DialogService>(
       () => thirdPartyServicesModule.dialogService);
   g.registerLazySingleton<FirebaseService>(() => FirebaseService());
   g.registerLazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
-  g.registerLazySingleton<CurrentUserService>(() => CurrentUserService());
 }
 
 class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {

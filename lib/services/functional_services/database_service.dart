@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/profile.dart';
-import 'package:tinkler/services/current_user_service.dart';
+import 'package:tinkler/services/state_services/current_user_service.dart';
 
 import 'api_path.dart';
 import 'firebase_service.dart';

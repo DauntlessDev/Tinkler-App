@@ -3,7 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/app/router.gr.dart';
-import 'package:tinkler/services/authentication_service.dart';
+import 'package:tinkler/services/functional_services/authentication_service.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();

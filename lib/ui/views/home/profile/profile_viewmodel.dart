@@ -6,9 +6,9 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
-import 'package:tinkler/services/authentication_service.dart';
-import 'package:tinkler/services/database_service.dart';
-import 'package:tinkler/services/current_user_service.dart';
+import 'package:tinkler/services/functional_services/authentication_service.dart';
+import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 
 class ProfileViewModel extends StreamViewModel<Profile> {
