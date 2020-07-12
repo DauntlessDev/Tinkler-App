@@ -7,14 +7,14 @@ import 'package:tinkler/model/chat.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/database_service.dart';
-import 'package:tinkler/services/user_service.dart';
+import 'package:tinkler/services/current_user_service.dart';
 
 class ChatViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   final _dialog = locator<DialogService>();
   final _navigation = locator<NavigationService>();
-  final _user = locator<UserService>();
-  final _database = locator<DatabaseService>();
+  // final _user = locator<UserService>();
+  // final _database = locator<DatabaseService>();
 
   Profile _userInfo;
   Profile get user => _userInfo;
@@ -40,38 +40,6 @@ class ChatViewModel extends BaseViewModel {
       );
     }
   }
-
-  String getChatRoomId(String a, String b) {
-    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
-      return "$b\_$a";
-    } else {
-      return "$a\_$b";
-    }
-  }
-
-  sendMessage(String email) {
-    List<String> users = [_user.email, email];
-
-    String chatRoomId = getChatRoomId(_user.email, email);
-
-    Map<String, dynamic> chatRoom = {
-      "users": users,
-      "chatRoomId": chatRoomId,
-    };
-
-    // _database.addChatRoom(chatRoom, chatRoomId);
-
-    // _navigation.
-  
-
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => Chat(
-    //               chatRoomId: chatRoomId,
-    //             )));
-  }
-
   List<Chat> _chatList = [
     Chat(
         name: 'Rom Braveheart P. Leuterio',

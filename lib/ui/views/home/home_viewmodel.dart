@@ -2,10 +2,10 @@ import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
-import 'package:tinkler/services/user_service.dart';
+import 'package:tinkler/services/current_user_service.dart';
 
 class HomeViewModel extends BaseViewModel {
-  final _user = locator<UserService>();
+  final _user = locator<CurrentUserService>();
   final _auth = locator<AuthenticationService>();
   Future<void> initialize() async {
     User user = await _auth.currentUser();

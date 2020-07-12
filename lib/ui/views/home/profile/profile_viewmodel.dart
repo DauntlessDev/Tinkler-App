@@ -8,13 +8,13 @@ import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/database_service.dart';
-import 'package:tinkler/services/user_service.dart';
+import 'package:tinkler/services/current_user_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 
 class ProfileViewModel extends StreamViewModel<Profile> {
   final _auth = locator<AuthenticationService>();
   final _database = locator<DatabaseService>();
-  final _user = locator<UserService>();
+  final _user = locator<CurrentUserService>();
   final _dialog = locator<DialogService>();
   final _theme = locator<AppThemeService>();
 

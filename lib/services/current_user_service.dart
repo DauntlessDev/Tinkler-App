@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:tinkler/model/user.dart';
 
 @lazySingleton
-class UserService extends ChangeNotifier {
+class CurrentUserService extends ChangeNotifier {
   String _uid;
   String get uid => _uid;
 

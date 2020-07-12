@@ -6,14 +6,14 @@ import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/authentication_service.dart';
 import 'package:tinkler/services/database_service.dart';
-import 'package:tinkler/services/user_service.dart';
+import 'package:tinkler/services/current_user_service.dart';
 
 class SignupViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   final _database = locator<DatabaseService>();
   final _dialog = locator<DialogService>();
   final _navigation = locator<NavigationService>();
-  final _user = locator<UserService>();
+  final _user = locator<CurrentUserService>();
 
   Future navigateToLogin() async {
     final _navigationService = locator<NavigationService>();

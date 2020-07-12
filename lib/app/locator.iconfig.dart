@@ -10,7 +10,7 @@ import 'package:tinkler/services/database_service.dart';
 import 'package:tinkler/services/third_party_services_module.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/services/firebase_service.dart';
-import 'package:tinkler/services/user_service.dart';
+import 'package:tinkler/services/current_user_service.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
@@ -23,7 +23,7 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerLazySingleton<FirebaseService>(() => FirebaseService());
   g.registerLazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
-  g.registerLazySingleton<UserService>(() => UserService());
+  g.registerLazySingleton<CurrentUserService>(() => CurrentUserService());
 }
 
 class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {
