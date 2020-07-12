@@ -7,9 +7,6 @@ class UserService extends ChangeNotifier {
   String _uid;
   String get uid => _uid;
 
-  String _displayName;
-  String get displayName => _displayName;
-
   String _email;
   String get email => _email;
 

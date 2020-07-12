@@ -67,7 +67,6 @@ class SignupViewModel extends BaseViewModel {
 
         await _database.addProfile(
           Profile(
-            uid: user.uid,
             displayName: _displayName,
             email: _email,
             photoUrl: '',

@@ -11,7 +11,7 @@ class AuthenticationService {
     if (user == null) {
       return null;
     }
-    return User(uid: user.uid);
+    return User(uid: user.uid, email: user.email);
   }
 
   Stream<User> get onAuthStateChanged {

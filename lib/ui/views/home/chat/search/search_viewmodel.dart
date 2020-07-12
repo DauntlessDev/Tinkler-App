@@ -1,6 +1,3 @@
-import 'package:meta/meta.dart';
-
-//view model class
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
@@ -18,7 +15,9 @@ class SearchViewModel extends BaseViewModel {
     setBusy(true);
     listOfUsers = await _database.usersFuture().then((listOfProfile) =>
         listOfProfile
-            .where((profile) => profile.displayName.toLowerCase().contains(_input.toLowerCase()))
+            .where((profile) => profile.displayName
+                .toLowerCase()
+                .contains(_input.toLowerCase()))
             .toList());
 
     setBusy(false);
