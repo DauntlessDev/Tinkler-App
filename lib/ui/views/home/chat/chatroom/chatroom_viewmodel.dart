@@ -6,7 +6,6 @@ import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 
 class ChatroomViewModel extends BaseViewModel {
   final _database = locator<DatabaseService>();
-  final _chatroom = locator<CurrentChatroomService>();
 
   String _input = '';
   String get input => _input;
@@ -15,11 +14,8 @@ class ChatroomViewModel extends BaseViewModel {
   Future<void> sendMessage() async {
     if (_input.isNotEmpty) {
       await _database.addMessage(
-          chatroomId: _chatroom.chatroomId,
           message: input,
-          messageId: DateTime
-            .now()
-            .millisecondsSinceEpoch.toString());
+          messageId: DateTime.now().millisecondsSinceEpoch.toString());
     }
   }
 }

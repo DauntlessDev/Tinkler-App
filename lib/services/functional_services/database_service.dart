@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/profile.dart';
+import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 
 import 'api_path.dart';
@@ -15,6 +16,7 @@ import 'firebase_service.dart';
 class DatabaseService {
   final _service = locator<FirebaseService>();
   final _user = locator<CurrentUserService>();
+  final _chatroom = locator<CurrentChatroomService>();
 
   Future<File> getImage() async {
     return await _service.getImage();
@@ -28,7 +30,7 @@ class DatabaseService {
   Future<void> addProfile(Profile profile) async {
     String _uid = _user.uid;
     await _service.setData(
-      path: APIPath.profile(_uid),
+      path: APIPath.userInfo(_uid),
       data: profile.toMap(),
     );
   }
@@ -36,7 +38,7 @@ class DatabaseService {
   Stream<Profile> profileStream() {
     String _uid = _user.uid;
     return _service.documentStreamNoID(
-      path: APIPath.profile(_uid),
+      path: APIPath.userInfo(_uid),
       builder: (data) => Profile.fromMap(data),
     );
   }
@@ -54,14 +56,20 @@ class DatabaseService {
   }
 
   Future<void> addMessage(
-      {@required String chatroomId,
-      @required String messageId,
-      @required String message}) async {
-    String _uid = _user.uid;
+      {@required String messageId, @required String message}) async {
+    String chatroomId = _chatroom.chatroomId;
     await _service.setData(
       path:
           APIPath.chatroomMessage(chatroomId: chatroomId, messageId: messageId),
       data: {'message': message},
+    );
+  }
+
+  Stream<Profile> messageStream() {
+    String chatroomId = _chatroom.chatroomId;
+    return _service.documentStreamNoID(
+      path: APIPath.chatroomMessages(chatroomId),
+      builder: (data) => Profile.fromMap(data),
     );
   }
 
