@@ -33,7 +33,7 @@ class SearchView extends StatelessWidget {
           inAsyncCall: model.isBusy,
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: SearchTileList(),
+            child: SearchTileBuilder(),
           ),
         ),
       ),
@@ -41,8 +41,8 @@ class SearchView extends StatelessWidget {
   }
 }
 
-class SearchTileList extends ViewModelWidget<SearchViewModel> {
-  SearchTileList({
+class SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
+  SearchTileBuilder({
     Key key,
   }) : super(key: key, reactive: true);
 
@@ -54,8 +54,10 @@ class SearchTileList extends ViewModelWidget<SearchViewModel> {
           title: 'Empty Result', message: 'The name entered is not found.');
 
     return ListView.builder(
-      itemBuilder: (context, index) =>
-          SearchTile(profile: model.listOfUsers[index]),
+      itemBuilder: (context, index) => SearchTile(
+        profile: model.listOfUsers[index],
+        sendMessage: () => model.sendMessage(model.listOfUsers[index].email),
+      ),
       itemCount: model.listOfUsers.length,
     );
   }
@@ -65,13 +67,16 @@ class SearchTile extends StatelessWidget {
   const SearchTile({
     Key key,
     @required this.profile,
+    @required this.sendMessage,
   }) : super(key: key);
 
   final Profile profile;
+  final Function sendMessage;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: sendMessage,
       leading: Avatar(photoUrl: profile.photoUrl, radius: 30),
       title: Text(profile.displayName),
     );

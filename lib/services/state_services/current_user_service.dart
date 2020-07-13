@@ -12,7 +12,7 @@ class CurrentUserService extends ChangeNotifier {
 
   void updateCurrentUserInfo(User user) {
     _uid = user.uid;
-    _uid = user.email;
+    _email = user.email;
     print('current user : $user');
 
     notifyListeners();
