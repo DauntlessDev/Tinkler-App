@@ -48,7 +48,7 @@ class SearchViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> sendMessage(String email) async {
+  Future<void> startConversation(String email) async {
     setBusy(true);
     final chatroom = Chatroom(
       users: [_user.email, email],

@@ -13,27 +13,27 @@ class ChatroomView extends StatelessWidget {
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
           title: Text(''),
-          backgroundColor: Colors.lightBlueAccent,
         ),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              // MessageBuilder(),
+              MessageBuilder(),
               Container(
+                color: Colors.white,
+                padding: EdgeInsets.all(2),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
-                      child: TextField(
-                          // onChanged: (value) {
-                          //   messageText = value;
-                          // },
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
+                        child: TextField(onChanged: model.setInput),
+                      ),
                     ),
                     FlatButton(
-                      onPressed: () {},
+                      onPressed: model.sendMessage,
                       child: Text(
                         'Send',
                       ),
@@ -49,25 +49,28 @@ class ChatroomView extends StatelessWidget {
   }
 }
 
-// class SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
-//   SearchTileBuilder({
-//     Key key,
-//   }) : super(key: key, reactive: true);
+class MessageBuilder extends ViewModelWidget<ChatroomViewModel> {
+  MessageBuilder({
+    Key key,
+  }) : super(key: key, reactive: true);
 
-//   @override
-//   Widget build(BuildContext context, SearchViewModel model) {
-//     if (model.listOfUsers == null) return Container();
-//     if (model.listOfUsers.isEmpty)
-//       return EmptyContent(
-//           title: 'Empty Chat', message: 'No messages found.');
+  @override
+  Widget build(BuildContext context, ChatroomViewModel model) {
+    // if (model.listOfUsers == null) return Container();
+    // if (model.listOfUsers.isEmpty)
+    //   return EmptyContent(
+    //       title: 'Empty Chat', message: 'No messages found.');
 
-//     return ListView.builder(
-//       itemBuilder: (context, index) =>
-//           MessageBubble(sender: model.listOfUsers[index]),
-//       itemCount: model.listOfUsers.length,
-//     );
-//   }
-// }
+    return Expanded(
+      child: Container(),
+      //   child: ListView.builder(
+      // itemBuilder: (context, index) =>
+      //     MessageBubble(sender: model.listOfUsers[index]),
+      // itemCount: model.listOfUsers.length,
+      // ),
+    );
+  }
+}
 
 class MessageBubble extends StatelessWidget {
   MessageBubble({
