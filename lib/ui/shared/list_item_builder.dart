@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/shared/empty_content.dart';
 
-
 typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
 class ListItemBuilder<T> extends StatelessWidget {
@@ -17,25 +16,24 @@ class ListItemBuilder<T> extends StatelessWidget {
   final ItemWidgetBuilder<T> itemBuilder;
   final Divider divider;
 
-  //TODO: to be removed and replaced by the commented property above
-  // final BaseViewModel model;
   final List<T> items;
 
   @override
   Widget build(BuildContext context) {
-    if (!model.isBusy) {
-      // return _buildList(items);
-      if (model.data != null) {
-        // final List<T> items = model.data;
-        if (items.isNotEmpty) {
-          return _buildList(items);
+    if (model != null) {
+      if (!model.isBusy) {
+        if (model.data != null) {
+          final List<T> items = model.data;
+          if (items.isNotEmpty) {
+            return _buildList(items);
+          }
+          return EmptyContent();
+        } else if (model.hasError ?? false) {
+          return EmptyContent(
+            title: 'Loading Error',
+            message: 'Something has gone wrong',
+          );
         }
-        return EmptyContent();
-      } else if (model.hasError) {
-        return EmptyContent(
-          title: 'Loading Error',
-          message: 'Something has gone wrong',
-        );
       }
     }
     return Center(child: CircularProgressIndicator());
@@ -43,6 +41,7 @@ class ListItemBuilder<T> extends StatelessWidget {
 
   Widget _buildList(List<T> items) {
     return ListView.separated(
+        reverse: true,
         itemBuilder: (context, index) {
           if (index == 0 || index == items.length + 1) {
             return Container();

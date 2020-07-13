@@ -9,7 +9,7 @@ class APIPath {
   static String chatroom(String chatroomId) => 'chatrooms/$chatroomId';
 
   static String chatroomMessages(String chatroomId) =>
-      'chatrooms/$chatroomId/messages/';
+      '/chatrooms/$chatroomId/messages';
   static String chatroomMessage({String chatroomId, String messageId}) =>
       'chatrooms/$chatroomId/messages/$messageId';
 }

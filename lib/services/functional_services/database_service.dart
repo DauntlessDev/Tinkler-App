@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/chatroom.dart';
+import 'package:tinkler/model/message.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
@@ -56,20 +57,23 @@ class DatabaseService {
   }
 
   Future<void> addMessage(
-      {@required String messageId, @required String message}) async {
+      {@required String messageId, @required Message message}) async {
     String chatroomId = _chatroom.chatroomId;
     await _service.setData(
       path:
           APIPath.chatroomMessage(chatroomId: chatroomId, messageId: messageId),
-      data: {'message': message},
+      data: message.toMap(),
     );
   }
 
-  Stream<Profile> messageStream() {
+  Stream<List<Message>> messagesStream() {
     String chatroomId = _chatroom.chatroomId;
-    return _service.documentStreamNoID(
+    print('chatroom api: ${APIPath.chatroomMessages(chatroomId)}');
+    return _service.collectionStreamNoID(
       path: APIPath.chatroomMessages(chatroomId),
-      builder: (data) => Profile.fromMap(data),
+      builder: (data) => Message.fromMap(data),
+      sort: (a, b) => a.time.compareTo(b.time),
+      isReversed: true,
     );
   }
 

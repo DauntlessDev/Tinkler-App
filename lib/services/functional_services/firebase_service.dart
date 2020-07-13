@@ -50,6 +50,7 @@ class FirebaseService {
     @required T builder(Map<String, dynamic> data),
     Query queryBuilder(Query query),
     int sort(T lhs, T rhs),
+    bool isReversed,
   }) {
     Query query = Firestore.instance.collection(path);
     if (queryBuilder != null) {
@@ -65,11 +66,16 @@ class FirebaseService {
       if (sort != null) {
         result.sort(sort);
       }
-      return result;
+
+      if (isReversed) {
+        List<T> reversedResult = result.reversed.toList();
+        return reversedResult;
+      } else {
+        return result;
+      }
     });
   }
 
-  
   Future<List<T>> collectionFuture<T>({
     @required String path,
     @required T builder(Map<String, dynamic> data),
