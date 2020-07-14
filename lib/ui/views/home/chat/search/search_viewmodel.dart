@@ -48,11 +48,13 @@ class SearchViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> startConversation(String email) async {
+  Future<void> startConversation(Profile otherProfile) async {
     setBusy(true);
+
+    _chatroom.updateOtherChatMate(otherProfile);
     final chatroom = Chatroom(
-      users: [_user.email, email],
-      chatroomID: getChatRoomId(_user.email, email),
+      users: [_user.email, otherProfile.email],
+      chatroomID: getChatRoomId(_user.email, otherProfile.email),
     );
 
     await _database.addChatroom(chatroom);

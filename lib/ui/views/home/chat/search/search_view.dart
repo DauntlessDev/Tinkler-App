@@ -56,7 +56,7 @@ class SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
     return ListView.builder(
       itemBuilder: (context, index) => SearchTile(
         profile: model.listOfUsers[index],
-        sendMessage: () => model.startConversation(model.listOfUsers[index].email),
+        sendMessage: () => model.startConversation(model.listOfUsers[index]),
       ),
       itemCount: model.listOfUsers.length,
     );
