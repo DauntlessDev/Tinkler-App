@@ -40,15 +40,12 @@ class ListItemBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildList(List<T> items) {
-    return ListView.separated(
-        reverse: true,
-        itemBuilder: (context, index) {
-          if (index == 0 || index == items.length + 1) {
-            return Container();
-          }
-          return itemBuilder(context, items[index - 1]);
-        },
-        itemCount: items.length + 2,
-        separatorBuilder: (BuildContext context, int index) => divider);
+    return ListView.builder(
+      reverse: true,
+      itemBuilder: (context, index) {
+        return itemBuilder(context, items[index]);
+      },
+      itemCount: items.length,
+    );
   }
 }

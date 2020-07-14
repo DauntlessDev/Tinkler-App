@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class EmptyContent extends StatelessWidget {
   EmptyContent(
-      {this.message = 'The joblist still has no content.',
-      this.title = 'Joblist Empty'});
+      {this.message = 'Page still don\'t have content',
+      this.title = 'Empty Page'});
   final String message;
   final String title;
   @override
@@ -15,13 +15,13 @@ class EmptyContent extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                fontSize: 13, color: Colors.black),
           ),
           Text(
             message,
             style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
+                fontSize: 11,
+                // fontWeight: FontWeight.bold,
                 color: Colors.black38),
           ),
         ],
