@@ -7,14 +7,10 @@ typedef ItemWidgetBuilder<T> = Widget Function(BuildContext context, T item);
 
 class ListItemBuilder<T> extends StatelessWidget {
   const ListItemBuilder(
-      {@required this.model,
-      @required this.itemBuilder,
-      @required this.divider,
-      @required this.items});
+      {@required this.model, @required this.itemBuilder, @required this.items});
 
   final StreamViewModel model;
   final ItemWidgetBuilder<T> itemBuilder;
-  final Divider divider;
 
   final List<T> items;
 

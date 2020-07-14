@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
+
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/ui/shared/list_item_builder.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
@@ -88,55 +89,77 @@ class MessageBuilder extends ViewModelWidget<ChatroomViewModel> {
 
   @override
   Widget build(BuildContext context, ChatroomViewModel model) {
-    // if (model.data == null) return Container();
-    // if (model.data.isEmpty)
-    //   return EmptyContent(
-    //       title: 'Empty Chat', message: 'No messages found.');
-
+    List<Message> messages = model.messages;
     return Expanded(
-      child: ListItemBuilder<Message>(
-        model: model,
-        items: model.data,
-        itemBuilder: (context, message) => MessageBubble(
-          ifUser: model.isUser(message.sender),
-          sender: message.sender,
-          text: message.message,
-        ),
-        divider: Divider(height: 0, thickness: 0),
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return MessageBubble(
+              ifUser: model.isUser(messages[index].sender),
+              sender: messages[index].sender,
+              // isLastSend: messages[index+1].sender,
+              text: messages[index].message,
+              isLastSend: index == 0
+                  ? true
+                  : model.isLastSend(
+                      sender: messages[index].sender,
+                      nextSender: messages[index - 1].sender,
+                    ));
+        },
+        itemCount: messages.length,
+        reverse: true,
       ),
     );
   }
 }
+// child: ListItemBuilder<Message>(
+//   model: model,
+//   items: model.data,
+//   itemBuilder: (context, message) => MessageBubble(
+//     ifUser: model.isUser(message.sender),
+//     sender: message.sender,
+//     text: message.message,
+//     nextSender: message.
+//   ),
+// ),
 
 class MessageBubble extends StatelessWidget {
   MessageBubble({
+    Key key,
     @required this.sender,
     @required this.text,
     @required this.ifUser,
-  });
+    @required this.isLastSend,
+  }) : super(key: key);
 
   final String sender;
   final String text;
   final bool ifUser;
+  final bool isLastSend;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0),
-      child: Column(
-        crossAxisAlignment:
-            ifUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment:
+            ifUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: <Widget>[
-          // Text(
-          //   this.sender,
-          //   style: TextStyle(color: Colors.grey[600]),
-          // ),
+          !ifUser & isLastSend
+              ? Avatar(
+                  photoUrl: '',
+                  radius: 17,
+                )
+              : SizedBox(width: 32),
           Material(
             color: ifUser ? Theme.of(context).primaryColor : Colors.white,
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-              topLeft: ifUser ? Radius.circular(20) : Radius.circular(0),
-              topRight: ifUser ? Radius.circular(0) : Radius.circular(20),
+              bottomLeft: Radius.circular(15),
+              bottomRight: Radius.circular(15),
+              topLeft: isLastSend
+                  ? ifUser ? Radius.circular(15) : Radius.circular(0)
+                  : Radius.circular(15),
+              topRight: isLastSend
+                  ? ifUser ? Radius.circular(0) : Radius.circular(15)
+                  : Radius.circular(15),
             ),
             elevation: 3.0,
             child: Container(

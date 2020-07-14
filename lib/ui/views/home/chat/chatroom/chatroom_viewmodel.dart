@@ -42,6 +42,10 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
     return _user.email == email;
   }
 
+  bool isLastSend({String sender, String nextSender}) {
+    return (sender != nextSender);
+  }
+
   String otherDisplayName;
   String otherPhotoUrl;
   void updateOtherUserInfo() {
