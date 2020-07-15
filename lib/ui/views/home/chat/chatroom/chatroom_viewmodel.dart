@@ -13,6 +13,29 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
   final _user = locator<CurrentUserService>();
   final _chatroom = locator<CurrentChatroomService>();
 
+  List<Message> get messages => data;
+
+  Stream<List<Message>> getMessages() {
+    updateOtherUserInfo();
+    _database.messagesStream().listen((event) {
+      initiateShowTime(event.length);
+    });
+
+    return _database.messagesStream();
+  }
+
+  @override
+  Stream<List<Message>> get stream => getMessages();
+
+  List<bool> _isShowTime = [];
+  List<bool> get isShowTime => _isShowTime;
+  void initiateShowTime(int length) {
+    for (int i = 0; i < length; i++) {
+      _isShowTime.add(false);
+    }
+    print(_isShowTime);
+  }
+
   String _input = '';
   String get input => _input;
   void setInput(String value) => _input = value;
@@ -30,15 +53,8 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
     _input = '';
   }
 
-  Stream<List<Message>> getMessages() {
-    updateOtherUserInfo();
-    return _database.messagesStream();
-  }
-
-  List<Message> get messages => data;
-
   bool isUser(String email) {
-    print(_user.email == email);
+    // print(_user.email == email);
     return _user.email == email;
   }
 
@@ -53,6 +69,9 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
     otherPhotoUrl = _chatroom.otherPhotoUrl;
   }
 
-  @override
-  Stream<List<Message>> get stream => getMessages();
+  void toggleisShowTime(int index) {
+    _isShowTime[index] = !_isShowTime[index];
+    print('isSHowntime : $index');
+    notifyListeners();
+  }
 }

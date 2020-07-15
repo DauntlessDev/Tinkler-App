@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
 import 'package:tinkler/model/message.dart';
-import 'package:tinkler/ui/shared/list_item_builder.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'chatroom_viewmodel.dart';
@@ -17,28 +16,30 @@ class ChatroomView extends StatelessWidget {
       viewModelBuilder: () => ChatroomViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
         inAsyncCall: model.isBusy,
-        child: Scaffold(
-          backgroundColor: Colors.grey[200],
-          appBar: AppBar(
-            title: Row(children: [
-              Avatar(photoUrl: model.otherPhotoUrl, radius: 20),
-              SizedBox(
-                width: 10,
+        child: model.data == null
+            ? Container()
+            : Scaffold(
+                backgroundColor: Colors.grey[200],
+                appBar: AppBar(
+                  title: Row(children: [
+                    Avatar(photoUrl: model.otherPhotoUrl, radius: 20),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(model.otherDisplayName)
+                  ]),
+                ),
+                body: SafeArea(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      MessageBuilder(),
+                      InputMessage(),
+                    ],
+                  ),
+                ),
               ),
-              Text(model.otherDisplayName)
-            ]),
-          ),
-          body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                MessageBuilder(),
-                InputMessage(),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -90,20 +91,24 @@ class MessageBuilder extends ViewModelWidget<ChatroomViewModel> {
   @override
   Widget build(BuildContext context, ChatroomViewModel model) {
     List<Message> messages = model.messages;
+
     return Expanded(
       child: ListView.builder(
         itemBuilder: (context, index) {
+          Message currentMessage = messages[index];
           return MessageBubble(
-              ifUser: model.isUser(messages[index].sender),
-              sender: messages[index].sender,
-              // isLastSend: messages[index+1].sender,
-              text: messages[index].message,
-              isLastSend: index == 0
-                  ? true
-                  : model.isLastSend(
-                      sender: messages[index].sender,
-                      nextSender: messages[index - 1].sender,
-                    ));
+            ifUser: model.isUser(currentMessage.sender),
+            index: index,
+            isShowTime: model.isShowTime[index], sender: currentMessage.sender,
+            // isLastSend: messages[index+1].sender,
+            text: currentMessage.message, time: currentMessage.time,
+            isLastSend: index == 0
+                ? true
+                : model.isLastSend(
+                    sender: currentMessage.sender,
+                    nextSender: messages[index - 1].sender,
+                  ),
+          );
         },
         itemCount: messages.length,
         reverse: true,
@@ -111,32 +116,28 @@ class MessageBuilder extends ViewModelWidget<ChatroomViewModel> {
     );
   }
 }
-// child: ListItemBuilder<Message>(
-//   model: model,
-//   items: model.data,
-//   itemBuilder: (context, message) => MessageBubble(
-//     ifUser: model.isUser(message.sender),
-//     sender: message.sender,
-//     text: message.message,
-//     nextSender: message.
-//   ),
-// ),
 
-class MessageBubble extends StatelessWidget {
+class MessageBubble extends ViewModelWidget<ChatroomViewModel> {
   MessageBubble({
     Key key,
     @required this.sender,
     @required this.text,
+    @required this.time,
     @required this.ifUser,
     @required this.isLastSend,
-  }) : super(key: key);
+    @required this.isShowTime,
+    @required this.index,
+  }) : super(key: key, reactive: true);
 
   final String sender;
   final String text;
+  final String time;
   final bool ifUser;
   final bool isLastSend;
+  final bool isShowTime;
+  final int index;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ChatroomViewModel model) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0),
       child: Row(
@@ -149,28 +150,36 @@ class MessageBubble extends StatelessWidget {
                   radius: 17,
                 )
               : SizedBox(width: 32),
-          Material(
-            color: ifUser ? Theme.of(context).primaryColor : Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              bottomRight: Radius.circular(15),
-              topLeft: isLastSend
-                  ? ifUser ? Radius.circular(15) : Radius.circular(0)
-                  : Radius.circular(15),
-              topRight: isLastSend
-                  ? ifUser ? Radius.circular(0) : Radius.circular(15)
-                  : Radius.circular(15),
-            ),
-            elevation: 3.0,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                this.text,
-                style: TextStyle(
-                  color: ifUser ? Colors.white : Colors.black,
+          Column(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () => model.toggleisShowTime(index),
+                child: Material(
+                  color: ifUser ? Theme.of(context).primaryColor : Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                    topLeft: isLastSend
+                        ? ifUser ? Radius.circular(15) : Radius.circular(0)
+                        : Radius.circular(15),
+                    topRight: isLastSend
+                        ? ifUser ? Radius.circular(0) : Radius.circular(15)
+                        : Radius.circular(15),
+                  ),
+                  elevation: 3.0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: Text(
+                      this.text,
+                      style: TextStyle(
+                        color: ifUser ? Colors.white : Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              isShowTime ? Text(time) : SizedBox(),
+            ],
           ),
         ],
       ),
