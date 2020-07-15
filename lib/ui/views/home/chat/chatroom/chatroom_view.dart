@@ -108,6 +108,12 @@ class MessageBuilder extends ViewModelWidget<ChatroomViewModel> {
                     sender: currentMessage.sender,
                     nextSender: messages[index - 1].sender,
                   ),
+            ifShowDate: (index == messages.length - 1)
+                ? true
+                : (index == 0)
+                    ? false
+                    : model.ifShowDate(
+                        currentMessage.time, messages[index - 1].time),
           );
         },
         itemCount: messages.length,
@@ -126,6 +132,7 @@ class MessageBubble extends ViewModelWidget<ChatroomViewModel> {
     @required this.ifUser,
     @required this.isLastSend,
     @required this.isShowTime,
+    @required this.ifShowDate,
     @required this.index,
   }) : super(key: key, reactive: true);
 
@@ -135,54 +142,70 @@ class MessageBubble extends ViewModelWidget<ChatroomViewModel> {
   final bool ifUser;
   final bool isLastSend;
   final bool isShowTime;
+  final bool ifShowDate;
   final int index;
   @override
   Widget build(BuildContext context, ChatroomViewModel model) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 1.0),
-      child: Row(
-        mainAxisAlignment:
-            ifUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: <Widget>[
-          !ifUser & isLastSend
-              ? Avatar(
-                  photoUrl: '',
-                  radius: 17,
-                )
-              : SizedBox(width: 32),
-          Column(
+    return Column(
+      children: <Widget>[
+        ifShowDate || isShowTime
+            ? Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+                child: Text(
+                  model.formatDate(time),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              )
+            : Container(),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 1.0),
+          child: Row(
+            mainAxisAlignment:
+                ifUser ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: <Widget>[
-              GestureDetector(
-                onTap: () => model.toggleisShowTime(index),
-                child: Material(
-                  color: ifUser ? Theme.of(context).primaryColor : Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                    topLeft: isLastSend
-                        ? ifUser ? Radius.circular(15) : Radius.circular(0)
-                        : Radius.circular(15),
-                    topRight: isLastSend
-                        ? ifUser ? Radius.circular(0) : Radius.circular(15)
-                        : Radius.circular(15),
-                  ),
-                  elevation: 3.0,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Text(
-                      this.text,
-                      style: TextStyle(
-                        color: ifUser ? Colors.white : Colors.black,
+              !ifUser & isLastSend
+                  ? Avatar(
+                      photoUrl: model.otherPhotoUrl,
+                      radius: 17,
+                    )
+                  : SizedBox(width: 32),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () => model.toggleisShowTime(index),
+                    child: Material(
+                      color: ifUser
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15),
+                        topLeft: isLastSend
+                            ? ifUser ? Radius.circular(15) : Radius.circular(0)
+                            : Radius.circular(15),
+                        topRight: isLastSend
+                            ? ifUser ? Radius.circular(0) : Radius.circular(15)
+                            : Radius.circular(15),
+                      ),
+                      elevation: 3.0,
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: Text(text,
+                            style: TextStyle(
+                              color: ifUser ? Colors.white : Colors.black,
+                            )),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-              isShowTime ? Text(time) : SizedBox(),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/message.dart';
-import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
+import 'package:intl/intl.dart';
 
 class ChatroomViewModel extends StreamViewModel<List<Message>> {
   final _database = locator<DatabaseService>();
@@ -33,7 +31,32 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
     for (int i = 0; i < length; i++) {
       _isShowTime.add(false);
     }
-    print(_isShowTime);
+  }
+
+  void toggleisShowTime(int index) {
+    _isShowTime[index] = !_isShowTime[index];
+    notifyListeners();
+  }
+
+  bool ifShowDate(String firstTime, String secondTime) {
+    DateTime firstDate = DateTime.parse(firstTime);
+    DateTime secondDate = DateTime.parse(secondTime);
+
+    return (firstDate.difference(secondDate).abs() >= Duration(hours: 6));
+  }
+
+  String formatDate(String firstTime) {
+    DateTime firstDate = DateTime.parse(firstTime);
+
+    if (firstDate.difference(DateTime.now()) > Duration(days: 365)) {
+      return '${DateFormat.yMMMMd().format(firstDate)} AT ${DateFormat.jm().format(firstDate)}';
+    } else if (firstDate.difference(DateTime.now()) > Duration(days: 7)) {
+      return '${DateFormat.MMMMd().format(firstDate)} AT ${DateFormat.jm().format(firstDate)}';
+    } else if (firstDate.day != DateTime.now().day) {
+      return '${DateFormat.E().format(firstDate).toUpperCase()} AT ${DateFormat.jm().format(firstDate)}';
+    } else {
+      return DateFormat.jm().format(firstDate);
+    }
   }
 
   String _input = '';
@@ -54,7 +77,6 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
   }
 
   bool isUser(String email) {
-    // print(_user.email == email);
     return _user.email == email;
   }
 
@@ -67,11 +89,5 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
   void updateOtherUserInfo() {
     otherDisplayName = _chatroom.otherDisplayName;
     otherPhotoUrl = _chatroom.otherPhotoUrl;
-  }
-
-  void toggleisShowTime(int index) {
-    _isShowTime[index] = !_isShowTime[index];
-    print('isSHowntime : $index');
-    notifyListeners();
   }
 }
