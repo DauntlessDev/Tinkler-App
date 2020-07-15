@@ -1,4 +1,3 @@
-
 class APIPath {
   static String users() => 'users/';
   static String userInfo(String uid) => 'users/$uid';
@@ -6,6 +5,7 @@ class APIPath {
   static String profilePic(String uid) => 'profilePics/$uid';
 
   static String chatroom(String chatroomId) => 'chatrooms/$chatroomId';
+  static String chatrooms() => 'chatrooms/';
 
   static String chatroomMessages(String chatroomId) =>
       '/chatrooms/$chatroomId/messages';

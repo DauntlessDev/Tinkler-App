@@ -14,7 +14,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
-      onModelReady: (model) => model.initialize(),
+      // onModelReady: (model) => model.initialize(),
       builder: (context, model, child) => Scaffold(
         body: _CupertinoHomeScaffold(
             currentTab: model.currentTab,

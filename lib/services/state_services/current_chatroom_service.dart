@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/profile.dart';
 
+
 @lazySingleton
 class CurrentChatroomService extends ChangeNotifier {
   String _chatroomId;
@@ -29,5 +30,14 @@ class CurrentChatroomService extends ChangeNotifier {
     _otherPhotoUrl = otherProfile.photoUrl;
 
     notifyListeners();
+  }
+
+  String getChatRoomId(String a, String b) {
+    print('a:$a b: $b');
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
+    }
   }
 }

@@ -7,17 +7,17 @@ import 'package:tinkler/services/state_services/current_user_service.dart';
 class HomeViewModel extends BaseViewModel {
   final _user = locator<CurrentUserService>();
   final _auth = locator<AuthenticationService>();
-  Future<void> initialize() async {
-    User user = await _auth.currentUser();
-    _user.updateCurrentUserInfo(user);
-  }
+  // Future<void> initialize() async {
+  //   User user = await _auth.currentUser();
+  //   _user.updateCurrentUserInfo(user);
+  // }
 
   TabItem _currentTab = TabItem.chat;
   TabItem get currentTab => _currentTab;
 
   void select(TabItem value, navigatorKeyValue) {
     if (value == _currentTab) {
-      navigatorKeyValue.currentState.popUntil((route) => route.isFirst);
+      // navigatorKeyValue.currentState.popUntil((route) => route.isFirst);
     } else {
       _currentTab = value;
       notifyListeners();

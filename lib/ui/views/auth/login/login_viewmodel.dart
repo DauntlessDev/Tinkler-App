@@ -3,11 +3,14 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/app/router.gr.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
+import 'package:tinkler/services/state_services/current_user_service.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   final _dialog = locator<DialogService>();
+  final _user = locator<CurrentUserService>();
 
   Future navigateToSignup() async {
     final _navigationService = locator<NavigationService>();
@@ -27,8 +30,10 @@ class LoginViewModel extends BaseViewModel {
     try {
       if (_email.isNotEmpty && _password.isNotEmpty) {
         setBusy(true);
-        await _auth.signInWithEmailAndPassword(
+        User user = await _auth.signInWithEmailAndPassword(
             email: _email, password: _password);
+
+        _user.updateCurrentUserInfo(user);
       } else {
         throw PlatformException(
             code: 'EMPTY_FIELDS', message: 'Please fill out all fields.');

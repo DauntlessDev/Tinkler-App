@@ -39,24 +39,13 @@ class SearchViewModel extends BaseViewModel {
     }
   }
 
-  String getChatRoomId(String a, String b) {
-    print('a:$a b: $b');
-    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
-      return "$b\_$a";
-    } else {
-      return "$a\_$b";
-    }
-  }
-
   Future<void> startConversation(Profile otherProfile) async {
     setBusy(true);
-
     _chatroom.updateOtherChatMate(otherProfile);
     final chatroom = Chatroom(
       users: [_user.email, otherProfile.email],
-      chatroomID: getChatRoomId(_user.email, otherProfile.email),
+      chatroomID: _chatroom.getChatRoomId(_user.email, otherProfile.email),
     );
-
     await _database.addChatroom(chatroom);
     _chatroom.updateCurrentChatroom(chatroom);
     setBusy(false);

@@ -3,70 +3,40 @@ import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/app/router.gr.dart';
-import 'package:tinkler/model/chat.dart';
+import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/profile.dart';
-import 'package:tinkler/services/functional_services/authentication_service.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 
-class ChatViewModel extends BaseViewModel {
-  final _auth = locator<AuthenticationService>();
-  final _dialog = locator<DialogService>();
+class ChatViewModel extends StreamViewModel {
+  final _database = locator<DatabaseService>();
+  final _user = locator<CurrentUserService>();
   final _navigation = locator<NavigationService>();
-  // final _user = locator<UserService>();
-  // final _database = locator<DatabaseService>();
+  final _chatroom = locator<CurrentChatroomService>();
 
-  Profile _userInfo;
-  Profile get user => _userInfo;
-  String get userPhotoUrl {
-    try {
-      return _userInfo.photoUrl;
-    } catch (e) {
-      return '';
-    }
+  List<Chatroom> get allUserConversations => data;
+  @override
+  Stream get stream => getAllUserConversations();
+  Stream<List<Chatroom>> getAllUserConversations() {
+    return _database.chatroomsStream(_user.email);
   }
 
   void navigateToSearch() {
     _navigation.navigateTo(Routes.searchViewRoute);
   }
 
-  Future<void> signOut() async {
-    try {
-      await _auth.signOut();
-    } catch (e) {
-      _dialog.showDialog(
-        title: 'Sign-up Failed',
-        description: e.message,
-      );
-    }
-  }
-  List<Chat> _chatList = [
-    Chat(
-        name: 'Rom Braveheart P. Leuterio',
-        latestMessage: 'Hello! how are you?',
-        time: '4:26',
-        photoUrl: 'assets/images/profile_1.jpg'),
-    Chat(
-        name: 'Bryan Chong S. Salazar',
-        latestMessage: 'Hello! how are you?',
-        time: '4:26',
-        photoUrl: 'assets/images/profile_2.jpg'),
-    Chat(
-        name: 'Kyle Chester M. Makapagal',
-        latestMessage: 'Hello! how are you?',
-        time: '4:26',
-        photoUrl: 'assets/images/profile_3.jpg'),
-    Chat(
-        name: 'Ryan Michael P. Caluag',
-        latestMessage: 'Hello! how are you?',
-        time: '4:26',
-        photoUrl: 'assets/images/profile_1.jpg'),
-    Chat(
-        name: 'Zeus Roy P. Sambilay',
-        latestMessage: 'Hello! how are you?',
-        time: '4:26',
-        photoUrl: 'assets/images/profile_2.jpg'),
-  ];
+  Future<void> startConversation(Profile otherProfile) async {
+    setBusy(true);
+    _chatroom.updateOtherChatMate(otherProfile);
+    final chatroom = Chatroom(
+      users: [_user.email, otherProfile.email],
+      chatroomID: _chatroom.getChatRoomId(_user.email, otherProfile.email),
+    );
+    await _database.addChatroom(chatroom);
+    _chatroom.updateCurrentChatroom(chatroom);
+    setBusy(false);
 
-  List<dynamic> get list => _chatList;
+    _navigation.navigateTo(Routes.chatroomView);
+  }
 }
