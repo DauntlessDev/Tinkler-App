@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
@@ -76,21 +75,12 @@ class DatabaseService {
     );
   }
 
-  Stream<List<Chatroom>> chatroomsStream(String userEmail) {
-    print('current email for chatroomstream : ${_user.email}');
+  Stream<List<Chatroom>> chatroomsStream() {
     return _service.collectionStreamNoID(
       path: APIPath.chatrooms(),
       builder: (data) => Chatroom.fromMap(data),
-      queryBuilder: (query) =>
-          query.where('chatroomID', arrayContains: userEmail),
+      queryBuilder: (query) => query.where('users', arrayContains: _user.email),
+      isReversed: true,
     );
   }
-
-  // Stream<List<Chatroom>> chatroomsStream() {
-  //   return _service.chatroomsStream(
-  //     builder: (data) => Chatroom.fromMap(data),
-  //     path: APIPath.chatrooms(),
-  //     userEmail: _user.email,
-  //   );
-  // }
 }

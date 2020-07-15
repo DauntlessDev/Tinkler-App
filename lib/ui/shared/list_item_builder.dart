@@ -37,7 +37,6 @@ class ListItemBuilder<T> extends StatelessWidget {
 
   Widget _buildList(List<T> items) {
     return ListView.builder(
-      reverse: true,
       itemBuilder: (context, index) {
         return itemBuilder(context, items[index]);
       },

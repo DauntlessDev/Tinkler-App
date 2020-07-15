@@ -5,7 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
-import 'package:tinkler/model/chatroom.dart';
 
 @lazySingleton
 class FirebaseService {
@@ -157,16 +156,4 @@ class FirebaseService {
         .getDownloadURL();
   }
 
-  // Stream<List<Chatroom>> chatroomsStream(
-  //     {@required String userEmail,
-  //     @required Chatroom builder(Map<String, dynamic> data),
-  //     @required path}) {
-  //   print('current email for chatroomstream : $userEmail');
-  //   return Firestore.instance.collection(path).snapshots().map(
-  //         (snapshot) => snapshot.documents
-  //             .map((snapshot) => builder(snapshot.data))
-  //             .where((value) => value.chatroomID.contains(userEmail))
-  //             .toList(),
-  //       );
-  // }
 }

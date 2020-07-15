@@ -19,7 +19,7 @@ class ChatViewModel extends StreamViewModel {
   @override
   Stream get stream => getAllUserConversations();
   Stream<List<Chatroom>> getAllUserConversations() {
-    return _database.chatroomsStream(_user.email);
+    return _database.chatroomsStream();
   }
 
   void navigateToSearch() {
