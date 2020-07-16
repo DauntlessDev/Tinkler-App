@@ -5,9 +5,7 @@ class HomeViewModel extends BaseViewModel {
   TabItem get currentTab => _currentTab;
 
   void select(TabItem value, navigatorKeyValue) {
-    if (value == _currentTab) {
-      // navigatorKeyValue.currentState.popUntil((route) => route.isFirst);
-    } else {
+    if (value != _currentTab) {
       _currentTab = value;
       notifyListeners();
     }

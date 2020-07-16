@@ -148,16 +148,14 @@ class MessageBubble extends ViewModelWidget<ChatroomViewModel> {
   Widget build(BuildContext context, ChatroomViewModel model) {
     return Column(
       children: <Widget>[
-        ifShowDate || isShowTime
-            ? Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-                child: Text(
-                  model.formatDate(time),
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                ),
-              )
-            : Container(),
+        if (ifShowDate || isShowTime)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+            child: Text(
+              model.formatDate(time),
+              style: TextStyle(color: Colors.grey, fontSize: 12),
+            ),
+          ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 1.0),
           child: Row(

@@ -22,6 +22,9 @@ class ChatViewModel extends StreamViewModel {
     return _database.chatroomsStream();
   }
 
+  void getChatInfo() {
+    // allUserConversations.
+  }
   void navigateToSearch() {
     _navigation.navigateTo(Routes.searchViewRoute);
   }
