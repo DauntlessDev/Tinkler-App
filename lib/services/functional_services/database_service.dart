@@ -43,12 +43,20 @@ class DatabaseService {
     );
   }
 
+  Future<List<Profile>> profileFuture({@required String email}) {
+    return _service.collectionFuture<Profile>(
+      path: APIPath.users(),
+      builder: (data) => Profile.fromMap(data),
+      queryBuilder: (query) => query.where('email', isEqualTo: email),
+    );
+  }
+
   Future<List<Profile>> usersFuture() {
     return _service.collectionFuture<Profile>(
         path: APIPath.users(), builder: (data) => Profile.fromMap(data));
   }
 
-  Future<void> addChatroom(Chatroom chatroom) async {
+  Future<void> addChatroom({@required Chatroom chatroom}) async {
     await _service.setData(
       path: APIPath.chatroom(chatroom.chatroomID),
       data: chatroom.toMap(),
@@ -72,6 +80,14 @@ class DatabaseService {
       builder: (data) => Message.fromMap(data),
       sort: (a, b) => a.time.compareTo(b.time),
       isReversed: true,
+    );
+  }
+
+  Future<List<Message>> messagesFuture({@required String chatroomId}) {
+    return _service.collectionFuture(
+      path: APIPath.chatroomMessages(chatroomId),
+      builder: (data) => Message.fromMap(data),
+      sort: (a, b) => a.time.compareTo(b.time),
     );
   }
 

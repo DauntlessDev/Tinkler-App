@@ -4,12 +4,13 @@ import 'package:tinkler/model/message.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
-import 'package:intl/intl.dart';
+import 'package:tinkler/services/state_services/formatter_service.dart';
 
 class ChatroomViewModel extends StreamViewModel<List<Message>> {
   final _database = locator<DatabaseService>();
   final _user = locator<CurrentUserService>();
   final _chatroom = locator<CurrentChatroomService>();
+  final _formatter = locator<FormatterService>();
 
   List<Message> get messages => data;
 
@@ -45,20 +46,6 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
     return (firstDate.difference(secondDate).abs() >= Duration(hours: 6));
   }
 
-  String formatDate(String firstTime) {
-    DateTime firstDate = DateTime.parse(firstTime);
-
-    if (firstDate.difference(DateTime.now()) > Duration(days: 365)) {
-      return '${DateFormat.yMMMMd().format(firstDate)} AT ${DateFormat.jm().format(firstDate)}';
-    } else if (firstDate.difference(DateTime.now()) > Duration(days: 7)) {
-      return '${DateFormat.MMMMd().format(firstDate)} AT ${DateFormat.jm().format(firstDate)}';
-    } else if (firstDate.day != DateTime.now().day) {
-      return '${DateFormat.E().format(firstDate).toUpperCase()} AT ${DateFormat.jm().format(firstDate)}';
-    } else {
-      return DateFormat.jm().format(firstDate);
-    }
-  }
-
   String _input = '';
   String get input => _input;
   void setInput(String value) => _input = value;
@@ -89,5 +76,9 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
   void updateOtherUserInfo() {
     otherDisplayName = _chatroom.otherDisplayName;
     otherPhotoUrl = _chatroom.otherPhotoUrl;
+  }
+
+  String formatDate(String firstTime) {
+    return _formatter.formatDate(firstTime);
   }
 }

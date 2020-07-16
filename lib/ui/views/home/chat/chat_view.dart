@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/model/chatroom.dart';
-import 'package:tinkler/ui/shared/list_item_builder.dart';
+import 'package:tinkler/model/chat.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'chat_viewmodel.dart';
@@ -60,21 +59,6 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
   }
 }
 
-// class MessageList extends ViewModelWidget<ChatViewModel> {
-//   const MessageList({
-//     Key key,
-//   }) : super(key: key, reactive: true);
-
-//   @override
-//   Widget build(BuildContext context, ChatViewModel model) {
-//     return ListItemBuilder<Chat>(
-//       model: model,
-//       itemBuilder: (context, chat) => MessageTile(chat: chat),
-//       items: model.data,
-//     );
-//   }
-// }
-
 class MessageList extends ViewModelWidget<ChatViewModel> {
   const MessageList({
     Key key,
@@ -82,40 +66,49 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
 
   @override
   Widget build(BuildContext context, ChatViewModel model) {
-    return ListItemBuilder<Chatroom>(
-      model: model,
-      itemBuilder: (context, chatroom) => MessageTile(chatroom: chatroom),
-      items: model.data,
+    return ListView.builder(
+      itemCount: model.listOfAllChats.length,
+      itemBuilder: (context, index) =>
+          MessageTile(chat: model.listOfAllChats[index]),
     );
+    // return ListItemBuilder<Chat>(
+    //   model: model,
+    //   itemBuilder: (context, chat) => MessageTile(chat: chat),
+    //   items: model.listOfAllChats,
+    // );
   }
 }
 
-class MessageTile extends StatelessWidget {
+class MessageTile extends ViewModelWidget<ChatViewModel> {
   const MessageTile({
     Key key,
-    @required this.chatroom,
-  }) : super(key: key);
+    @required this.chat,
+  }) : super(key: key, reactive: true);
 
-  final Chatroom chatroom;
+  final Chat chat;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ChatViewModel model) {
     return ListTile(
       leading: CircleAvatar(
         radius: 25,
-        child: Avatar(photoUrl: '', radius: 30),
+        child: ClipOval(
+            child: Avatar(
+          radius: 20,
+          photoUrl: chat.photoUrl,
+        )),
       ),
       title: Text(
-        chatroom.chatroomID,
+        chat.name,
         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
       ),
       subtitle: RichText(
         text: TextSpan(
           style: Theme.of(context).primaryTextTheme.subtitle1,
           children: [
-            TextSpan(text: 'fake text'),
+            TextSpan(text: chat.lastMessage),
             TextSpan(
-              text: ' • 6:69',
+              text: ' • ${model.formatDate(chat.time)}',
               style: TextStyle(color: Colors.grey),
             )
           ],
@@ -137,56 +130,3 @@ class MessageTile extends StatelessWidget {
     );
   }
 }
-
-// class MessageTile extends StatelessWidget {
-//   const MessageTile({
-//     Key key,
-//     @required this.chat,
-//   }) : super(key: key);
-
-//   final Chat chat;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListTile(
-//       leading: CircleAvatar(
-//         radius: 25,
-//         child: ClipOval(
-//           child: Image(
-//             image: AssetImage(chat.photoUrl),
-//             fit: BoxFit.contain,
-//           ),
-//         ),
-//       ),
-//       title: Text(
-//         chat.name,
-//         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-//       ),
-//       subtitle: RichText(
-//         text: TextSpan(
-//           style: Theme.of(context).primaryTextTheme.subtitle1,
-//           children: [
-//             TextSpan(text: chat.latestMessage),
-//             TextSpan(
-//               text: ' • ${chat.time}',
-//               style: TextStyle(color: Colors.grey),
-//             )
-//           ],
-//         ),
-//       ),
-//       trailing: Container(
-//         decoration: BoxDecoration(
-//           shape: BoxShape.circle,
-//           color: Colors.blue[900],
-//         ),
-//         child: Padding(
-//           padding: const EdgeInsets.all(2.0),
-//           child: Text(
-//             '12',
-//             style: TextStyle(color: Colors.white, fontSize: 9),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

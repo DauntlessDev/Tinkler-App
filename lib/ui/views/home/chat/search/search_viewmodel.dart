@@ -46,7 +46,7 @@ class SearchViewModel extends BaseViewModel {
       users: [_user.email, otherProfile.email],
       chatroomID: _chatroom.getChatRoomId(_user.email, otherProfile.email),
     );
-    await _database.addChatroom(chatroom);
+    await _database.addChatroom(chatroom: chatroom);
     _chatroom.updateCurrentChatroom(chatroom);
     setBusy(false);
 
