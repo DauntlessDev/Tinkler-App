@@ -40,9 +40,9 @@ class ChatViewModel extends StreamViewModel {
           Message lastMessage;
           Profile otherUserProfile;
 
-          await _database
-              .messagesFuture(chatroomId: chatroom.chatroomID)
-              .then((value) => lastMessage = value.last);
+          _database
+              .messagesStreamInChat(chatroomId: chatroom.chatroomID)
+              .listen((value) => lastMessage = value.first);
 
           for (String userInChat in chatroom.users) {
             print(
@@ -71,10 +71,7 @@ class ChatViewModel extends StreamViewModel {
             ),
           );
           notifyListeners();
-          print('list of all chats: $listOfAllChats');
         }
-        notifyListeners();
-        print('last list of all chats: $listOfAllChats');
       }
     } on PlatformException catch (e) {
       print('Chatviewmodel: chatInfo error message => ${e.message} ');

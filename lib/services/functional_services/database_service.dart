@@ -83,6 +83,16 @@ class DatabaseService {
     );
   }
 
+  
+  Stream<List<Message>> messagesStreamInChat({@required String chatroomId}) {
+    return _service.collectionStreamNoID(
+      path: APIPath.chatroomMessages(chatroomId),
+      builder: (data) => Message.fromMap(data),
+      sort: (a, b) => a.time.compareTo(b.time),
+      isReversed: true,
+    );
+  }
+
   Future<List<Message>> messagesFuture({@required String chatroomId}) {
     return _service.collectionFuture(
       path: APIPath.chatroomMessages(chatroomId),
