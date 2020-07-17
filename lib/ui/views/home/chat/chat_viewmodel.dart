@@ -33,6 +33,7 @@ class ChatViewModel extends StreamViewModel {
   Future<void> getChatInfo(List<Chatroom> allUserConversations) async {
     // setBusy(true);
     try {
+      listOfAllChats.clear();
       print('all user convo: $allUserConversations');
       if (allUserConversations != null) {
         for (Chatroom chatroom in allUserConversations) {
