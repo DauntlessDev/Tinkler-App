@@ -33,7 +33,6 @@ class LoginViewModel extends BaseViewModel {
         User user = await _auth.signInWithEmailAndPassword(
             email: _email, password: _password);
 
-        _user.updateCurrentUserInfo(user);
       } else {
         throw PlatformException(
             code: 'EMPTY_FIELDS', message: 'Please fill out all fields.');

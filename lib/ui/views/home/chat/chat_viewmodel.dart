@@ -13,12 +13,21 @@ import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
 
-class ChatViewModel extends FutureViewModel {
+class ChatViewModel extends StreamViewModel {
   final _database = locator<DatabaseService>();
   final _user = locator<CurrentUserService>();
   final _navigation = locator<NavigationService>();
   final _chatroom = locator<CurrentChatroomService>();
   final _formatter = locator<FormatterService>();
+
+  // List<Chatroom> get allUserConversations => data;
+  @override
+  Stream get stream {
+    _database.chatroomsStream().listen((event) {
+      // if (event.isNotEmpty) getChatInfo(event);
+    });
+    return _database.chatroomsStream();
+  }
 
   List<Chat> listOfAllChats = [];
   Future<void> getChatInfo(List<Chatroom> allUserConversations) async {
@@ -70,6 +79,7 @@ class ChatViewModel extends FutureViewModel {
                 lastMessage: lastMessage.message,
                 time: lastMessage.time),
           );
+          notifyListeners();
           print('list of all chats: $listOfAllChats');
         }
         notifyListeners();
@@ -100,14 +110,14 @@ class ChatViewModel extends FutureViewModel {
   }
 
   @override
-  Future futureToRun() {
-    List<Chatroom> allUserConversations = [];
-    _database.chatroomsStream().listen((event) {
-      allUserConversations = event;
-    });
+  // Future futureToRun() {
+  //   // List<Chatroom> allUserConversations = [];
+  //   // _database.chatroomsStream().listen((event) {
+  //   //   allUserConversations = event;
+  //   // });
 
-    return getChatInfo(allUserConversations);
-  }
+  //   return getChatInfo(allUserConversations);
+  // }
 
   String formatDate(String firstTime) {
     return _formatter.formatDate(firstTime);

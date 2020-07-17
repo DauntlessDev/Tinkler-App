@@ -16,10 +16,6 @@ class CurrentUserService extends ChangeNotifier {
     _email = user.email;
     print('current user : $user');
 
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString('userEmail', user.email);
-    pref.setString('userUid', user.email);
-
     notifyListeners();
   }
 }

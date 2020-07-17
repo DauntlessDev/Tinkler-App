@@ -16,10 +16,6 @@ Future<void> main() async {
   setupLocator();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   AppThemeService.isDarkModeOn = prefs.getBool('isdarkmodeon') ?? false;
-  final _user = locator<CurrentUserService>();
-  _user.updateCurrentUserInfo(User(
-      uid: prefs.getString('userUid') ?? '',
-      email: prefs.getString('userEmail') ?? ''));
   runApp(MyApp());
 }
 
