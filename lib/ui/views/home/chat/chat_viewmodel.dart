@@ -24,7 +24,7 @@ class ChatViewModel extends StreamViewModel {
   @override
   Stream get stream {
     _database.chatroomsStream().listen((event) {
-      // if (event.isNotEmpty) getChatInfo(event);
+      if (event.isNotEmpty) getChatInfo(event);
     });
     return _database.chatroomsStream();
   }
@@ -59,18 +59,19 @@ class ChatViewModel extends StreamViewModel {
           // }
 
           for (String userInChat in chatroom.users) {
-            while (userInChat == _user.email) {
-              continue;
-            }
             print(
                 'userInchat: $userInChat != ${_user.email} => ${userInChat != _user.email}');
             if (userInChat != _user.email) {
               await _database.profileFuture(email: userInChat).then((value) {
                 print('list of profile in chatroom: $value');
                 otherUserProfile = value.first;
+
+                print('otherUserProfile: $otherUserProfile');
               });
             }
           }
+          
+          
 
           listOfAllChats.add(
             Chat(
@@ -108,16 +109,6 @@ class ChatViewModel extends StreamViewModel {
 
     _navigation.navigateTo(Routes.chatroomView);
   }
-
-  @override
-  // Future futureToRun() {
-  //   // List<Chatroom> allUserConversations = [];
-  //   // _database.chatroomsStream().listen((event) {
-  //   //   allUserConversations = event;
-  //   // });
-
-  //   return getChatInfo(allUserConversations);
-  // }
 
   String formatDate(String firstTime) {
     return _formatter.formatDate(firstTime);
