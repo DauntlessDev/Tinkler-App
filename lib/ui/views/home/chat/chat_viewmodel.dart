@@ -70,8 +70,19 @@ class ChatViewModel extends StreamViewModel {
               });
             }
           }
-          
-          
+
+          if (otherUserProfile == null) {
+            for (String userInChat in chatroom.users) {
+              if (userInChat == _user.email) {
+                await _database.profileFuture(email: userInChat).then((value) {
+                  print('list of profile in chatroom: $value');
+                  otherUserProfile = value.first;
+
+                  print('otherUserProfile: $otherUserProfile');
+                });
+              }
+            }
+          }
 
           listOfAllChats.add(
             Chat(
