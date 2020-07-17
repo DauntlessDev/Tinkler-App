@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/chat.dart';
+import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'chat_viewmodel.dart';
@@ -68,14 +69,11 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
   Widget build(BuildContext context, ChatViewModel model) {
     return ListView.builder(
       itemCount: model.listOfAllChats.length,
-      itemBuilder: (context, index) =>
-          MessageTile(chat: model.listOfAllChats[index]),
+      itemBuilder: (context, index) => MessageTile(
+        chat: model.listOfAllChats[index],
+        startConversation: model.startConversation,
+      ),
     );
-    // return ListItemBuilder<Chat>(
-    //   model: model,
-    //   itemBuilder: (context, chat) => MessageTile(chat: chat),
-    //   items: model.listOfAllChats,
-    // );
   }
 }
 
@@ -83,32 +81,31 @@ class MessageTile extends ViewModelWidget<ChatViewModel> {
   const MessageTile({
     Key key,
     @required this.chat,
+    @required this.startConversation,
   }) : super(key: key, reactive: true);
 
   final Chat chat;
+  final Function startConversation;
 
   @override
   Widget build(BuildContext context, ChatViewModel model) {
     return ListTile(
-      leading: CircleAvatar(
-        radius: 25,
-        child: ClipOval(
-            child: Avatar(
-          radius: 20,
-          photoUrl: chat.photoUrl,
-        )),
+      onTap: () => startConversation(chat.profile),
+      leading: Avatar(
+        radius: 20,
+        photoUrl: chat.profile.photoUrl,
       ),
       title: Text(
-        chat.name,
+        chat.profile.displayName,
         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
       ),
       subtitle: RichText(
         text: TextSpan(
           style: Theme.of(context).primaryTextTheme.subtitle1,
           children: [
-            TextSpan(text: chat.lastMessage),
+            TextSpan(text: chat.lastMessage.message),
             TextSpan(
-              text: ' • ${model.formatDate(chat.time)}',
+              text: ' • ${model.formatDate(chat.lastMessage.time)}',
               style: TextStyle(color: Colors.grey),
             )
           ],

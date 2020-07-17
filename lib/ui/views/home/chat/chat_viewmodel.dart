@@ -87,10 +87,9 @@ class ChatViewModel extends StreamViewModel {
 
           listOfAllChats.add(
             Chat(
-                name: otherUserProfile.displayName,
-                photoUrl: otherUserProfile.photoUrl,
-                lastMessage: lastMessage.message,
-                time: lastMessage.time),
+              profile: otherUserProfile,
+              lastMessage: lastMessage,
+            ),
           );
           notifyListeners();
           print('list of all chats: $listOfAllChats');

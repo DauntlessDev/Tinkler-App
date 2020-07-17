@@ -1,15 +1,14 @@
 import 'package:flutter/foundation.dart';
+import 'package:tinkler/model/profile.dart';
+
+import 'message.dart';
 
 class Chat {
-  final String name;
-  final String photoUrl;
-  final String lastMessage;
-  final String time;
+  final Profile profile;
+  final Message lastMessage;
 
   const Chat({
-    @required this.name,
-    @required this.photoUrl,
+    @required this.profile,
     @required this.lastMessage,
-    @required this.time,
   });
 }
