@@ -40,47 +40,26 @@ class ChatViewModel extends StreamViewModel {
           Message lastMessage;
           Profile otherUserProfile;
 
-          // await _database
-          //     .messagesFuture(chatroomId: chatroom.chatroomID)
-          //     .then((value) => lastMessage = value.last);
-
           await _database
               .messagesFuture(chatroomId: chatroom.chatroomID)
-              .then((value) {
-            print('list of messagse : $value');
-            lastMessage = value.last;
-          });
-
-          // for (String userInChat in chatroom.users) {
-          //   if (userInChat != _user.email) {
-          //     await _database
-          //         .profileFuture(email: userInChat)
-          //         .then((value) => otherUserProfile = value.last);
-          //   }
-          // }
+              .then((value) => lastMessage = value.last);
 
           for (String userInChat in chatroom.users) {
             print(
                 'userInchat: $userInChat != ${_user.email} => ${userInChat != _user.email}');
             if (userInChat != _user.email) {
-              await _database.profileFuture(email: userInChat).then((value) {
-                print('list of profile in chatroom: $value');
-                otherUserProfile = value.first;
-
-                print('otherUserProfile: $otherUserProfile');
-              });
+              await _database
+                  .profileFuture(email: userInChat)
+                  .then((value) => otherUserProfile = value.first);
             }
           }
 
           if (otherUserProfile == null) {
             for (String userInChat in chatroom.users) {
               if (userInChat == _user.email) {
-                await _database.profileFuture(email: userInChat).then((value) {
-                  print('list of profile in chatroom: $value');
-                  otherUserProfile = value.first;
-
-                  print('otherUserProfile: $otherUserProfile');
-                });
+                await _database
+                    .profileFuture(email: userInChat)
+                    .then((value) => otherUserProfile = value.first);
               }
             }
           }
@@ -100,7 +79,6 @@ class ChatViewModel extends StreamViewModel {
     } on PlatformException catch (e) {
       print('Chatviewmodel: chatInfo error message => ${e.message} ');
     }
-    // setBusy(false);
   }
 
   void navigateToSearch() {
