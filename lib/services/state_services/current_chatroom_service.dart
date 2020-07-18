@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/profile.dart';
 
-
 @lazySingleton
 class CurrentChatroomService extends ChangeNotifier {
   String _chatroomId;
@@ -25,9 +24,13 @@ class CurrentChatroomService extends ChangeNotifier {
   String _otherPhotoUrl;
   String get otherPhotoUrl => _otherPhotoUrl;
 
+  String _otherEmail;
+  String get otherEmail => _otherEmail;
+
   void updateOtherChatMate(Profile otherProfile) {
     _otherDisplayName = otherProfile.displayName;
     _otherPhotoUrl = otherProfile.photoUrl;
+    _otherEmail = otherProfile.email;
 
     notifyListeners();
   }

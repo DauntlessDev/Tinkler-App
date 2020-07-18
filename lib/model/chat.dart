@@ -4,10 +4,10 @@ import 'package:tinkler/model/profile.dart';
 import 'message.dart';
 
 class Chat {
-  final Profile profile;
-  final Message lastMessage;
+  Profile profile;
+  Message lastMessage;
 
-  const Chat({
+  Chat({
     @required this.profile,
     @required this.lastMessage,
   });

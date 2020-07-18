@@ -2,6 +2,7 @@ import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/all_chat_service.dart';
 import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
@@ -11,10 +12,12 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
   final _user = locator<CurrentUserService>();
   final _chatroom = locator<CurrentChatroomService>();
   final _formatter = locator<FormatterService>();
+  final _chat = locator<AllChatService>();
 
   List<Message> get messages => data;
 
   Stream<List<Message>> getMessages() {
+    _chat.addListener(() => notifyListeners());
     updateOtherUserInfo();
     _database.messagesStream().listen((event) {
       initiateShowTime(event.length);
@@ -52,13 +55,17 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
 
   Future<void> sendMessage() async {
     if (_input.isNotEmpty) {
+      Message lastMessage = Message(
+        sender: _user.email,
+        message: _input,
+        time: DateTime.now().toIso8601String(),
+      );
       await _database.addMessage(
-          message: Message(
-            sender: _user.email,
-            message: _input,
-            time: DateTime.now().toIso8601String(),
-          ),
+          message: lastMessage,
           messageId: DateTime.now().millisecondsSinceEpoch.toString());
+
+      _chat.setLastMessageOfSpecificChat(
+          email: otherEmail, message: lastMessage);
     }
     _input = '';
   }
@@ -73,9 +80,11 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
 
   String otherDisplayName;
   String otherPhotoUrl;
+  String otherEmail;
   void updateOtherUserInfo() {
     otherDisplayName = _chatroom.otherDisplayName;
     otherPhotoUrl = _chatroom.otherPhotoUrl;
+    otherEmail = _chatroom.otherEmail;
   }
 
   String formatDate(String firstTime) {

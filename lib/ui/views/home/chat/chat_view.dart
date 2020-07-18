@@ -26,7 +26,7 @@ class ChatView extends StatelessWidget {
 class _MainContent extends ViewModelWidget<ChatViewModel> {
   const _MainContent({
     Key key,
-  }) : super(key: key);
+  }) : super(key: key, reactive: true);
 
   @override
   Widget build(BuildContext context, ChatViewModel model) {

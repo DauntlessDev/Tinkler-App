@@ -9,6 +9,7 @@ import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/all_chat_service.dart';
 import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
@@ -19,17 +20,19 @@ class ChatViewModel extends StreamViewModel {
   final _navigation = locator<NavigationService>();
   final _chatroom = locator<CurrentChatroomService>();
   final _formatter = locator<FormatterService>();
+  final _chat = locator<AllChatService>();
 
   // List<Chatroom> get allUserConversations => data;
   @override
   Stream get stream {
+    _chat.addListener(() => notifyListeners());
     _database.chatroomsStream().listen((event) {
       if (event.isNotEmpty) getChatInfo(event);
     });
     return _database.chatroomsStream();
   }
 
-  List<Chat> listOfAllChats = [];
+  List<Chat> get listOfAllChats => _chat.getListOfAllChats;
   Future<void> getChatInfo(List<Chatroom> allUserConversations) async {
     // setBusy(true);
     try {
@@ -64,7 +67,7 @@ class ChatViewModel extends StreamViewModel {
             }
           }
 
-          listOfAllChats.add(
+          _chat.addChatInList(
             Chat(
               profile: otherUserProfile,
               lastMessage: lastMessage,
