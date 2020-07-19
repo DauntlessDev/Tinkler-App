@@ -5,6 +5,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/views/home/posts/posts_view.dart';
 import 'package:tinkler/ui/views/home/profile/profile_view.dart';
+import 'package:tinkler/ui/views/home/search/search_view.dart';
 
 import 'chat/chat_view.dart';
 import 'home_viewmodel.dart';
@@ -45,10 +46,11 @@ class _CupertinoHomeScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        currentIndex: 1,
+        currentIndex: 0,
         backgroundColor: Theme.of(context).backgroundColor,
         items: [
           _buildItem(TabItem.posts),
+          _buildItem(TabItem.search),
           _buildItem(TabItem.chat),
           _buildItem(TabItem.profile),
         ],
@@ -89,6 +91,7 @@ class _TabItemData {
       title: 'Home',
       icon: MdiIcons.homeOutline,
     ),
+    TabItem.search: _TabItemData(title: 'Search', icon: Icons.search),
     TabItem.chat: _TabItemData(title: 'Chat', icon: MdiIcons.chatOutline),
     TabItem.profile: _TabItemData(
       title: 'Profile',
@@ -99,6 +102,7 @@ class _TabItemData {
   static Map<TabItem, GlobalKey<NavigatorState>> get navigatorKey {
     return {
       TabItem.posts: PostsView.navigatorKey,
+      TabItem.search: SearchView.navigatorKey,
       TabItem.chat: ChatView.navigatorKey,
       TabItem.profile: ProfileView.navigatorKey,
     };
@@ -107,6 +111,7 @@ class _TabItemData {
   static Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
       TabItem.posts: (_) => PostsView(),
+      TabItem.search: (_) => SearchView(),
       TabItem.chat: (_) => ChatView(),
       TabItem.profile: (_) => ProfileView(),
     };

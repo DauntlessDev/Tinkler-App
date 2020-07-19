@@ -1,7 +1,7 @@
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
-  TabItem _currentTab = TabItem.chat;
+  TabItem _currentTab = TabItem.posts;
   TabItem get currentTab => _currentTab;
 
   void select(TabItem value, navigatorKeyValue) {
@@ -12,4 +12,4 @@ class HomeViewModel extends BaseViewModel {
   }
 }
 
-enum TabItem { posts, chat, profile }
+enum TabItem { posts, search, chat, profile }
