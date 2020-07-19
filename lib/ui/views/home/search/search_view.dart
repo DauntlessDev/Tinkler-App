@@ -56,7 +56,7 @@ class SearchView extends StatelessWidget {
           inAsyncCall: model.isBusy,
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: SearchTileBuilder(),
+            child: _SearchTileBuilder(),
           ),
         ),
       ),
@@ -64,8 +64,8 @@ class SearchView extends StatelessWidget {
   }
 }
 
-class SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
-  SearchTileBuilder({
+class _SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
+  _SearchTileBuilder({
     Key key,
   }) : super(key: key, reactive: true);
 
@@ -77,7 +77,7 @@ class SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
           title: 'Empty Result', message: 'The name entered is not found.');
 
     return ListView.builder(
-      itemBuilder: (context, index) => SearchTile(
+      itemBuilder: (context, index) => _SearchTile(
         profile: model.listOfUsers[index],
         visitProfile: () => model.visitProfile(model.listOfUsers[index]),
       ),
@@ -86,8 +86,8 @@ class SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
   }
 }
 
-class SearchTile extends StatelessWidget {
-  const SearchTile({
+class _SearchTile extends StatelessWidget {
+  const _SearchTile({
     Key key,
     @required this.profile,
     @required this.visitProfile,

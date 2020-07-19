@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/chat.dart';
+import 'package:tinkler/ui/shared/empty_content.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'chat_viewmodel.dart';
@@ -43,6 +44,7 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
       // body: Container(),
       body: MessageList(),
       floatingActionButton: FloatingActionButton(
+        heroTag: "chatFab",
         onPressed: model.navigateToSearch,
         child: Icon(Icons.message),
       ),
@@ -57,6 +59,7 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
 
   @override
   Widget build(BuildContext context, ChatViewModel model) {
+    if (model.listOfAllChats == null) return EmptyContent();
     return ListView.builder(
       itemCount: model.listOfAllChats.length,
       itemBuilder: (context, index) => MessageTile(

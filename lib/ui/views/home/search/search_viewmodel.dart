@@ -9,9 +9,6 @@ import 'package:tinkler/services/state_services/current_user_service.dart';
 
 class SearchViewModel extends BaseViewModel {
   final _database = locator<DatabaseService>();
-  final _user = locator<CurrentUserService>();
-  final _navigation = locator<NavigationService>();
-  final _chatroom = locator<CurrentChatroomService>();
 
   String _input = '';
   String get input => _input;
@@ -38,6 +35,6 @@ class SearchViewModel extends BaseViewModel {
   }
 
   Future<void> visitProfile(Profile otherProfile) async {
-      //navigate to profile
+    //navigate to profile
   }
 }

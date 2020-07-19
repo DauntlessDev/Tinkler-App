@@ -83,7 +83,7 @@ class ChatViewModel extends StreamViewModel {
   }
 
   void navigateToSearch() {
-    _navigation.navigateTo(Routes.searchViewRoute);
+    _navigation.navigateTo(Routes.chatsearchViewRoute);
   }
 
   String formatDate(String firstTime) {
@@ -102,7 +102,7 @@ class ChatViewModel extends StreamViewModel {
       _chatroom.updateCurrentChatroom(chatroom);
       setBusy(false);
 
-      _navigation.navigateTo(Routes.chatroomView);
+      _navigation.navigateTo(Routes.chatroomViewRoute);
     } on PlatformException catch (e) {
       _dialog.showDialog(title: 'Chat', description: e.message);
     }

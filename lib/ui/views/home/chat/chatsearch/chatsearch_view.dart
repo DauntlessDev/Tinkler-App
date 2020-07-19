@@ -21,7 +21,6 @@ class ChatSearchView extends StatelessWidget {
           ),
           actions: <Widget>[
             FlatButton(
-              // padding: EdgeInsets.only(left: 20),
               onPressed: model.searchUsers,
               child: Icon(
                 Icons.search,
@@ -33,7 +32,7 @@ class ChatSearchView extends StatelessWidget {
           inAsyncCall: model.isBusy,
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: SearchTileBuilder(),
+            child: _SearchTileBuilder(),
           ),
         ),
       ),
@@ -41,8 +40,8 @@ class ChatSearchView extends StatelessWidget {
   }
 }
 
-class SearchTileBuilder extends ViewModelWidget<ChatSearchViewModel> {
-  SearchTileBuilder({
+class _SearchTileBuilder extends ViewModelWidget<ChatSearchViewModel> {
+  _SearchTileBuilder({
     Key key,
   }) : super(key: key, reactive: true);
 
@@ -54,7 +53,7 @@ class SearchTileBuilder extends ViewModelWidget<ChatSearchViewModel> {
           title: 'Empty Result', message: 'The name entered is not found.');
 
     return ListView.builder(
-      itemBuilder: (context, index) => SearchTile(
+      itemBuilder: (context, index) => _SearchTile(
         profile: model.listOfUsers[index],
         sendMessage: () => model.startConversation(model.listOfUsers[index]),
       ),
@@ -63,8 +62,8 @@ class SearchTileBuilder extends ViewModelWidget<ChatSearchViewModel> {
   }
 }
 
-class SearchTile extends StatelessWidget {
-  const SearchTile({
+class _SearchTile extends StatelessWidget {
+  const _SearchTile({
     Key key,
     @required this.profile,
     @required this.sendMessage,

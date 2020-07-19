@@ -33,36 +33,41 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
     ];
 
     return Scaffold(
-        body: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Latest Posts', style: TextStyle(fontSize: 16)),
-                    SizedBox(height: 20),
-                    Expanded(
-                      flex: 1,
-                      child: ListView(
-                        children: postList,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+        floatingActionButton: FloatingActionButton(
+          heroTag: "postFab",
+          onPressed: () {},
+          child: Icon(Icons.add),
         ),
-      ),
-    ));
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('Latest Posts', style: TextStyle(fontSize: 16)),
+                        SizedBox(height: 20),
+                        Expanded(
+                          flex: 1,
+                          child: ListView(
+                            children: postList,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
 

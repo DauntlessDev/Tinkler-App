@@ -70,34 +70,32 @@ class ProfileMenu extends ViewModelWidget<ProfileViewModel> {
       Option(title: 'Logout', iconData: Icons.exit_to_app, onTap: model.signOut)
     ];
 
-    return PopupMenuButton(
-      icon: Icon(Icons.menu),
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<_OptionTile>>[
-        PopupMenuItem<_OptionTile>(
-          child: _OptionTile(
-            option: _optionList[0],
+    return Theme(
+      data: Theme.of(context).copyWith(
+        cardColor:
+            AppThemeService.isDarkModeOn ? Colors.blueGrey[900] : Colors.white,
+      ),
+      child: PopupMenuButton(
+        icon: Icon(Icons.menu),
+        itemBuilder: (BuildContext context) => <PopupMenuEntry<_OptionTile>>[
+          PopupMenuItem<_OptionTile>(
+            child: _OptionTile(
+              option: _optionList[0],
+            ),
           ),
-        ),
-        PopupMenuItem<_OptionTile>(
-          child: _OptionTile(
-            option: _optionList[1],
+          PopupMenuItem<_OptionTile>(
+            child: _OptionTile(
+              option: _optionList[1],
+            ),
           ),
-        ),
-        PopupMenuItem<_OptionTile>(
-          child: _OptionTile(
-            option: _optionList[2],
+          PopupMenuItem<_OptionTile>(
+            child: _OptionTile(
+              option: _optionList[2],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
-
-    // return PopupMenuButton(
-    //     icon: Icon(Icons.menu),
-    //     itemBuilder: (context) {
-    //       for (Option option in _optionList) {
-    //         return _OptionTile(option: option);
-    //       }
-    //     });
   }
 }
 

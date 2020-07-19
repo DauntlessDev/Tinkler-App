@@ -50,6 +50,6 @@ class ChatSearchViewModel extends BaseViewModel {
     _chatroom.updateCurrentChatroom(chatroom);
     setBusy(false);
 
-    _navigation.navigateTo(Routes.chatroomView);
+    _navigation.navigateTo(Routes.chatroomViewRoute);
   }
 }

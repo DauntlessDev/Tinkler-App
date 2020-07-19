@@ -19,15 +19,15 @@ abstract class Routes {
   static const homeViewRoute = '/home-view-route';
   static const loginViewRoute = '/login-view-route';
   static const signupViewRoute = '/signup-view-route';
-  static const searchViewRoute = '/search-view-route';
-  static const chatroomView = '/chatroom-view';
+  static const chatsearchViewRoute = '/chatsearch-view-route';
+  static const chatroomViewRoute = '/chatroom-view-route';
   static const all = {
     landingViewRoute,
     homeViewRoute,
     loginViewRoute,
     signupViewRoute,
-    searchViewRoute,
-    chatroomView,
+    chatsearchViewRoute,
+    chatroomViewRoute,
   };
 }
 
@@ -62,12 +62,12 @@ class Router extends RouterBase {
           builder: (context) => SignupView(),
           settings: settings,
         );
-      case Routes.searchViewRoute:
+      case Routes.chatsearchViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => ChatSearchView(),
           settings: settings,
         );
-      case Routes.chatroomView:
+      case Routes.chatroomViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => ChatroomView(),
           settings: settings,

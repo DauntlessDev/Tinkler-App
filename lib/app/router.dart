@@ -13,6 +13,6 @@ class $Router {
   HomeView homeViewRoute;
   LoginView loginViewRoute;
   SignupView signupViewRoute;
-  ChatSearchView searchViewRoute;
-  ChatroomView chatroomView;
+  ChatSearchView chatsearchViewRoute;
+  ChatroomView chatroomViewRoute;
 }
