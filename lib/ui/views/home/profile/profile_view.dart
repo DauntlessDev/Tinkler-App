@@ -73,7 +73,7 @@ class ProfileMenu extends ViewModelWidget<ProfileViewModel> {
     return Theme(
       data: Theme.of(context).copyWith(
         cardColor:
-            AppThemeService.isDarkModeOn ? Colors.blueGrey[900] : Colors.white,
+            AppThemeService.isDarkModeOn ? Colors.grey[900] : Colors.white,
       ),
       child: PopupMenuButton(
         icon: Icon(Icons.menu),

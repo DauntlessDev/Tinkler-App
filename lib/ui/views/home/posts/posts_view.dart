@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/ui/views/home/posts/post_bottomsheet/post_bottomsheet_view.dart';
 
 import 'posts_viewmodel.dart';
 
@@ -35,7 +36,8 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           heroTag: "postFab",
-          onPressed: () {},
+          onPressed: () => showBottomSheet(
+              context: context, builder: (context) => PostBottomsheetView()),
           child: Icon(Icons.add),
         ),
         body: SafeArea(

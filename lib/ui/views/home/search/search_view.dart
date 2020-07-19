@@ -30,11 +30,15 @@ class SearchView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        color: Colors.grey[100],
+                        color: Theme.of(context).colorScheme.onSurface,
                         width: 290,
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: TextField(
-                          decoration: InputDecoration(hintText: 'Enter name'),
+                          decoration: InputDecoration(
+                            hintText: 'Enter name',
+                            fillColor: Theme.of(context).colorScheme.onSurface,
+                            hintStyle: TextStyle(color: Colors.grey),
+                          ),
                           onChanged: model.setInput,
                           onEditingComplete: model.searchUsers,
                         ),

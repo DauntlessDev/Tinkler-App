@@ -15,7 +15,10 @@ class ChatSearchView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: TextField(
-            decoration: InputDecoration(hintText: 'Enter name'),
+            decoration: InputDecoration(
+              hintText: 'Enter name',
+              hintStyle: TextStyle(color: Colors.grey),
+            ),
             onChanged: model.setInput,
             onEditingComplete: model.searchUsers,
           ),

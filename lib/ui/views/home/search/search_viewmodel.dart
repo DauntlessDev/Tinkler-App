@@ -1,11 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
-import 'package:tinkler/services/state_services/current_chatroom_service.dart';
-import 'package:tinkler/services/state_services/current_user_service.dart';
 
 class SearchViewModel extends BaseViewModel {
   final _database = locator<DatabaseService>();

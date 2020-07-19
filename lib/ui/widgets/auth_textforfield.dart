@@ -37,7 +37,6 @@ class AuthTextFormField extends StatelessWidget {
         hintStyle: TextStyle(color: Colors.grey),
         icon: Icon(
           iconData,
-          //NOT WORKING IN FLUTTER DONT KNOW WHY :(
           color: focusNode.hasFocus ? Colors.blue[900] : Colors.grey,
         ),
         focusColor: Theme.of(context).primaryColor,
