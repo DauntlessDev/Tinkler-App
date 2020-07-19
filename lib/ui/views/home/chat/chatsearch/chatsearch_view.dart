@@ -5,13 +5,13 @@ import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/shared/empty_content.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
-import 'search_viewmodel.dart';
+import 'chatsearch_viewmodel.dart';
 
-class SearchView extends StatelessWidget {
+class ChatSearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SearchViewModel>.reactive(
-      viewModelBuilder: () => SearchViewModel(),
+    return ViewModelBuilder<ChatSearchViewModel>.reactive(
+      viewModelBuilder: () => ChatSearchViewModel(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: TextField(
@@ -41,13 +41,13 @@ class SearchView extends StatelessWidget {
   }
 }
 
-class SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
+class SearchTileBuilder extends ViewModelWidget<ChatSearchViewModel> {
   SearchTileBuilder({
     Key key,
   }) : super(key: key, reactive: true);
 
   @override
-  Widget build(BuildContext context, SearchViewModel model) {
+  Widget build(BuildContext context, ChatSearchViewModel model) {
     if (model.listOfUsers == null) return Container();
     if (model.listOfUsers.isEmpty)
       return EmptyContent(

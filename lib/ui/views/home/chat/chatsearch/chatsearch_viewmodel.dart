@@ -9,7 +9,7 @@ import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 
-class SearchViewModel extends BaseViewModel {
+class ChatSearchViewModel extends BaseViewModel {
   final _database = locator<DatabaseService>();
   final _user = locator<CurrentUserService>();
   final _navigation = locator<NavigationService>();
