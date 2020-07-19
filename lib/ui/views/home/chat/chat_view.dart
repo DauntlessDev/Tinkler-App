@@ -39,20 +39,11 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
             const RotatedBox(quarterTurns: 1, child: Icon(Icons.chevron_right)),
           ],
         ),
-        actions: <Widget>[
-          FlatButton(
-            // padding: EdgeInsets.only(left: 10),
-            onPressed: model.navigateToSearch,
-            child: const Icon(
-              Icons.search,
-            ),
-          ),
-        ],
       ),
       // body: Container(),
       body: MessageList(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: model.navigateToSearch,
         child: Icon(Icons.message),
       ),
     );

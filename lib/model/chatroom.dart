@@ -5,19 +5,24 @@ import 'package:flutter/foundation.dart';
 class Chatroom {
   final List<String> users;
   final String chatroomID;
+  final String chatName;
 
   Chatroom({
     this.users,
     this.chatroomID,
+    this.chatName = '',
   });
+
 
   Chatroom copyWith({
     List<String> users,
     String chatroomID,
+    String chatName,
   }) {
     return Chatroom(
       users: users ?? this.users,
       chatroomID: chatroomID ?? this.chatroomID,
+      chatName: chatName ?? this.chatName,
     );
   }
 
@@ -25,6 +30,7 @@ class Chatroom {
     return {
       'users': users,
       'chatroomID': chatroomID,
+      'chatName': chatName,
     };
   }
 
@@ -34,6 +40,7 @@ class Chatroom {
     return Chatroom(
       users: List<String>.from(map['users']),
       chatroomID: map['chatroomID'],
+      chatName: map['chatName'],
     );
   }
 
@@ -42,7 +49,7 @@ class Chatroom {
   static Chatroom fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  String toString() => 'Chatroom(users: $users, chatroomID: $chatroomID)';
+  String toString() => 'Chatroom(users: $users, chatroomID: $chatroomID, chatName: $chatName)';
 
   @override
   bool operator ==(Object o) {
@@ -50,9 +57,10 @@ class Chatroom {
   
     return o is Chatroom &&
       listEquals(o.users, users) &&
-      o.chatroomID == chatroomID;
+      o.chatroomID == chatroomID &&
+      o.chatName == chatName;
   }
 
   @override
-  int get hashCode => users.hashCode ^ chatroomID.hashCode;
+  int get hashCode => users.hashCode ^ chatroomID.hashCode ^ chatName.hashCode;
 }
