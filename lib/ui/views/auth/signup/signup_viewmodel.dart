@@ -3,17 +3,14 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
-import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
-import 'package:tinkler/services/state_services/current_user_service.dart';
 
 class SignupViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   final _database = locator<DatabaseService>();
   final _dialog = locator<DialogService>();
   final _navigation = locator<NavigationService>();
-  final _user = locator<CurrentUserService>();
 
   Future navigateToLogin() async {
     final _navigationService = locator<NavigationService>();
@@ -61,7 +58,7 @@ class SignupViewModel extends BaseViewModel {
         print('$_displayName , $_email , $_password , $_confirmPassword ');
         setBusy(true);
 
-        User user = await _auth.createWithEmailAndPassword(
+        await _auth.createWithEmailAndPassword(
             email: _email, password: _password);
 
         await _database.addProfile(

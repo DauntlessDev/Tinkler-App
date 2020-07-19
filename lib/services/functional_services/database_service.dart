@@ -83,7 +83,6 @@ class DatabaseService {
     );
   }
 
-  
   Stream<List<Message>> messagesStreamInChat({@required String chatroomId}) {
     return _service.collectionStreamNoID(
       path: APIPath.chatroomMessages(chatroomId),
@@ -108,5 +107,9 @@ class DatabaseService {
       queryBuilder: (query) => query.where('users', arrayContains: _user.email),
       isReversed: true,
     );
+  }
+
+  Future<void> deleteChatroom({String chatroomId}) async {
+    await _service.deleteData(path: APIPath.chatroom(chatroomId));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tinkler/model/user.dart';
 
 @lazySingleton

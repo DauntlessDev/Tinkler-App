@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/theme/app_theme.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 
 import 'app/locator.dart';
 import 'app/router.gr.dart';
-import 'model/user.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

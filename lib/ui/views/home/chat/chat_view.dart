@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/chat.dart';
-import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'chat_viewmodel.dart';
@@ -89,38 +88,50 @@ class MessageTile extends ViewModelWidget<ChatViewModel> {
 
   @override
   Widget build(BuildContext context, ChatViewModel model) {
-    return ListTile(
-      onTap: () => startConversation(chat.profile),
-      leading: Avatar(
-        radius: 20,
-        photoUrl: chat.profile.photoUrl,
-      ),
-      title: Text(
-        chat.profile.displayName,
-        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-      ),
-      subtitle: RichText(
-        text: TextSpan(
-          style: Theme.of(context).primaryTextTheme.subtitle1,
-          children: [
-            TextSpan(text: chat.lastMessage.message),
-            TextSpan(
-              text: ' • ${model.formatDate(chat.lastMessage.time)}',
-              style: TextStyle(color: Colors.grey),
-            )
-          ],
+    return Dismissible(
+      background: Container(
+        color: Colors.blueGrey[100],
+        padding: EdgeInsets.only(left: 15),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Icon(Icons.delete),
         ),
       ),
-      trailing: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.blue[900],
+      onDismissed: (direction) => model.deleteChatroom(chat.profile.email),
+      key: Key('chat-${model.getChatroomID(chat.profile.email)}'),
+      child: ListTile(
+        onTap: () => startConversation(chat.profile),
+        leading: Avatar(
+          radius: 20,
+          photoUrl: chat.profile.photoUrl,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Text(
-            '12',
-            style: TextStyle(color: Colors.white, fontSize: 9),
+        title: Text(
+          chat.profile.displayName,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+        subtitle: RichText(
+          text: TextSpan(
+            style: Theme.of(context).primaryTextTheme.subtitle1,
+            children: [
+              TextSpan(text: chat.lastMessage.message),
+              TextSpan(
+                text: ' • ${model.formatDate(chat.lastMessage.time)}',
+                style: TextStyle(color: Colors.grey),
+              )
+            ],
+          ),
+        ),
+        trailing: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.blue[900],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Text(
+              '12',
+              style: TextStyle(color: Colors.white, fontSize: 9),
+            ),
           ),
         ),
       ),

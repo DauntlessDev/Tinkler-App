@@ -17,6 +17,7 @@ import 'package:tinkler/services/state_services/formatter_service.dart';
 class ChatViewModel extends StreamViewModel {
   final _database = locator<DatabaseService>();
   final _user = locator<CurrentUserService>();
+  final _dialog = locator<DialogService>();
   final _navigation = locator<NavigationService>();
   final _chatroom = locator<CurrentChatroomService>();
   final _formatter = locator<FormatterService>();
@@ -85,21 +86,36 @@ class ChatViewModel extends StreamViewModel {
     _navigation.navigateTo(Routes.searchViewRoute);
   }
 
-  Future<void> startConversation(Profile otherProfile) async {
-    setBusy(true);
-    _chatroom.updateOtherChatMate(otherProfile);
-    final chatroom = Chatroom(
-      users: [_user.email, otherProfile.email],
-      chatroomID: _chatroom.getChatRoomId(_user.email, otherProfile.email),
-    );
-    await _database.addChatroom(chatroom: chatroom);
-    _chatroom.updateCurrentChatroom(chatroom);
-    setBusy(false);
-
-    _navigation.navigateTo(Routes.chatroomView);
-  }
-
   String formatDate(String firstTime) {
     return _formatter.formatDate(firstTime);
   }
+
+  Future<void> startConversation(Profile otherProfile) async {
+    try {
+      setBusy(true);
+      _chatroom.updateOtherChatMate(otherProfile);
+      final chatroom = Chatroom(
+        users: [_user.email, otherProfile.email],
+        chatroomID: getChatroomID(otherProfile.email),
+      );
+      await _database.addChatroom(chatroom: chatroom);
+      _chatroom.updateCurrentChatroom(chatroom);
+      setBusy(false);
+
+      _navigation.navigateTo(Routes.chatroomView);
+    } on PlatformException catch (e) {
+      _dialog.showDialog(title: 'Chat', description: e.message);
+    }
+  }
+
+  Future<void> deleteChatroom(String otherEmail) async {
+    try {
+      await _database.deleteChatroom(chatroomId: getChatroomID(otherEmail));
+    } on PlatformException catch (e) {
+      _dialog.showDialog(title: 'Chat', description: e.message);
+    }
+  }
+
+  String getChatroomID(otherEmail) =>
+      _chatroom.getChatRoomId(_user.email, otherEmail);
 }
