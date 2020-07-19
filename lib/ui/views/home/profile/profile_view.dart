@@ -41,12 +41,63 @@ class _MainContent extends ViewModelWidget<ProfileViewModel> {
               const Icon(Icons.person),
             ],
           ),
+          actions: <Widget>[
+            ProfileMenu(),
+          ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(240),
             child: _BottomAppBarProfile(),
           )),
-      body: _OptionListBuilder(),
+      body: Container(),
     );
+  }
+}
+
+class ProfileMenu extends ViewModelWidget<ProfileViewModel> {
+  ProfileMenu({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, ProfileViewModel model) {
+    final List<Option> _optionList = [
+      Option(
+          title: 'Dark Mode',
+          iconData: MdiIcons.moonWaningCrescent,
+          onTap: model.toggleDarkMode,
+          isSwitch: true),
+      Option(title: 'Notifications', iconData: MdiIcons.bell, onTap: () {}),
+      Option(title: 'Logout', iconData: Icons.exit_to_app, onTap: model.signOut)
+    ];
+
+    return PopupMenuButton(
+      icon: Icon(Icons.menu),
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<_OptionTile>>[
+        PopupMenuItem<_OptionTile>(
+          child: _OptionTile(
+            option: _optionList[0],
+          ),
+        ),
+        PopupMenuItem<_OptionTile>(
+          child: _OptionTile(
+            option: _optionList[1],
+          ),
+        ),
+        PopupMenuItem<_OptionTile>(
+          child: _OptionTile(
+            option: _optionList[2],
+          ),
+        ),
+      ],
+    );
+
+    // return PopupMenuButton(
+    //     icon: Icon(Icons.menu),
+    //     itemBuilder: (context) {
+    //       for (Option option in _optionList) {
+    //         return _OptionTile(option: option);
+    //       }
+    //     });
   }
 }
 
@@ -136,27 +187,27 @@ class _OptionTile extends StatelessWidget {
   }
 }
 
-class _OptionListBuilder extends ViewModelWidget<ProfileViewModel> {
-  const _OptionListBuilder({
-    Key key,
-  }) : super(key: key, reactive: false);
+// class _OptionListBuilder extends ViewModelWidget<ProfileViewModel> {
+//   const _OptionListBuilder({
+//     Key key,
+//   }) : super(key: key, reactive: false);
 
-  @override
-  Widget build(BuildContext context, ProfileViewModel model) {
-    final List<Option> _optionList = [
-      Option(
-          title: 'Dark Mode',
-          iconData: MdiIcons.moonWaningCrescent,
-          onTap: model.toggleDarkMode,
-          isSwitch: true),
-      Option(title: 'Notifications', iconData: MdiIcons.bell, onTap: () {}),
-      Option(title: 'App Updates', iconData: Icons.file_download, onTap: () {}),
-      Option(title: 'Logout', iconData: Icons.exit_to_app, onTap: model.signOut)
-    ];
+//   @override
+//   Widget build(BuildContext context, ProfileViewModel model) {
+//     final List<Option> _optionList = [
+//       Option(
+//           title: 'Dark Mode',
+//           iconData: MdiIcons.moonWaningCrescent,
+//           onTap: model.toggleDarkMode,
+//           isSwitch: true),
+//       Option(title: 'Notifications', iconData: MdiIcons.bell, onTap: () {}),
+//       Option(title: 'App Updates', iconData: Icons.file_download, onTap: () {}),
+//       Option(title: 'Logout', iconData: Icons.exit_to_app, onTap: model.signOut)
+//     ];
 
-    return ListView.builder(
-        itemBuilder: (context, index) =>
-            _OptionTile(option: _optionList[index]),
-        itemCount: _optionList.length);
-  }
-}
+//     return ListView.builder(
+//         itemBuilder: (context, index) =>
+//             _OptionTile(option: _optionList[index]),
+//         itemCount: _optionList.length);
+//   }
+// }
