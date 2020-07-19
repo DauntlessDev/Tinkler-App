@@ -24,24 +24,6 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
 
   @override
   Widget build(BuildContext context, PostsViewModel model) {
-    List<Widget> momentList = [
-      MomentAvatar(),
-      SizedBox(width: 10),
-      MomentAvatar(),
-      SizedBox(width: 10),
-      MomentAvatar(),
-      SizedBox(width: 10),
-      MomentAvatar(),
-      SizedBox(width: 10),
-      MomentAvatar(),
-      SizedBox(width: 10),
-      MomentAvatar(),
-      SizedBox(width: 10),
-      MomentAvatar(),
-      SizedBox(width: 10),
-      MomentAvatar(),
-    ];
-
     List<Widget> postList = [
       PostTile(),
       SizedBox(height: 15),
@@ -53,24 +35,15 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
     return Scaffold(
         body: SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(left: 30.0, top: 40),
+        padding: const EdgeInsets.only(left: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text('Moments', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 15),
-            Container(
-              height: 50,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: momentList,
-              ),
-            ),
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30, 30, 0),
+                padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -93,31 +66,6 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
   }
 }
 
-class MomentAvatar extends StatelessWidget {
-  const MomentAvatar({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Theme.of(context).primaryColor, width: 3),
-      ),
-      child: CircleAvatar(
-        radius: 25,
-        child: ClipOval(
-          child: Image(
-            image: AssetImage('assets/images/profile_2.jpg'),
-            fit: BoxFit.contain,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class PostTile extends StatelessWidget {
   const PostTile({
     Key key,
@@ -130,7 +78,7 @@ class PostTile extends StatelessWidget {
       child: Container(
         color: Theme.of(context).colorScheme.onSurface,
         child: Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
               Row(

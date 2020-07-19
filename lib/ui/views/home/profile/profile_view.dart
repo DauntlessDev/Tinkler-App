@@ -149,7 +149,6 @@ class _OptionListBuilder extends ViewModelWidget<ProfileViewModel> {
           iconData: MdiIcons.moonWaningCrescent,
           onTap: model.toggleDarkMode,
           isSwitch: true),
-      Option(title: 'Story', iconData: MdiIcons.collage, onTap: () {}),
       Option(title: 'Notifications', iconData: MdiIcons.bell, onTap: () {}),
       Option(title: 'App Updates', iconData: Icons.file_download, onTap: () {}),
       Option(title: 'Logout', iconData: Icons.exit_to_app, onTap: model.signOut)
