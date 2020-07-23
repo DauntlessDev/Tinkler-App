@@ -36,8 +36,11 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           heroTag: "postFab",
-          onPressed: () => showBottomSheet(
-              context: context, builder: (context) => PostBottomsheetView()),
+          onPressed: () => showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return PostBottomsheetView();
+              }),
           child: Icon(Icons.add),
         ),
         body: SafeArea(

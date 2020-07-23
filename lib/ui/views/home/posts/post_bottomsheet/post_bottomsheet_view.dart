@@ -6,30 +6,35 @@ import 'package:stacked/stacked.dart';
 import 'post_bottomsheet_viewmodel.dart';
 
 class PostBottomsheetView extends StatelessWidget {
-  static final navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PostBottomsheetViewModel>.nonReactive(
-      builder: (context, model, child) => const _MainContent(),
-      viewModelBuilder: () => PostBottomsheetViewModel(),
-    );
-  }
-}
-
-class _MainContent extends ViewModelWidget<PostBottomsheetViewModel> {
-  const _MainContent({
-    Key key,
-  }) : super(key: key, reactive: false);
-
-  @override
-  Widget build(BuildContext context, PostBottomsheetViewModel model) {
-    return Container(
-      height: 350,
-      color: Theme.of(context).backgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
-        child: Column(),
+      builder: (context, model, child) => Container(
+        color: Theme.of(context).backgroundColor,
+        height: 350,
+        width: double.maxFinite,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text('Create Post'),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Enter status',
+                    fillColor: Theme.of(context).colorScheme.onSurface,
+                    hintStyle: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
+      viewModelBuilder: () => PostBottomsheetViewModel(),
     );
   }
 }
