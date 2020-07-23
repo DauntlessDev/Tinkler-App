@@ -33,7 +33,7 @@ class ChatViewModel extends StreamViewModel {
     return _database.chatroomsStream();
   }
 
-  List<Chat> get listOfAllChats => _chat.getListOfAllChats;
+  List<Chat> get listOfAllChats => _chat.getNonEmptyChats;
   Future<void> getChatInfo(List<Chatroom> allUserConversations) async {
     // setBusy(true);
     try {
@@ -46,7 +46,18 @@ class ChatViewModel extends StreamViewModel {
 
           _database
               .messagesStreamInChat(chatroomId: chatroom.chatroomID)
-              .listen((value) => lastMessage = value.first);
+              .listen(
+            (value) {
+              if (value == null)
+                lastMessage = Message(message: '', sender: '', time: '');
+              else if (value.isEmpty)
+                lastMessage = Message(message: '', sender: '', time: '');
+              else
+                lastMessage = value.first;
+
+              return lastMessage;
+            },
+          );
 
           for (String userInChat in chatroom.users) {
             print(
@@ -67,13 +78,13 @@ class ChatViewModel extends StreamViewModel {
               }
             }
           }
-
           _chat.addChatInList(
             Chat(
               profile: otherUserProfile,
               lastMessage: lastMessage,
             ),
           );
+
           notifyListeners();
         }
       }

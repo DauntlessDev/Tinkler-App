@@ -8,6 +8,7 @@ import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/all_chat_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 
@@ -17,6 +18,7 @@ class ProfileViewModel extends StreamViewModel<Profile> {
   final _user = locator<CurrentUserService>();
   final _dialog = locator<DialogService>();
   final _theme = locator<AppThemeService>();
+  final _chatlist = locator<AllChatService>();
 
   Profile get profile {
     return (data == null)
@@ -57,6 +59,7 @@ class ProfileViewModel extends StreamViewModel<Profile> {
 
       if (decision.confirmed) {
         await _auth.signOut();
+        _chatlist.clear();
         _user.updateCurrentUserInfo(User(email: '', uid: ''));
       }
     } on PlatformException catch (e) {

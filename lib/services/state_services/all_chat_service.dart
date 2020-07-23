@@ -1,10 +1,8 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:observable_ish/value/value.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/chat.dart';
 import 'package:tinkler/model/message.dart';
-
 
 @lazySingleton
 class AllChatService with ReactiveServiceMixin {
@@ -14,6 +12,9 @@ class AllChatService with ReactiveServiceMixin {
 
   RxValue<List<Chat>> _listOfAllChats = RxValue<List<Chat>>(initial: []);
   List<Chat> get getListOfAllChats => _listOfAllChats.value;
+  List<Chat> get getNonEmptyChats => _listOfAllChats.value
+      .where((chat) => chat.lastMessage.sender.isNotEmpty)
+      .toList();
 
   void setLastMessageOfSpecificChat({String email, Message message}) {
     for (Chat chat in _listOfAllChats.value) {
@@ -31,6 +32,12 @@ class AllChatService with ReactiveServiceMixin {
 
   void addChatInList(Chat chat) {
     _listOfAllChats.value.add(chat);
+    print('_listOfAllChats : $_listOfAllChats');
+    notifyListeners();
+  }
+
+  void clear() {
+    _listOfAllChats.value.clear();
     print('_listOfAllChats : $_listOfAllChats');
     notifyListeners();
   }
