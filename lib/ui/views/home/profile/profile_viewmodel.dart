@@ -19,14 +19,12 @@ class ProfileViewModel extends StreamViewModel<Profile> {
   final _theme = locator<AppThemeService>();
 
   Profile get profile {
-    if (data == null) {
-      return Profile(photoUrl: '', displayName: '', email: '');
-    } else {
-      return Profile(
-          photoUrl: data.photoUrl ?? '',
-          displayName: data.displayName,
-          email: data.email);
-    }
+    return (data == null)
+        ? Profile(photoUrl: '', displayName: '', email: '')
+        : Profile(
+            photoUrl: data.photoUrl ?? '',
+            email: data.email,
+            displayName: data.displayName);
   }
 
   void toggleDarkMode(bool value) {

@@ -31,10 +31,12 @@ class PostBottomsheetViewModel extends BaseViewModel {
 
       _database.addPost(
           post: Post(
-              postId: generatedPostId(posterEmail: _user.email, time: time),
-              description: _input,
-              posterProfile: currentProfile,
-              time: time));
+        postId: generatedPostId(posterEmail: _user.email, time: time),
+        description: _input,
+        posterProfile: currentProfile,
+        time: time,
+        pictureUrl: '',
+      ));
 
       setBusy(false);
     }

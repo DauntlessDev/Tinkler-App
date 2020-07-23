@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/model/post.dart';
+import 'package:tinkler/ui/shared/list_item_builder.dart';
 import 'package:tinkler/ui/views/home/posts/post_bottomsheet/post_bottomsheet_view.dart';
+import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'posts_viewmodel.dart';
 
@@ -25,13 +28,13 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
 
   @override
   Widget build(BuildContext context, PostsViewModel model) {
-    List<Widget> postList = [
-      PostTile(),
-      SizedBox(height: 15),
-      PostTile(),
-      SizedBox(height: 15),
-      PostTile(),
-    ];
+    // List<Widget> postList = [
+    //   PostTile(),
+    //   SizedBox(height: 15),
+    //   PostTile(),
+    //   SizedBox(height: 15),
+    //   PostTile(),
+    // ];
 
     return Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -61,8 +64,11 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
                         SizedBox(height: 20),
                         Expanded(
                           flex: 1,
-                          child: ListView(
-                            children: postList,
+                          child: ListItemBuilder(
+                            itemBuilder: (BuildContext context, item) =>
+                                PostTile(post: item),
+                            items: model.postList,
+                            model: PostsViewModel(),
                           ),
                         ),
                       ],
@@ -76,13 +82,16 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
   }
 }
 
-class PostTile extends StatelessWidget {
+class PostTile extends ViewModelWidget<PostsViewModel> {
   const PostTile({
     Key key,
+    @required this.post,
   }) : super(key: key);
 
+  final Post post;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, PostsViewModel model) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -93,22 +102,19 @@ class PostTile extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 25,
-                    child: ClipOval(
-                      child: Image(
-                        image: AssetImage('assets/images/profile_1.jpg'),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
+                  Avatar(radius: 25, photoUrl: post.posterProfile.photoUrl),
                   SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Brave Leuterio',
-                          style: TextStyle(fontWeight: FontWeight.w700)),
-                      Text('4 mins ago', style: TextStyle(color: Colors.grey)),
+                      Text(
+                        post.posterProfile.displayName,
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        model.formatTime(post.time),
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     ],
                   ),
                   Spacer(flex: 1),
@@ -117,7 +123,7 @@ class PostTile extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                'The black currawong (Strepera fuliginosa), also known as the black jay, is a large passerine bird endemic to Tasmania and nearby islands in the Bass Strait. ',
+                post.description,
                 textAlign: TextAlign.justify,
                 style: TextStyle(fontSize: 13),
               ),

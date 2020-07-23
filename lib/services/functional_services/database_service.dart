@@ -52,9 +52,12 @@ class DatabaseService {
     );
   }
 
-  Future<List<Profile>> usersFuture() {
+  Future<List<Profile>> usersFuture(String searchInput) {
     return _service.collectionFuture<Profile>(
-        path: APIPath.users(), builder: (data) => Profile.fromMap(data));
+        path: APIPath.users(),
+        builder: (data) => Profile.fromMap(data),
+        queryBuilder: (query) =>
+            query.where('caseSearch', arrayContains: searchInput));
   }
 
   Future<void> addChatroom({@required Chatroom chatroom}) async {

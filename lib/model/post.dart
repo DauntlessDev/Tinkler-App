@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:tinkler/model/profile.dart';
 
 class Post {
@@ -8,18 +7,17 @@ class Post {
   String description;
   String pictureUrl;
   String time;
+  int likesCount;
+  int commentsCount;
   Profile posterProfile;
-  List<String> usersLike;
-  List<String> comments;
-
   Post({
-    @required this.postId,
-    @required this.description,
-    @required this.time,
-    @required this.posterProfile,
+    this.postId,
+    this.description,
     this.pictureUrl,
-    this.usersLike,
-    this.comments,
+    this.time,
+    this.likesCount,
+    this.commentsCount,
+    this.posterProfile,
   });
 
   Post copyWith({
@@ -27,18 +25,18 @@ class Post {
     String description,
     String pictureUrl,
     String time,
+    int likesCount,
+    int commentsCount,
     Profile posterProfile,
-    List<String> usersLike,
-    List<String> comments,
   }) {
     return Post(
       postId: postId ?? this.postId,
       description: description ?? this.description,
       pictureUrl: pictureUrl ?? this.pictureUrl,
       time: time ?? this.time,
+      likesCount: likesCount ?? this.likesCount,
+      commentsCount: commentsCount ?? this.commentsCount,
       posterProfile: posterProfile ?? this.posterProfile,
-      usersLike: usersLike ?? this.usersLike,
-      comments: comments ?? this.comments,
     );
   }
 
@@ -48,9 +46,9 @@ class Post {
       'description': description,
       'pictureUrl': pictureUrl,
       'time': time,
+      'likesCount': likesCount,
+      'commentsCount': commentsCount,
       'posterProfile': posterProfile?.toMap(),
-      'usersLike': usersLike,
-      'comments': comments,
     };
   }
 
@@ -62,9 +60,9 @@ class Post {
       description: map['description'],
       pictureUrl: map['pictureUrl'],
       time: map['time'],
+      likesCount: map['likesCount'],
+      commentsCount: map['commentsCount'],
       posterProfile: Profile.fromMap(map['posterProfile']),
-      usersLike: List<String>.from(map['usersLike']),
-      comments: List<String>.from(map['comments']),
     );
   }
 
@@ -74,7 +72,7 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, description: $description, pictureUrl: $pictureUrl, time: $time, posterProfile: $posterProfile, usersLike: $usersLike, comments: $comments)';
+    return 'Post(postId: $postId, description: $description, pictureUrl: $pictureUrl, time: $time, likesCount: $likesCount, commentsCount: $commentsCount, posterProfile: $posterProfile)';
   }
 
   @override
@@ -86,9 +84,9 @@ class Post {
         o.description == description &&
         o.pictureUrl == pictureUrl &&
         o.time == time &&
-        o.posterProfile == posterProfile &&
-        listEquals(o.usersLike, usersLike) &&
-        listEquals(o.comments, comments);
+        o.likesCount == likesCount &&
+        o.commentsCount == commentsCount &&
+        o.posterProfile == posterProfile;
   }
 
   @override
@@ -97,8 +95,8 @@ class Post {
         description.hashCode ^
         pictureUrl.hashCode ^
         time.hashCode ^
-        posterProfile.hashCode ^
-        usersLike.hashCode ^
-        comments.hashCode;
+        likesCount.hashCode ^
+        commentsCount.hashCode ^
+        posterProfile.hashCode;
   }
 }

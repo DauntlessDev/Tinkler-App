@@ -16,12 +16,7 @@ class SearchViewModel extends BaseViewModel {
     if (_input.isNotEmpty) {
       setBusy(true);
       try {
-        listOfUsers = await _database.usersFuture().then((listOfProfile) =>
-            listOfProfile
-                .where((profile) => profile.displayName
-                    .toLowerCase()
-                    .contains(_input.toLowerCase()))
-                .toList());
+        listOfUsers = await _database.usersFuture(_input);
 
         notifyListeners();
         setBusy(false);

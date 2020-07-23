@@ -61,11 +61,22 @@ class SignupViewModel extends BaseViewModel {
         await _auth.createWithEmailAndPassword(
             email: _email, password: _password);
 
+        setSearchParam(String caseNumber) {
+          List<String> caseSearchList = List();
+          String temp = "";
+          for (int i = 0; i < caseNumber.length; i++) {
+            temp = temp + caseNumber[i];
+            caseSearchList.add(temp);
+          }
+          return caseSearchList;
+        }
+
         await _database.addProfile(
           Profile(
-            displayName: _displayName,
             email: _email,
             photoUrl: '',
+            displayName: _displayName,
+            caseSearch: setSearchParam(_displayName.toLowerCase()),
           ),
         );
         clearInputs();
