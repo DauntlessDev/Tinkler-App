@@ -11,4 +11,7 @@ class APIPath {
       '/chatrooms/$chatroomId/messages';
   static String chatroomMessage({String chatroomId, String messageId}) =>
       'chatrooms/$chatroomId/messages/$messageId';
+
+  static String post(String postId) => 'posts/$postId';
+  static String posts() => 'posts/';
 }

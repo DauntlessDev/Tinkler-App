@@ -1,22 +1,23 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:meta/meta.dart';
-
 import 'package:tinkler/model/profile.dart';
 
 class Post {
   String postId;
   String description;
   String pictureUrl;
-  Profile profile;
+  String time;
+  Profile posterProfile;
   List<String> usersLike;
   List<String> comments;
+
   Post({
     @required this.postId,
     @required this.description,
+    @required this.time,
+    @required this.posterProfile,
     this.pictureUrl,
-    @required this.profile,
     this.usersLike,
     this.comments,
   });
@@ -25,7 +26,8 @@ class Post {
     String postId,
     String description,
     String pictureUrl,
-    Profile profile,
+    String time,
+    Profile posterProfile,
     List<String> usersLike,
     List<String> comments,
   }) {
@@ -33,7 +35,8 @@ class Post {
       postId: postId ?? this.postId,
       description: description ?? this.description,
       pictureUrl: pictureUrl ?? this.pictureUrl,
-      profile: profile ?? this.profile,
+      time: time ?? this.time,
+      posterProfile: posterProfile ?? this.posterProfile,
       usersLike: usersLike ?? this.usersLike,
       comments: comments ?? this.comments,
     );
@@ -44,7 +47,8 @@ class Post {
       'postId': postId,
       'description': description,
       'pictureUrl': pictureUrl,
-      'profile': profile?.toMap(),
+      'time': time,
+      'posterProfile': posterProfile?.toMap(),
       'usersLike': usersLike,
       'comments': comments,
     };
@@ -57,7 +61,8 @@ class Post {
       postId: map['postId'],
       description: map['description'],
       pictureUrl: map['pictureUrl'],
-      profile: Profile.fromMap(map['profile']),
+      time: map['time'],
+      posterProfile: Profile.fromMap(map['posterProfile']),
       usersLike: List<String>.from(map['usersLike']),
       comments: List<String>.from(map['comments']),
     );
@@ -69,7 +74,7 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, description: $description, pictureUrl: $pictureUrl, profile: $profile, usersLike: $usersLike, comments: $comments)';
+    return 'Post(postId: $postId, description: $description, pictureUrl: $pictureUrl, time: $time, posterProfile: $posterProfile, usersLike: $usersLike, comments: $comments)';
   }
 
   @override
@@ -80,7 +85,8 @@ class Post {
         o.postId == postId &&
         o.description == description &&
         o.pictureUrl == pictureUrl &&
-        o.profile == profile &&
+        o.time == time &&
+        o.posterProfile == posterProfile &&
         listEquals(o.usersLike, usersLike) &&
         listEquals(o.comments, comments);
   }
@@ -90,7 +96,8 @@ class Post {
     return postId.hashCode ^
         description.hashCode ^
         pictureUrl.hashCode ^
-        profile.hashCode ^
+        time.hashCode ^
+        posterProfile.hashCode ^
         usersLike.hashCode ^
         comments.hashCode;
   }

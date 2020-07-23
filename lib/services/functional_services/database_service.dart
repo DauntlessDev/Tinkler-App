@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/message.dart';
+import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
@@ -111,5 +112,21 @@ class DatabaseService {
 
   Future<void> deleteChatroom({String chatroomId}) async {
     await _service.deleteData(path: APIPath.chatroom(chatroomId));
+  }
+
+  Future<void> addPost({@required Post post}) async {
+    await _service.setData(
+      path: APIPath.post(post.postId),
+      data: post.toMap(),
+    );
+  }
+
+  Stream<List<Post>> postStream() {
+    return _service.collectionStreamNoID(
+      path: APIPath.posts(),
+      builder: (data) => Post.fromMap(data),
+      sort: (a, b) => a.time.compareTo(b.time),
+      isReversed: true,
+    );
   }
 }
