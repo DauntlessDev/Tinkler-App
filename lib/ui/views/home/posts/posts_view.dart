@@ -5,7 +5,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/ui/shared/empty_content.dart';
-import 'package:tinkler/ui/shared/list_item_builder.dart';
 import 'package:tinkler/ui/views/home/posts/post_bottomsheet/post_bottomsheet_view.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 
@@ -85,7 +84,13 @@ class PostListBuilder extends ViewModelWidget<PostsViewModel> {
 
   @override
   Widget build(BuildContext context, PostsViewModel model) {
-    if (model.postList == null) return EmptyContent();
+    if (model.postList == null)
+      return EmptyContent();
+    else if (model.postList.isEmpty)
+      return EmptyContent(
+        title: 'Post Empty',
+        message: 'Follow other users.',
+      );
     return ListView.builder(
       itemCount: model.postList.length,
       itemBuilder: (context, index) => PostTile(
