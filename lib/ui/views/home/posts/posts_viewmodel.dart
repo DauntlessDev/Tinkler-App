@@ -20,6 +20,8 @@ class PostsViewModel extends StreamViewModel {
 
   List<Post> _postList = [];
   void setPosts(List<Post> event) {
+    setBusy(true);
+    _postList.clear();
     print('event : $event');
     for (Post post in event) {
       print('postsss: $post');
@@ -35,6 +37,7 @@ class PostsViewModel extends StreamViewModel {
         ),
       );
     }
+    setBusy(false);
     notifyListeners();
   }
 

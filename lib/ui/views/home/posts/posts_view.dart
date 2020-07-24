@@ -111,6 +111,9 @@ class PostTile extends ViewModelWidget<PostsViewModel> {
 
   @override
   Widget build(BuildContext context, PostsViewModel model) {
+    double descriptionFontSize = 13;
+    if (post.description.length < 10) descriptionFontSize = 25;
+    else if (post.description.length < 15) descriptionFontSize = 17;
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -144,7 +147,7 @@ class PostTile extends ViewModelWidget<PostsViewModel> {
               Text(
                 post.description,
                 textAlign: TextAlign.justify,
-                style: TextStyle(fontSize: 13),
+                style: TextStyle(fontSize: descriptionFontSize),
               ),
               SizedBox(height: 20),
               Align(
