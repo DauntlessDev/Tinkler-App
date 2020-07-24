@@ -107,36 +107,90 @@ class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
   @override
   Widget build(BuildContext context, ProfileViewModel model) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.all(7.0),
       child: Center(
-        child: Column(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Stack(children: [
-              Avatar(photoUrl: model.profile.photoUrl, radius: 60),
-              Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: GestureDetector(
-                    onTap: model.changeProfile,
-                    child: Icon(MdiIcons.camera,
-                        size: 25,
-                        color: AppThemeService.isDarkModeOn
-                            ? Colors.white
-                            : Colors.black),
-                  ))
-            ]),
-            const SizedBox(height: 15),
-            Text(
-              model.profile.displayName ?? '',
-              style: Theme.of(context).textTheme.bodyText2,
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Avatar(photoUrl: model.profile.photoUrl, radius: 50),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      model.profile.displayName ?? '',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(model.profile.email,
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.w300)),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 5),
-            Text(model.profile.email,
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-            const SizedBox(height: 50),
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    // crossAxisAlignment: CrossAx,
+                    children: <Widget>[
+                      _ProfileStats(number: 12, label: 'posts'),
+                      _ProfileStats(number: 243, label: 'followers'),
+                      _ProfileStats(number: 187, label: 'following'),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Container(
+                      width: double.maxFinite,
+                      color: Theme.of(context).primaryColor,
+                      child: FlatButton(
+                        onPressed: model.changeProfile,
+                        child: Text('Change Picture'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ProfileStats extends StatelessWidget {
+  const _ProfileStats({
+    Key key,
+    @required this.number,
+    @required this.label,
+  }) : super(key: key);
+
+  final int number;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Text('$number',
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+            )),
+        Text(label, style: TextStyle(fontSize: 11)),
+      ],
     );
   }
 }
