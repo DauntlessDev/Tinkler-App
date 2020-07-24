@@ -4,12 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/all_chat_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
+import 'package:tinkler/services/state_services/formatter_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 
 class ProfileViewModel extends StreamViewModel<Profile> {
@@ -18,7 +20,25 @@ class ProfileViewModel extends StreamViewModel<Profile> {
   final _user = locator<CurrentUserService>();
   final _dialog = locator<DialogService>();
   final _theme = locator<AppThemeService>();
+  final _formatter = locator<FormatterService>();
   final _chatlist = locator<AllChatService>();
+
+  Stream<Profile> profileStream() => _database.profileStream();
+  Stream<List<Post>> ownPostStream() =>
+      _database.specificPostStream(_user.email);
+  List<Post> ownPostList = [];
+
+  @override
+  Stream<Profile> get stream {
+    ownPostStream().listen((event) {
+      if (event != null) {
+        ownPostList = event;
+        print(ownPostList);
+        notifyListeners();
+      }
+    });
+    return profileStream();
+  }
 
   Profile get profile {
     return (data == null)
@@ -70,8 +90,5 @@ class ProfileViewModel extends StreamViewModel<Profile> {
     }
   }
 
-  Stream<Profile> profileStream() => _database.profileStream();
-
-  @override
-  Stream<Profile> get stream => profileStream();
+  String formatTime(String time) => _formatter.formatDate(time);
 }

@@ -31,6 +31,7 @@ class PostBottomsheetViewModel extends BaseViewModel {
 
       _database.addPost(
           post: Post(
+        posterEmail: _user.email,
         postId: generatedPostId(posterEmail: _user.email, time: time),
         description: _input,
         posterProfile: currentProfile,

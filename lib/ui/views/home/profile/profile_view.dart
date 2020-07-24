@@ -5,6 +5,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 import 'package:tinkler/ui/shared/avatar.dart';
+import 'package:tinkler/ui/shared/post_tile.dart';
 
 import 'profile_viewmodel.dart';
 
@@ -16,7 +17,7 @@ class ProfileView extends StatelessWidget {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.profile == null || model.isBusy,
+          inAsyncCall: model.profile == null && model.isBusy,
           child: _MainContent()),
     );
   }
@@ -105,8 +106,18 @@ class _ProfileContent extends ViewModelWidget<ProfileViewModel> {
       padding: const EdgeInsets.fromLTRB(15, 0, 7, 7),
       child: Column(
         children: <Widget>[
-          SizedBox(height: 20),
-          _ProfileHeader(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: _ProfileHeader(),
+          ),
+          Align(
+              alignment: Alignment.bottomLeft,
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.pages),
+                  Text(' Posts'),
+                ],
+              )),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: SizedBox(
@@ -114,19 +125,28 @@ class _ProfileContent extends ViewModelWidget<ProfileViewModel> {
               child: Container(color: Theme.of(context).colorScheme.onSurface),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                children: <Widget>[
-                  Icon(Icons.pages),
-                  Text('yes'),
-                ],
-              ),
-            ),
-          )
+          OwnPostListBuilder(),
         ],
+      ),
+    );
+  }
+}
+
+class OwnPostListBuilder extends ViewModelWidget<ProfileViewModel> {
+  const OwnPostListBuilder({
+    Key key,
+  }) : super(key: key, reactive: true);
+
+  @override
+  Widget build(BuildContext context, ProfileViewModel model) {
+    return Expanded(
+      child: SizedBox(
+        height: 500,
+        child: ListView.builder(
+          itemBuilder: (context, index) =>
+              PostTile(post: model.ownPostList[index]),
+          itemCount: model.ownPostList.length,
+        ),
       ),
     );
   }

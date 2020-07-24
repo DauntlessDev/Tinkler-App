@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 import 'package:tinkler/model/profile.dart';
 
 class Post {
   String postId;
+  String posterEmail;
   String description;
   String pictureUrl;
   String time;
@@ -11,17 +14,19 @@ class Post {
   int commentsCount;
   Profile posterProfile;
   Post({
-    this.postId,
-    this.description,
-    this.pictureUrl,
-    this.time,
-    this.likesCount,
-    this.commentsCount,
-    this.posterProfile,
+    @required this.postId,
+    @required this.posterEmail,
+    @required this.description,
+    @required this.pictureUrl,
+    @required this.time,
+    @required this.likesCount,
+    @required this.commentsCount,
+    @required this.posterProfile,
   });
 
   Post copyWith({
     String postId,
+    String posterEmail,
     String description,
     String pictureUrl,
     String time,
@@ -31,6 +36,7 @@ class Post {
   }) {
     return Post(
       postId: postId ?? this.postId,
+      posterEmail: posterEmail ?? this.posterEmail,
       description: description ?? this.description,
       pictureUrl: pictureUrl ?? this.pictureUrl,
       time: time ?? this.time,
@@ -43,6 +49,7 @@ class Post {
   Map<String, dynamic> toMap() {
     return {
       'postId': postId,
+      'posterEmail': posterEmail,
       'description': description,
       'pictureUrl': pictureUrl,
       'time': time,
@@ -57,6 +64,7 @@ class Post {
 
     return Post(
       postId: map['postId'],
+      posterEmail: map['posterEmail'],
       description: map['description'],
       pictureUrl: map['pictureUrl'],
       time: map['time'],
@@ -72,7 +80,7 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, description: $description, pictureUrl: $pictureUrl, time: $time, likesCount: $likesCount, commentsCount: $commentsCount, posterProfile: $posterProfile)';
+    return 'Post(postId: $postId, posterEmail: $posterEmail, description: $description, pictureUrl: $pictureUrl, time: $time, likesCount: $likesCount, commentsCount: $commentsCount, posterProfile: $posterProfile)';
   }
 
   @override
@@ -81,6 +89,7 @@ class Post {
 
     return o is Post &&
         o.postId == postId &&
+        o.posterEmail == posterEmail &&
         o.description == description &&
         o.pictureUrl == pictureUrl &&
         o.time == time &&
@@ -92,6 +101,7 @@ class Post {
   @override
   int get hashCode {
     return postId.hashCode ^
+        posterEmail.hashCode ^
         description.hashCode ^
         pictureUrl.hashCode ^
         time.hashCode ^

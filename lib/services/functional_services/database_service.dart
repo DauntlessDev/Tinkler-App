@@ -132,4 +132,14 @@ class DatabaseService {
       isReversed: true,
     );
   }
+
+  Stream<List<Post>> specificPostStream(String email) {
+    return _service.collectionStreamNoID(
+      path: APIPath.posts(),
+      builder: (data) => Post.fromMap(data),
+      sort: (a, b) => a.time.compareTo(b.time),
+      queryBuilder: (query) => query.where('posterEmail', isEqualTo: email),
+      isReversed: true,
+    );
+  }
 }
