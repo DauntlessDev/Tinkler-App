@@ -115,19 +115,6 @@ class MessageTile extends ViewModelWidget<ChatViewModel> {
             ],
           ),
         ),
-        trailing: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.blue[900],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Text(
-              '12',
-              style: TextStyle(color: Colors.white, fontSize: 9),
-            ),
-          ),
-        ),
       ),
     );
   }
