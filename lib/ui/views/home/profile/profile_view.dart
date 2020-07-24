@@ -184,28 +184,3 @@ class _OptionTile extends StatelessWidget {
           );
   }
 }
-
-// class _OptionListBuilder extends ViewModelWidget<ProfileViewModel> {
-//   const _OptionListBuilder({
-//     Key key,
-//   }) : super(key: key, reactive: false);
-
-//   @override
-//   Widget build(BuildContext context, ProfileViewModel model) {
-//     final List<Option> _optionList = [
-//       Option(
-//           title: 'Dark Mode',
-//           iconData: MdiIcons.moonWaningCrescent,
-//           onTap: model.toggleDarkMode,
-//           isSwitch: true),
-//       Option(title: 'Notifications', iconData: MdiIcons.bell, onTap: () {}),
-//       Option(title: 'App Updates', iconData: Icons.file_download, onTap: () {}),
-//       Option(title: 'Logout', iconData: Icons.exit_to_app, onTap: model.signOut)
-//     ];
-
-//     return ListView.builder(
-//         itemBuilder: (context, index) =>
-//             _OptionTile(option: _optionList[index]),
-//         itemCount: _optionList.length);
-//   }
-// }

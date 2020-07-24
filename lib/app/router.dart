@@ -4,6 +4,7 @@ import 'package:tinkler/ui/views/auth/signup/signup_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatroom/chatroom_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatsearch/chatsearch_view.dart';
 import 'package:tinkler/ui/views/home/home_view.dart';
+import 'package:tinkler/ui/views/home/search/checkprofile/checkprofile_view.dart';
 import 'package:tinkler/ui/views/landing_view.dart';
 
 @MaterialAutoRouter()
@@ -15,4 +16,5 @@ class $Router {
   SignupView signupViewRoute;
   ChatSearchView chatsearchViewRoute;
   ChatroomView chatroomViewRoute;
+  CheckProfileView checkProfileViewRoute;
 }

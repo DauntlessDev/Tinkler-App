@@ -83,7 +83,7 @@ class _SearchTileBuilder extends ViewModelWidget<SearchViewModel> {
     return ListView.builder(
       itemBuilder: (context, index) => _SearchTile(
         profile: model.listOfUsers[index],
-        visitProfile: () => model.visitProfile(model.listOfUsers[index]),
+        visitProfile: () => model.visitProfile(model.listOfUsers[index].email),
       ),
       itemCount: model.listOfUsers.length,
     );
