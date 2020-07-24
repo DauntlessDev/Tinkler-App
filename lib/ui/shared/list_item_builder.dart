@@ -16,9 +16,12 @@ class ListItemBuilder<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('model != null ${model != null}');
+    print('model.data != null ${model.data != null}');
     if (model != null) {
       if (!model.isBusy) {
         if (model.data != null) {
+          print('model.data.isEmpty != null ${model.data.isEmpty != null}');
           final List<T> items = model.data;
           if (items.isNotEmpty) {
             return _buildList(items);

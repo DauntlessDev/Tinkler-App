@@ -22,7 +22,7 @@ class PostBottomsheetViewModel extends BaseViewModel {
   Future<void> proceedPost() async {
     if (_input.isNotEmpty) {
       setBusy(true);
-      String time = DateTime.now().millisecondsSinceEpoch.toString();
+      String time = DateTime.now().toIso8601String();
       Profile currentProfile;
 
       await _database
@@ -36,6 +36,8 @@ class PostBottomsheetViewModel extends BaseViewModel {
         posterProfile: currentProfile,
         time: time,
         pictureUrl: '',
+        commentsCount: 0,
+        likesCount: 0,
       ));
 
       setBusy(false);

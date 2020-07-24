@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/post.dart';
+import 'package:tinkler/ui/shared/empty_content.dart';
 import 'package:tinkler/ui/shared/list_item_builder.dart';
 import 'package:tinkler/ui/views/home/posts/post_bottomsheet/post_bottomsheet_view.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
@@ -64,12 +65,7 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
                         SizedBox(height: 20),
                         Expanded(
                           flex: 1,
-                          child: ListItemBuilder(
-                            itemBuilder: (BuildContext context, item) =>
-                                PostTile(post: item),
-                            items: model.postList,
-                            model: PostsViewModel(),
-                          ),
+                          child: PostListBuilder(),
                         ),
                       ],
                     ),
@@ -79,6 +75,24 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
             ),
           ),
         ));
+  }
+}
+
+class PostListBuilder extends ViewModelWidget<PostsViewModel> {
+  const PostListBuilder({
+    Key key,
+  }) : super(key: key, reactive: true);
+
+  @override
+  Widget build(BuildContext context, PostsViewModel model) {
+    if (model.postList == null) return EmptyContent();
+    return ListView.builder(
+      itemCount: model.postList.length,
+      itemBuilder: (context, index) => PostTile(
+        post: model.postList[index],
+        // startConversation: model.startConversation,
+      ),
+    );
   }
 }
 

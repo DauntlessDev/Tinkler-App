@@ -21,19 +21,21 @@ class PostsViewModel extends StreamViewModel {
   List<Post> _postList = [];
   void setPosts(List<Post> event) {
     print('event : $event');
-    if (event != null) {
-      for (Post post in event) {
-        print(post);
-        _postList.add(
-          Post(
-              description: post.description,
-              posterProfile: post.posterProfile,
-              postId: post.postId,
-              time: formatTime(post.time),
-              pictureUrl: post.pictureUrl ?? ''),
-        );
-      }
+    for (Post post in event) {
+      print('postsss: $post');
+      _postList.add(
+        Post(
+          description: post.description,
+          posterProfile: post.posterProfile,
+          postId: post.postId,
+          time: post.time,
+          pictureUrl: post.pictureUrl ?? '',
+          commentsCount: post.commentsCount,
+          likesCount: post.likesCount,
+        ),
+      );
     }
+    notifyListeners();
   }
 
   List<Post> get postList => _postList;
