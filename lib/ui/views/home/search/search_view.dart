@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/shared/empty_content.dart';
 import 'package:tinkler/ui/views/home/search/search_viewmodel.dart';
-import 'package:tinkler/ui/widgets/avatar.dart';
+import 'package:tinkler/ui/shared/avatar.dart';
 
 class SearchView extends StatelessWidget {
   static final navigatorKey = GlobalKey<NavigatorState>();

@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/ui/shared/empty_content.dart';
 import 'package:tinkler/ui/views/home/posts/post_bottomsheet/post_bottomsheet_view.dart';
-import 'package:tinkler/ui/widgets/avatar.dart';
+import 'package:tinkler/ui/shared/avatar.dart';
 
 import 'posts_viewmodel.dart';
 
@@ -112,7 +112,8 @@ class PostTile extends ViewModelWidget<PostsViewModel> {
   @override
   Widget build(BuildContext context, PostsViewModel model) {
     double descriptionFontSize = 13;
-    if (post.description.length < 10) descriptionFontSize = 25;
+    if (post.description.length < 10)
+      descriptionFontSize = 25;
     else if (post.description.length < 15) descriptionFontSize = 17;
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),

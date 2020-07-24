@@ -14,8 +14,7 @@ class EmptyContent extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
-                fontSize: 13, color: Colors.black),
+            style: TextStyle(fontSize: 13, color: Colors.black),
           ),
           Text(
             message,

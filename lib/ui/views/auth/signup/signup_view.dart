@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/widgets/auth_textforfield.dart';
-import 'package:tinkler/ui/widgets/rounded_button.dart';
-import 'package:tinkler/ui/widgets/tappable_richtext.dart';
-import 'package:tinkler/ui/widgets/top_background.dart';
+import 'package:tinkler/ui/shared/auth_textforfield.dart';
+import 'package:tinkler/ui/shared/rounded_button.dart';
+import 'package:tinkler/ui/shared/tappable_richtext.dart';
+import 'package:tinkler/ui/shared/top_background.dart';
 
 import 'signup_viewmodel.dart';
 
