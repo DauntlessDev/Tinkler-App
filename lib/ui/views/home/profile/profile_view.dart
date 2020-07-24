@@ -31,24 +31,19 @@ class _MainContent extends ViewModelWidget<ProfileViewModel> {
   Widget build(BuildContext context, ProfileViewModel model) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 1,
-          title: Row(
-            children: [
-              Text(
-                'Profile ',
-                style: Theme.of(context).appBarTheme.textTheme.headline1,
-              ),
-              const Icon(Icons.person),
-            ],
-          ),
-          actions: <Widget>[
-            ProfileMenu(),
+        elevation: 1,
+        title: Row(
+          children: [
+            Text(
+              'Profile ',
+              style: Theme.of(context).appBarTheme.textTheme.headline1,
+            ),
+            const Icon(Icons.person),
           ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(240),
-            child: _BottomAppBarProfile(),
-          )),
-      body: Container(),
+        ),
+        actions: <Widget>[ProfileMenu()],
+      ),
+      body: _ProfileContent(),
     );
   }
 }
@@ -99,73 +94,102 @@ class ProfileMenu extends ViewModelWidget<ProfileViewModel> {
   }
 }
 
-class _BottomAppBarProfile extends ViewModelWidget<ProfileViewModel> {
-  const _BottomAppBarProfile({
+class _ProfileContent extends ViewModelWidget<ProfileViewModel> {
+  const _ProfileContent({
     Key key,
   }) : super(key: key, reactive: true);
 
   @override
   Widget build(BuildContext context, ProfileViewModel model) {
     return Padding(
-      padding: const EdgeInsets.all(7.0),
-      child: Center(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+      padding: const EdgeInsets.fromLTRB(15, 0, 7, 7),
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 20),
+          _ProfileHeader(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: SizedBox(
+              height: 1,
+              child: Container(color: Theme.of(context).colorScheme.onSurface),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Avatar(photoUrl: model.profile.photoUrl, radius: 50),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text(
-                      model.profile.displayName ?? '',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text(model.profile.email,
-                        style: TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.w300)),
-                  ),
+                  Icon(Icons.pages),
+                  Text('yes'),
                 ],
               ),
             ),
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // crossAxisAlignment: CrossAx,
-                    children: <Widget>[
-                      _ProfileStats(number: 12, label: 'posts'),
-                      _ProfileStats(number: 243, label: 'followers'),
-                      _ProfileStats(number: 187, label: 'following'),
-                    ],
-                  ),
-                  SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Container(
-                      width: double.maxFinite,
-                      color: Theme.of(context).primaryColor,
-                      child: FlatButton(
-                        onPressed: model.changeProfile,
-                        child: Text('Change Picture'),
-                      ),
-                    ),
-                  ),
-                ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _ProfileHeader extends ViewModelWidget<ProfileViewModel> {
+  const _ProfileHeader({
+    Key key,
+  }) : super(key: key, reactive: true);
+
+  @override
+  Widget build(BuildContext context, ProfileViewModel model) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Avatar(photoUrl: model.profile.photoUrl, radius: 50),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(
+                model.profile.displayName ?? '',
+                style: Theme.of(context).textTheme.bodyText2,
               ),
+            ),
+            const SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(model.profile.email,
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
             ),
           ],
         ),
-      ),
+        Expanded(
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // crossAxisAlignment: CrossAx,
+                children: <Widget>[
+                  _ProfileStats(number: 12, label: 'posts'),
+                  _ProfileStats(number: 243, label: 'followers'),
+                  _ProfileStats(number: 187, label: 'following'),
+                ],
+              ),
+              SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Container(
+                  width: double.maxFinite,
+                  color: Theme.of(context).primaryColor,
+                  child: FlatButton(
+                    onPressed: model.changeProfile,
+                    child: Text('Change Picture'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
