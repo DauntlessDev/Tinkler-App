@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
-import 'package:tinkler/model/profile.dart';
-
 class Post {
   String postId;
   String posterEmail;
@@ -12,7 +10,6 @@ class Post {
   String time;
   int likesCount;
   int commentsCount;
-  Profile posterProfile;
   Post({
     @required this.postId,
     @required this.posterEmail,
@@ -21,7 +18,6 @@ class Post {
     @required this.time,
     @required this.likesCount,
     @required this.commentsCount,
-    @required this.posterProfile,
   });
 
   Post copyWith({
@@ -32,7 +28,6 @@ class Post {
     String time,
     int likesCount,
     int commentsCount,
-    Profile posterProfile,
   }) {
     return Post(
       postId: postId ?? this.postId,
@@ -42,7 +37,6 @@ class Post {
       time: time ?? this.time,
       likesCount: likesCount ?? this.likesCount,
       commentsCount: commentsCount ?? this.commentsCount,
-      posterProfile: posterProfile ?? this.posterProfile,
     );
   }
 
@@ -55,7 +49,6 @@ class Post {
       'time': time,
       'likesCount': likesCount,
       'commentsCount': commentsCount,
-      'posterProfile': posterProfile?.toMap(),
     };
   }
 
@@ -70,7 +63,6 @@ class Post {
       time: map['time'],
       likesCount: map['likesCount'],
       commentsCount: map['commentsCount'],
-      posterProfile: Profile.fromMap(map['posterProfile']),
     );
   }
 
@@ -80,7 +72,7 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(postId: $postId, posterEmail: $posterEmail, description: $description, pictureUrl: $pictureUrl, time: $time, likesCount: $likesCount, commentsCount: $commentsCount, posterProfile: $posterProfile)';
+    return 'Post(postId: $postId, posterEmail: $posterEmail, description: $description, pictureUrl: $pictureUrl, time: $time, likesCount: $likesCount, commentsCount: $commentsCount)';
   }
 
   @override
@@ -94,8 +86,7 @@ class Post {
         o.pictureUrl == pictureUrl &&
         o.time == time &&
         o.likesCount == likesCount &&
-        o.commentsCount == commentsCount &&
-        o.posterProfile == posterProfile;
+        o.commentsCount == commentsCount;
   }
 
   @override
@@ -106,7 +97,6 @@ class Post {
         pictureUrl.hashCode ^
         time.hashCode ^
         likesCount.hashCode ^
-        commentsCount.hashCode ^
-        posterProfile.hashCode;
+        commentsCount.hashCode;
   }
 }

@@ -48,7 +48,7 @@ class _MainContent extends ViewModelWidget<ProfileViewModel> {
       body: ProfileContent(
           buttonText: 'Change Picture',
           onPressed: model.changeProfile,
-          ownPostsList: model.ownPostList,
+          ownPostsList: model.ownPostProfileList,
           profile: model.profile),
     );
   }

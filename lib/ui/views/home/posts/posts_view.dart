@@ -72,20 +72,20 @@ class PostListBuilder extends ViewModelWidget<PostsViewModel> {
 
   @override
   Widget build(BuildContext context, PostsViewModel model) {
-    if (model.postList == null)
+    if (model.postprofileList == null)
       return EmptyContent();
-    else if (model.postList.isEmpty)
+    else if (model.postprofileList.isEmpty)
       return EmptyContent(
         title: 'Post Empty',
         message: 'Follow other users.',
       );
     return ListView.separated(
-      itemCount: model.postList.length + 2,
+      itemCount: model.postprofileList.length + 2,
       itemBuilder: (context, index) {
-        if (index == 0 || index == model.postList.length + 1)
+        if (index == 0 || index == model.postprofileList.length + 1)
           return Container();
         return PostTile(
-          post: model.postList[index - 1],
+          postprofile: model.postprofileList[index - 1],
           // startConversation: model.startConversation,
         );
       },

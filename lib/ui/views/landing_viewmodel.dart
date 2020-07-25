@@ -11,7 +11,7 @@ class LandingViewModel extends StreamViewModel<User> {
 
   User get user => data;
   Stream<User> onAuthStateChanged() {
-    _auth.onAuthStateChanged.listen((event) {
+    _auth.onAuthStateChanged.listen((event) async {
       try {
         if (event != null) {
           _user.updateCurrentUserInfo(event);

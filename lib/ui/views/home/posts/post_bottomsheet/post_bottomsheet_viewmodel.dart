@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
-import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 
@@ -52,8 +51,6 @@ class PostBottomsheetViewModel extends BaseViewModel {
   Future<void> proceedPost() async {
     if (_input.isNotEmpty) {
       setBusy(true);
-
-      Profile currentProfile;
       String time = DateTime.now().toIso8601String();
       String _postId = generatedPostId(posterEmail: _user.email, time: time);
 
@@ -63,16 +60,11 @@ class PostBottomsheetViewModel extends BaseViewModel {
             image: _selectedImage, postId: _postId);
       }
 
-      await _database
-          .profileFuture(email: _user.email)
-          .then((value) => currentProfile = value.first);
-
       _database.addPost(
           post: Post(
         posterEmail: _user.email,
         postId: _postId,
         description: _input,
-        posterProfile: currentProfile,
         time: time,
         pictureUrl: _pictureDownloadUrl,
         commentsCount: 0,

@@ -1,6 +1,6 @@
 //view class
 import 'package:flutter/material.dart';
-import 'package:tinkler/model/post.dart';
+import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/shared/avatar.dart';
 import 'package:tinkler/ui/shared/post_tile.dart';
@@ -17,7 +17,7 @@ class ProfileContent extends StatelessWidget {
   final Profile profile;
   final String buttonText;
   final Function onPressed;
-  final List<Post> ownPostsList;
+  final List<PostProfile> ownPostsList;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,7 +59,7 @@ class OwnPostListBuilder extends StatelessWidget {
     @required this.ownPostsList,
   }) : super(key: key);
 
-  final List<Post> ownPostsList;
+  final List<PostProfile> ownPostsList;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class OwnPostListBuilder extends StatelessWidget {
           itemBuilder: (context, index) {
             if (index == 0 || index == ownPostsList.length + 1)
               return Container();
-            return PostTile(post: ownPostsList[index - 1]);
+            return PostTile(postprofile: ownPostsList[index - 1]);
           },
           itemCount: ownPostsList.length + 2,
           separatorBuilder: (BuildContext context, int index) => Divider(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:tinkler/app/locator.dart';
-import 'package:tinkler/model/post.dart';
+import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
 
 import 'avatar.dart';
@@ -9,10 +9,10 @@ import 'avatar.dart';
 class PostTile extends StatelessWidget {
   PostTile({
     Key key,
-    @required this.post,
+    @required this.postprofile,
   });
 
-  final Post post;
+  final PostProfile postprofile;
   final _formatter = locator<FormatterService>();
 
   @override
@@ -29,7 +29,7 @@ class PostTile extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.topLeft,
                     child: Avatar(
-                        radius: 25, photoUrl: post.posterProfile.photoUrl)),
+                        radius: 25, photoUrl: postprofile.posterProfile.photoUrl)),
               ),
               SizedBox(width: 15),
               Column(
@@ -38,30 +38,30 @@ class PostTile extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text(
-                        post.posterProfile.displayName,
+                        postprofile.posterProfile.displayName,
                         style: TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 11),
                       ),
                       Text(
-                        ' • ${_formatter.formatPostDate(post.time)}',
+                        ' • ${_formatter.formatPostDate(postprofile.post.time)}',
                         style: TextStyle(color: Colors.grey, fontSize: 10),
                       ),
                     ],
                   ),
                   SizedBox(height: 2),
                   Text(
-                    post.posterProfile.email,
+                    postprofile.posterProfile.email,
                     style: TextStyle(color: Colors.grey, fontSize: 10),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    post.description,
+                    postprofile.post.description,
                     style: TextStyle(fontSize: 12),
                   ),
                   SizedBox(height: 10),
-                  if (post.pictureUrl.isNotEmpty)
+                  if (postprofile.post.pictureUrl.isNotEmpty)
                     Image(
-                      image: NetworkImage(post.pictureUrl),
+                      image: NetworkImage(postprofile.post.pictureUrl),
                       fit: BoxFit.fitWidth,
                       width: 250,
                       height: 200,

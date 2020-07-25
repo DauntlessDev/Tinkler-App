@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
+import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
@@ -26,16 +27,46 @@ class ProfileViewModel extends StreamViewModel<Profile> {
       _database.specificPostStream(_user.email);
   List<Post> ownPostList = [];
 
+  List<PostProfile> ownPostProfileList = [];
+
   @override
   Stream<Profile> get stream {
     ownPostStream().listen((event) {
       if (event != null) {
         ownPostList = event;
-        print(ownPostList);
-        notifyListeners();
+      }
+    });
+
+    profileStream().listen((event) {
+      if (event != null) {
+        setPosts(ownPostList, event);
       }
     });
     return profileStream();
+  }
+
+  Future<void> setPosts(List<Post> event, Profile senderProfile) async {
+    setBusy(true);
+    print('event : $event');
+
+    for (Post post in event) {
+      print('postsss: $post');
+      ownPostProfileList.add(
+        PostProfile(
+            post: Post(
+              description: post.description,
+              posterEmail: post.posterEmail,
+              postId: post.postId,
+              time: post.time,
+              pictureUrl: post.pictureUrl ?? '',
+              commentsCount: post.commentsCount,
+              likesCount: post.likesCount,
+            ),
+            posterProfile: senderProfile),
+      );
+    }
+    notifyListeners();
+    setBusy(false);
   }
 
   Profile get profile {
