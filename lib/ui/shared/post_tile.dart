@@ -61,7 +61,9 @@ class PostTile extends StatelessWidget {
                   SizedBox(height: 10),
                   if (post.pictureUrl.isNotEmpty)
                     Image(
-                      image: AssetImage('assets/images/profile_1.jpg'),
+                      image: NetworkImage(post.pictureUrl),
+                      fit: BoxFit.fitWidth,
+                      width: 250,
                       height: 200,
                     ),
                   SizedBox(height: 10),

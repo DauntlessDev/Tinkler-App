@@ -50,6 +50,7 @@ class ProfileViewModel extends StreamViewModel<Profile> {
           )
         : Profile(
             photoUrl: data.photoUrl ?? '',
+            caseSearch: data.caseSearch,
             email: data.email,
             displayName: data.displayName,
             followers: data.followers,
