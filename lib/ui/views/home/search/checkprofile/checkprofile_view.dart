@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/shared/avatar.dart';
+import 'package:tinkler/ui/shared/profile_content.dart';
 
 import 'checkprofile_viewmodel.dart';
 
@@ -29,50 +29,22 @@ class _MainContent extends ViewModelWidget<CheckProfileViewModel> {
   Widget build(BuildContext context, CheckProfileViewModel model) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 1,
-          title: Row(
-            children: [
-              Text(
-                'Profile ',
-                style: Theme.of(context).appBarTheme.textTheme.headline1,
-              ),
-              const Icon(Icons.person),
-            ],
-          ),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(240),
-            child: _BottomAppBarProfile(),
-          )),
-      body: Container(),
-    );
-  }
-}
-
-class _BottomAppBarProfile extends ViewModelWidget<CheckProfileViewModel> {
-  const _BottomAppBarProfile({
-    Key key,
-  }) : super(key: key, reactive: true);
-
-  @override
-  Widget build(BuildContext context, CheckProfileViewModel model) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            Avatar(photoUrl: model.profile.photoUrl, radius: 60),
-            const SizedBox(height: 15),
+        elevation: 1,
+        title: Row(
+          children: [
             Text(
-              model.profile.displayName ?? '',
-              style: Theme.of(context).textTheme.bodyText2,
+              'Profile ',
+              style: Theme.of(context).appBarTheme.textTheme.headline1,
             ),
-            const SizedBox(height: 5),
-            Text(model.profile.email,
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-            const SizedBox(height: 50),
+            const Icon(Icons.person),
           ],
         ),
       ),
+      body: ProfileContent(
+          buttonText: 'Change Picture',
+          onPressed: model.followUser,
+          ownPostsList: model.ownPostList,
+          profile: model.profile),
     );
   }
 }

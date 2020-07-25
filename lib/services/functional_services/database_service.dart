@@ -142,4 +142,14 @@ class DatabaseService {
       isReversed: true,
     );
   }
+
+  Future<List<Post>> specificPostFuture(String email) {
+    return _service.collectionFuture(
+      path: APIPath.posts(),
+      builder: (data) => Post.fromMap(data),
+      sort: (a, b) => a.time.compareTo(b.time),
+      queryBuilder: (query) => query.where('posterEmail', isEqualTo: email),
+      isReversed: true,
+    );
+  }
 }

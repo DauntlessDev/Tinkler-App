@@ -1,5 +1,6 @@
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/visit_profile_service.dart';
@@ -7,6 +8,24 @@ import 'package:tinkler/services/state_services/visit_profile_service.dart';
 class CheckProfileViewModel extends FutureViewModel<Profile> {
   final _database = locator<DatabaseService>();
   final _visitProfile = locator<VisitProfileService>();
+
+  Future<Profile> profileFuture() async {
+    setBusy(true);
+    List<Profile> profileList =
+        await _database.profileFuture(email: _visitProfile.email);
+    setBusy(false);
+    return profileList.first;
+  }
+
+  Future<List<Post>> ownPostFuture() =>
+      _database.specificPostFuture(_visitProfile.email);
+  List<Post> ownPostList = [];
+
+  @override
+  Future<Profile> futureToRun() async {
+    ownPostList = await ownPostFuture();
+    return await profileFuture();
+  }
 
   Profile get profile {
     return (data == null)
@@ -28,14 +47,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
           );
   }
 
-  Future<Profile> profileFuture() async {
-    setBusy(true);
-    List<Profile> profileList =
-        await _database.profileFuture(email: _visitProfile.email);
-    setBusy(false);
-    return profileList.first;
+  void followUser() {
+    print('follow userssss');
   }
-
-  @override
-  Future<Profile> futureToRun() => profileFuture();
 }

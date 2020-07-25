@@ -4,8 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
-import 'package:tinkler/ui/shared/avatar.dart';
-import 'package:tinkler/ui/shared/post_tile.dart';
+import 'package:tinkler/ui/shared/profile_content.dart';
 
 import 'profile_viewmodel.dart';
 
@@ -44,7 +43,11 @@ class _MainContent extends ViewModelWidget<ProfileViewModel> {
         ),
         actions: <Widget>[ProfileMenu()],
       ),
-      body: _ProfileContent(),
+      body: ProfileContent(
+          buttonText: 'Change Picture',
+          onPressed: model.changeProfile,
+          ownPostsList: model.ownPostList,
+          profile: model.profile),
     );
   }
 }
@@ -91,152 +94,6 @@ class ProfileMenu extends ViewModelWidget<ProfileViewModel> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _ProfileContent extends ViewModelWidget<ProfileViewModel> {
-  const _ProfileContent({
-    Key key,
-  }) : super(key: key, reactive: true);
-
-  @override
-  Widget build(BuildContext context, ProfileViewModel model) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 0, 7, 7),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: _ProfileHeader(),
-          ),
-          Align(
-              alignment: Alignment.bottomLeft,
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.pages),
-                  Text(' Posts'),
-                ],
-              )),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: SizedBox(
-              height: 1,
-              child: Container(color: Theme.of(context).colorScheme.onSurface),
-            ),
-          ),
-          OwnPostListBuilder(),
-        ],
-      ),
-    );
-  }
-}
-
-class OwnPostListBuilder extends ViewModelWidget<ProfileViewModel> {
-  const OwnPostListBuilder({
-    Key key,
-  }) : super(key: key, reactive: true);
-
-  @override
-  Widget build(BuildContext context, ProfileViewModel model) {
-    return Expanded(
-      child: SizedBox(
-        height: 500,
-        child: ListView.builder(
-          itemBuilder: (context, index) =>
-              PostTile(post: model.ownPostList[index]),
-          itemCount: model.ownPostList.length,
-        ),
-      ),
-    );
-  }
-}
-
-class _ProfileHeader extends ViewModelWidget<ProfileViewModel> {
-  const _ProfileHeader({
-    Key key,
-  }) : super(key: key, reactive: true);
-
-  @override
-  Widget build(BuildContext context, ProfileViewModel model) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Avatar(photoUrl: model.profile.photoUrl, radius: 50),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                model.profile.displayName ?? '',
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(model.profile.email,
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-            ),
-          ],
-        ),
-        Expanded(
-          child: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // crossAxisAlignment: CrossAx,
-                children: <Widget>[
-                  _ProfileStats(number: model.profile.posts, label: 'posts'),
-                  _ProfileStats(
-                      number: model.profile.followers, label: 'followers'),
-                  _ProfileStats(
-                      number: model.profile.following, label: 'following'),
-                ],
-              ),
-              SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  width: double.maxFinite,
-                  color: Theme.of(context).primaryColor,
-                  child: FlatButton(
-                    onPressed: model.changeProfile,
-                    child: Text('Change Picture'),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ProfileStats extends StatelessWidget {
-  const _ProfileStats({
-    Key key,
-    @required this.number,
-    @required this.label,
-  }) : super(key: key);
-
-  final int number;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text('$number',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
-            )),
-        Text(label, style: TextStyle(fontSize: 11)),
-      ],
     );
   }
 }

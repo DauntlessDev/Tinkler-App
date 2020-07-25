@@ -11,7 +11,6 @@ import 'package:tinkler/services/functional_services/authentication_service.dart
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/all_chat_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
-import 'package:tinkler/services/state_services/formatter_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 
 class ProfileViewModel extends StreamViewModel<Profile> {
@@ -20,7 +19,6 @@ class ProfileViewModel extends StreamViewModel<Profile> {
   final _user = locator<CurrentUserService>();
   final _dialog = locator<DialogService>();
   final _theme = locator<AppThemeService>();
-  final _formatter = locator<FormatterService>();
   final _chatlist = locator<AllChatService>();
 
   Stream<Profile> profileStream() => _database.profileStream();
@@ -100,6 +98,4 @@ class ProfileViewModel extends StreamViewModel<Profile> {
       );
     }
   }
-
-  String formatTime(String time) => _formatter.formatDate(time);
 }
