@@ -138,6 +138,7 @@ class _ProfileHeader extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
                   width: double.maxFinite,
+                  height: 50,
                   color: Theme.of(context).primaryColor,
                   child: FlatButton(
                     onPressed: onPressed,

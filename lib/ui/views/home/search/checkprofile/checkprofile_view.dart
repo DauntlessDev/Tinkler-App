@@ -14,8 +14,10 @@ class CheckProfileView extends StatelessWidget {
     return ViewModelBuilder<CheckProfileViewModel>.reactive(
       viewModelBuilder: () => CheckProfileViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.profile == null || model.isBusy,
-          child: _MainContent()),
+          inAsyncCall: model.profile.email.isEmpty || model.isBusy,
+          child: model.profile.email.isEmpty
+              ? Container(color: Theme.of(context).backgroundColor)
+              : _MainContent()),
     );
   }
 }
