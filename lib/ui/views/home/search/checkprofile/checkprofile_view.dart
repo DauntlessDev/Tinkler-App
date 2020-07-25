@@ -41,7 +41,7 @@ class _MainContent extends ViewModelWidget<CheckProfileViewModel> {
         ),
       ),
       body: ProfileContent(
-          buttonText: 'Change Picture',
+          buttonText: 'Follow',
           onPressed: model.followUser,
           ownPostsList: model.ownPostList,
           profile: model.profile),
