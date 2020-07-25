@@ -42,11 +42,22 @@ class ProfileViewModel extends StreamViewModel<Profile> {
 
   Profile get profile {
     return (data == null)
-        ? Profile(photoUrl: '', displayName: '', email: '')
+        ? Profile(
+            photoUrl: '',
+            displayName: '',
+            email: '',
+            followers: 0,
+            following: 0,
+            posts: 0,
+          )
         : Profile(
             photoUrl: data.photoUrl ?? '',
             email: data.email,
-            displayName: data.displayName);
+            displayName: data.displayName,
+            followers: data.followers,
+            following: data.following,
+            posts: data.posts,
+          );
   }
 
   void toggleDarkMode(bool value) {

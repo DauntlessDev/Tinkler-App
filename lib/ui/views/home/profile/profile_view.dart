@@ -189,9 +189,11 @@ class _ProfileHeader extends ViewModelWidget<ProfileViewModel> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 // crossAxisAlignment: CrossAx,
                 children: <Widget>[
-                  _ProfileStats(number: 12, label: 'posts'),
-                  _ProfileStats(number: 243, label: 'followers'),
-                  _ProfileStats(number: 187, label: 'following'),
+                  _ProfileStats(number: model.profile.posts, label: 'posts'),
+                  _ProfileStats(
+                      number: model.profile.followers, label: 'followers'),
+                  _ProfileStats(
+                      number: model.profile.following, label: 'following'),
                 ],
               ),
               SizedBox(height: 12),

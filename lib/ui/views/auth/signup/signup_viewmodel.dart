@@ -77,6 +77,9 @@ class SignupViewModel extends BaseViewModel {
             photoUrl: '',
             displayName: _displayName,
             caseSearch: setSearchParam(_displayName.toLowerCase()),
+            followers: 0,
+            following: 0,
+            posts: 0,
           ),
         );
         clearInputs();

@@ -5,27 +5,39 @@ import 'package:flutter/foundation.dart';
 class Profile {
   final String email;
   final String displayName;
-  final List<String> caseSearch;
   final String photoUrl;
+  final int posts;
+  final int followers;
+  final int following;
+  final List<String> caseSearch;
 
   Profile({
     @required this.email,
     @required this.displayName,
     @required this.photoUrl,
+    @required this.posts,
+    @required this.followers,
+    @required this.following,
     this.caseSearch,
   });
 
   Profile copyWith({
     String email,
     String displayName,
-    List<String> caseSearch,
     String photoUrl,
+    int posts,
+    int followers,
+    int following,
+    List<String> caseSearch,
   }) {
     return Profile(
       email: email ?? this.email,
       displayName: displayName ?? this.displayName,
-      caseSearch: caseSearch ?? this.caseSearch,
       photoUrl: photoUrl ?? this.photoUrl,
+      posts: posts ?? this.posts,
+      followers: followers ?? this.followers,
+      following: following ?? this.following,
+      caseSearch: caseSearch ?? this.caseSearch,
     );
   }
 
@@ -33,8 +45,11 @@ class Profile {
     return {
       'email': email,
       'displayName': displayName,
-      'caseSearch': caseSearch,
       'photoUrl': photoUrl,
+      'posts': posts,
+      'followers': followers,
+      'following': following,
+      'caseSearch': caseSearch,
     };
   }
 
@@ -44,8 +59,11 @@ class Profile {
     return Profile(
       email: map['email'],
       displayName: map['displayName'],
-      caseSearch: List<String>.from(map['caseSearch']),
       photoUrl: map['photoUrl'],
+      posts: map['posts'],
+      followers: map['followers'],
+      following: map['following'],
+      caseSearch: List<String>.from(map['caseSearch']),
     );
   }
 
@@ -55,7 +73,7 @@ class Profile {
 
   @override
   String toString() {
-    return 'Profile(email: $email, displayName: $displayName, caseSearch: $caseSearch, photoUrl: $photoUrl)';
+    return 'Profile(email: $email, displayName: $displayName, photoUrl: $photoUrl, posts: $posts, followers: $followers, following: $following, caseSearch: $caseSearch)';
   }
 
   @override
@@ -65,15 +83,21 @@ class Profile {
     return o is Profile &&
         o.email == email &&
         o.displayName == displayName &&
-        listEquals(o.caseSearch, caseSearch) &&
-        o.photoUrl == photoUrl;
+        o.photoUrl == photoUrl &&
+        o.posts == posts &&
+        o.followers == followers &&
+        o.following == following &&
+        listEquals(o.caseSearch, caseSearch);
   }
 
   @override
   int get hashCode {
     return email.hashCode ^
         displayName.hashCode ^
-        caseSearch.hashCode ^
-        photoUrl.hashCode;
+        photoUrl.hashCode ^
+        posts.hashCode ^
+        followers.hashCode ^
+        following.hashCode ^
+        caseSearch.hashCode;
   }
 }

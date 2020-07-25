@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
