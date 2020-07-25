@@ -139,7 +139,9 @@ class _ProfileHeader extends StatelessWidget {
                 child: Container(
                   width: double.maxFinite,
                   height: 50,
-                  color: Theme.of(context).primaryColor,
+                  color: onPressed == null
+                      ? Colors.grey
+                      : Theme.of(context).primaryColor,
                   child: FlatButton(
                     onPressed: onPressed,
                     child: Text(

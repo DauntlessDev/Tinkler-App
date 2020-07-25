@@ -3,11 +3,13 @@ import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/visit_profile_service.dart';
 
 class CheckProfileViewModel extends FutureViewModel<Profile> {
   final _database = locator<DatabaseService>();
   final _visitProfile = locator<VisitProfileService>();
+  final _user = locator<CurrentUserService>();
 
   Future<Profile> profileFuture() async {
     setBusy(true);
@@ -45,6 +47,10 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
             following: data.following,
             posts: data.posts,
           );
+  }
+
+  bool isVisitingOwnProfile() {
+    return profile.email == _user.email;
   }
 
   void followUser() {
