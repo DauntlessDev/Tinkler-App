@@ -1,4 +1,6 @@
 //view class
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -10,12 +12,12 @@ import 'post_bottomsheet_viewmodel.dart';
 class PostBottomsheetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PostBottomsheetViewModel>.nonReactive(
+    return ViewModelBuilder<PostBottomsheetViewModel>.reactive(
       builder: (context, model, child) => ModalProgressHUD(
         inAsyncCall: model.isBusy,
         child: Container(
-          color: Theme.of(context).backgroundColor,
           height: 280,
+          color: Theme.of(context).backgroundColor,
           width: double.maxFinite,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
@@ -26,14 +28,35 @@ class PostBottomsheetView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text('Create Post'),
-                  TextField(
-                    minLines: 5,
-                    maxLines: 5,
-                    onChanged: model.setInput,
-                    decoration: InputDecoration(
-                      hintText: 'Enter status',
-                      fillColor: Theme.of(context).colorScheme.onSurface,
-                      hintStyle: TextStyle(color: Colors.grey),
+                  Container(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: TextField(
+                            minLines: 5,
+                            maxLines: 5,
+                            onChanged: model.setInput,
+                            decoration: InputDecoration(
+                              hintText: 'Enter status',
+                              fillColor:
+                                  Theme.of(context).colorScheme.onSurface,
+                              hintStyle: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        if (model.imagePath.isNotEmpty)
+                          Expanded(
+                            flex: 1,
+                            child: Image(
+                              image: FileImage(File(model.imagePath)),
+                              fit: BoxFit.cover,
+                              height: 80,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 15),
@@ -42,8 +65,7 @@ class PostBottomsheetView extends StatelessWidget {
                     children: <Widget>[
                       FlatButton(
                         onPressed: () async {
-                          await model.proceedPost();
-                          Navigator.pop(context);
+                          await model.addImage();
                         },
                         child: Icon(MdiIcons.imagePlus, size: 30),
                       ),
@@ -69,7 +91,10 @@ class PostBottomsheetView extends StatelessWidget {
                         child: Container(
                           color: Theme.of(context).colorScheme.onSurface,
                           child: FlatButton(
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              model.fileReset();
+                              Navigator.pop(context);
+                            },
                             child: Text('Cancel'),
                           ),
                         ),

@@ -16,22 +16,33 @@ class PostBottomsheetViewModel extends BaseViewModel {
 
   String _input = '';
   String get input => _input;
-  void setInput(String value) {
-    _input = value;
-    print(_input);
-  }
+  void setInput(String value) => _input = value;
+  void inputClear() => _input = '';
 
   String generatedPostId({String posterEmail, String time}) =>
       posterEmail + time;
 
-  String _photoUrl = '';
+  String _imagePath = '';
+  String get imagePath => _imagePath;
+  void imagePathClear() => _imagePath = '';
+
+  File _selectedImage;
+  void selectedImageClear() => _selectedImage.delete();
+
+  void fileReset() {
+    inputClear();
+    imagePathClear();
+    selectedImageClear();
+  }
+
   Future<void> addImage() async {
     setBusy(true);
     try {
       File _image = await _database.getImage();
-      String downloadUrl = await _database.uploadProfilePic(image: _image);
-
-      _photoUrl = downloadUrl;
+      _imagePath = _image.path;
+      _selectedImage = _image;
+      notifyListeners();
+      print('image path : $_imagePath');
     } on PlatformException catch (e) {
       _dialog.showDialog(title: 'Profile', description: e.message);
     } catch (e) {}
@@ -41,8 +52,16 @@ class PostBottomsheetViewModel extends BaseViewModel {
   Future<void> proceedPost() async {
     if (_input.isNotEmpty) {
       setBusy(true);
-      String time = DateTime.now().toIso8601String();
+
       Profile currentProfile;
+      String time = DateTime.now().toIso8601String();
+      String _postId = generatedPostId(posterEmail: _user.email, time: time);
+
+      String _pictureDownloadUrl = "";
+      if (_selectedImage != null) {
+        _pictureDownloadUrl = await _database.uploadPostPicture(
+            image: _selectedImage, postId: _postId);
+      }
 
       await _database
           .profileFuture(email: _user.email)
@@ -51,16 +70,16 @@ class PostBottomsheetViewModel extends BaseViewModel {
       _database.addPost(
           post: Post(
         posterEmail: _user.email,
-        postId: generatedPostId(posterEmail: _user.email, time: time),
+        postId: _postId,
         description: _input,
         posterProfile: currentProfile,
         time: time,
-        pictureUrl: _photoUrl,
+        pictureUrl: _pictureDownloadUrl,
         commentsCount: 0,
         likesCount: 0,
       ));
-
-      _photoUrl = '';
+      fileReset();
+      notifyListeners();
       setBusy(false);
     }
   }
