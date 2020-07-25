@@ -11,6 +11,7 @@ class PostsViewModel extends StreamViewModel {
 
   @override
   Stream get stream => _getPostStream();
+
   Stream<List<Post>> _getPostStream() {
     _database.postStream().listen((event) {
       if (event != null) setPosts(event);
@@ -43,11 +44,9 @@ class PostsViewModel extends StreamViewModel {
     }
     setBusy(false);
     notifyListeners();
+    print('model isbusy: $isBusy');
   }
 
   List<PostProfile> get postprofileList => _postprofileList;
-
   String formatTime(String time) => _formatter.formatDate(time);
 }
-
-class CurrentUserProfileServicce {}

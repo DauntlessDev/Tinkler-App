@@ -1,6 +1,7 @@
 //view class
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/shared/empty_content.dart';
 import 'package:tinkler/ui/shared/post_tile.dart';
@@ -12,8 +13,10 @@ class PostsView extends StatelessWidget {
   static final navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PostsViewModel>.nonReactive(
-      builder: (context, model, child) => const _MainContent(),
+    return ViewModelBuilder<PostsViewModel>.reactive(
+      builder: (context, model, child) => ModalProgressHUD(
+          inAsyncCall: model.isBusy,
+          child: model.isBusy ? Container() : const _MainContent()),
       viewModelBuilder: () => PostsViewModel(),
     );
   }
