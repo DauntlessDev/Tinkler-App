@@ -141,7 +141,10 @@ class _ProfileHeader extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   child: FlatButton(
                     onPressed: onPressed,
-                    child: Text(buttonText),
+                    child: Text(
+                      buttonText,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),

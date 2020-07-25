@@ -1,6 +1,7 @@
 //view class
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 
@@ -39,6 +40,13 @@ class PostBottomsheetView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      FlatButton(
+                        onPressed: () async {
+                          await model.proceedPost();
+                          Navigator.pop(context);
+                        },
+                        child: Icon(MdiIcons.imagePlus, size: 30),
+                      ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Container(
@@ -48,7 +56,10 @@ class PostBottomsheetView extends StatelessWidget {
                               await model.proceedPost();
                               Navigator.pop(context);
                             },
-                            child: Text('Post'),
+                            child: Text(
+                              'Post',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),

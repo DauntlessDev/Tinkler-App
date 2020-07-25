@@ -46,8 +46,6 @@ class PostTile extends StatelessWidget {
                         ' • ${_formatter.formatPostDate(post.time)}',
                         style: TextStyle(color: Colors.grey, fontSize: 10),
                       ),
-                      // Expanded(child: Container()),
-                      // Icon(Icons.menu, size: 15),
                     ],
                   ),
                   SizedBox(height: 2),
@@ -60,6 +58,12 @@ class PostTile extends StatelessWidget {
                     post.description,
                     style: TextStyle(fontSize: 12),
                   ),
+                  SizedBox(height: 10),
+                  if (post.pictureUrl.isNotEmpty)
+                    Image(
+                      image: AssetImage('assets/images/profile_1.jpg'),
+                      height: 200,
+                    ),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
