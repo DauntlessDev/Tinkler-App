@@ -79,11 +79,20 @@ class PostListBuilder extends ViewModelWidget<PostsViewModel> {
         title: 'Post Empty',
         message: 'Follow other users.',
       );
-    return ListView.builder(
-      itemCount: model.postList.length,
-      itemBuilder: (context, index) => PostTile(
-        post: model.postList[index],
-        // startConversation: model.startConversation,
+    return ListView.separated(
+      itemCount: model.postList.length + 2,
+      itemBuilder: (context, index) {
+        if (index == 0 || index == model.postList.length + 1)
+          return Container();
+        return PostTile(
+          post: model.postList[index - 1],
+          // startConversation: model.startConversation,
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) => Divider(
+        color: Colors.grey,
+        thickness: .2,
+        height: .2,
       ),
     );
   }

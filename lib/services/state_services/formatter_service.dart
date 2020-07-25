@@ -17,4 +17,24 @@ class FormatterService extends ChangeNotifier {
       return DateFormat.jm().format(firstDate);
     }
   }
+
+  String formatPostDate(String firstTime) {
+    DateTime firstDate = DateTime.parse(firstTime);
+
+    if (firstDate.difference(DateTime.now()) > Duration(days: 365)) {
+      return '${DateFormat.yMMMMd().format(firstDate)}';
+    } else if (firstDate.day != DateTime.now().day) {
+      return '${DateFormat.MMMMd().format(firstDate)}';
+    } else if (firstDate.difference(DateTime.now()) >= Duration(hours: 1)) {
+      return '${firstDate.difference(DateTime.now()).inHours}h';
+    } else if (firstDate.difference(DateTime.now()) >= Duration(minutes: 1)) {
+      return '${firstDate.difference(DateTime.now()).inMinutes}m';
+    } else if (firstDate.difference(DateTime.now()) >= Duration(seconds: 10)) {
+      return '${firstDate.difference(DateTime.now()).inSeconds}s';
+    } else if (firstDate.difference(DateTime.now()) < Duration(seconds: 10)) {
+      return 'now';
+    } else {
+      return '${firstDate.difference(DateTime.now()).inHours}h';
+    }
+  }
 }

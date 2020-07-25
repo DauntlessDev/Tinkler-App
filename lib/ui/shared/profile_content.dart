@@ -41,10 +41,9 @@ class ProfileContent extends StatelessWidget {
                 ],
               )),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: SizedBox(
               height: 1,
-              child: Container(color: Theme.of(context).colorScheme.onSurface),
             ),
           ),
           OwnPostListBuilder(ownPostsList: ownPostsList),
@@ -67,9 +66,18 @@ class OwnPostListBuilder extends StatelessWidget {
     return Expanded(
       child: SizedBox(
         height: 500,
-        child: ListView.builder(
-          itemBuilder: (context, index) => PostTile(post: ownPostsList[index]),
-          itemCount: ownPostsList.length,
+        child: ListView.separated(
+          itemBuilder: (context, index) {
+            if (index == 0 || index == ownPostsList.length + 1)
+              return Container();
+            return PostTile(post: ownPostsList[index - 1]);
+          },
+          itemCount: ownPostsList.length + 2,
+          separatorBuilder: (BuildContext context, int index) => Divider(
+            color: Colors.grey,
+            thickness: .2,
+            height: .2,
+          ),
         ),
       ),
     );
