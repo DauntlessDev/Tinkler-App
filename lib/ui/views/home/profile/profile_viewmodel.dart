@@ -47,10 +47,9 @@ class ProfileViewModel extends StreamViewModel<Profile> {
 
   Future<void> setPosts(List<Post> event, Profile senderProfile) async {
     setBusy(true);
-    print('event : $event');
+    ownPostProfileList.clear();
 
     for (Post post in event) {
-      print('postsss: $post');
       ownPostProfileList.add(
         PostProfile(
             post: Post(

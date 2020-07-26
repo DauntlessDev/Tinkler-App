@@ -1,4 +1,6 @@
+import 'package:meta/meta.dart';
 import 'package:stacked/stacked.dart';
+
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/postprofile.dart';
@@ -54,11 +56,9 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
 
   Future<void> setPosts(List<Post> event, Profile senderProfile) async {
     setBusy(true);
-    print('event : $event');
     ownPostProfileList.clear();
 
     for (Post post in event) {
-      print('postsss: $post');
       ownPostProfileList.add(
         PostProfile(
             post: Post(
@@ -77,13 +77,44 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     setBusy(false);
   }
 
-  bool isVisitingOwnProfile() {
-    return profile.email == _user.email;
+  bool isVisitingOwnProfile() => profile.email == _user.email;
+  bool isFollowed() => false;
+
+  void updateUserFollowingCount({@required bool toFollow}) async {
+    Profile currentProfileInfo;
+    await _database
+        .profileFuture(email: _user.email)
+        .then((value) => currentProfileInfo = value.first);
+
+    toFollow
+        ? _database.addProfile(currentProfileInfo.copyWith(
+            posts: currentProfileInfo.following + 1))
+        : _database.addProfile(currentProfileInfo.copyWith(
+            posts: currentProfileInfo.following - 1));
   }
 
-  void followUser() {
-    print('follow userssss');
+  Future<void> updateOtherFollowersCount({@required bool toFollow}) async {
+    Profile othersProfileInfo;
+    await _database
+        .profileFuture(email: profile.email)
+        .then((value) => othersProfileInfo = value.first);
+
+    toFollow
+        ? _database.addProfile(
+            othersProfileInfo.copyWith(posts: othersProfileInfo.followers + 1))
+        : _database.addProfile(
+            othersProfileInfo.copyWith(posts: othersProfileInfo.followers - 1));
   }
 
-  
+  Future<void> followUser() async {
+    updateUserFollowingCount(toFollow: true);
+    updateOtherFollowersCount(toFollow: true);
+    futureToRun();
+  }
+
+  Future<void> unfollowUser() async {
+    updateUserFollowingCount(toFollow: false);
+    updateOtherFollowersCount(toFollow: false);
+    futureToRun();
+  }
 }

@@ -158,38 +158,4 @@ class DatabaseService {
     );
   }
 
-  // Future<void> addFollowing({@required String email}) async {
-  //   await _service.setData(
-  //     path: APIPath.post(post.postId),
-  //     data: post.toMap(),
-  //   );
-  // }
-
-  // Future<void> addFollowers({@required Post post}) async {
-  //   await _service.setData(
-  //     path: APIPath.post(post.postId),
-  //     data: post.toMap(),
-  //   );
-  // }
-
-  // Future<void> updateFollowingsCount({@required Post post}) async {
-  //   await _service.setData(
-  //     path: APIPath.post(post.postId),
-  //     data: post.toMap(),
-  //   );
-  // }
-
-  // Future<void> updateFollowersCount({@required Post post}) async {
-  //   await _service.setData(
-  //     path: APIPath.post(post.postId),
-  //     data: post.toMap(),
-  //   );
-  // }
-
-  Future<void> updatePostsCount({@required Post post}) async {
-    await _service.setData(
-      path: APIPath.post(post.postId),
-      data: post.toMap(),
-    );
-  }
 }
