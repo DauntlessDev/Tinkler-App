@@ -10,12 +10,14 @@ class ProfileContent extends StatelessWidget {
     Key key,
     @required this.profile,
     @required this.buttonText,
+    @required this.buttonColor,
     @required this.onPressed,
     @required this.ownPostsList,
   }) : super(key: key);
 
   final Profile profile;
   final String buttonText;
+  final Color buttonColor;
   final Function onPressed;
   final List<PostProfile> ownPostsList;
   @override
@@ -30,6 +32,7 @@ class ProfileContent extends StatelessWidget {
               buttonText: buttonText,
               onPressed: onPressed,
               profile: profile,
+              buttonColor: buttonColor,
             ),
           ),
           Align(
@@ -89,11 +92,13 @@ class _ProfileHeader extends StatelessWidget {
     Key key,
     @required this.profile,
     @required this.buttonText,
+    @required this.buttonColor,
     @required this.onPressed,
   }) : super(key: key);
 
   final Profile profile;
   final String buttonText;
+  final Color buttonColor;
   final Function onPressed;
 
   @override
@@ -139,9 +144,7 @@ class _ProfileHeader extends StatelessWidget {
                 child: Container(
                   width: double.maxFinite,
                   height: 50,
-                  color: onPressed == null
-                      ? Colors.grey
-                      : Theme.of(context).primaryColor,
+                  color: onPressed == null ? Colors.grey : buttonColor,
                   child: FlatButton(
                     onPressed: onPressed,
                     child: Text(

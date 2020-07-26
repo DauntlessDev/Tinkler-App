@@ -49,7 +49,7 @@ class _MainContent extends ViewModelWidget<ProfileViewModel> {
           buttonText: 'Change Picture',
           onPressed: model.changeProfile,
           ownPostsList: model.ownPostProfileList,
-          profile: model.profile),
+          profile: model.profile, buttonColor: Theme.of(context).primaryColor,),
     );
   }
 }

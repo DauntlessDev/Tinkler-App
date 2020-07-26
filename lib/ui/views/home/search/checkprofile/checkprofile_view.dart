@@ -43,10 +43,14 @@ class _MainContent extends ViewModelWidget<CheckProfileViewModel> {
         ),
       ),
       body: ProfileContent(
-          buttonText: model.buttonText(),
-          onPressed: model.isVisitingOwnProfile() ? null : model.followingUser,
-          ownPostsList: model.ownPostProfileList,
-          profile: model.profile),
+        buttonText: model.buttonText(),
+        onPressed: model.onPressed(),
+        ownPostsList: model.ownPostProfileList,
+        profile: model.profile,
+        buttonColor: model.isFollowed
+            ? Colors.blue[300]
+            : Theme.of(context).primaryColor,
+      ),
     );
   }
 }

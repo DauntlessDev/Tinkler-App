@@ -65,10 +65,10 @@ class DatabaseService {
             query.where('caseSearch', arrayContains: searchInput));
   }
 
-  Future<void> addFollowers(
+  Future<void> addFollower(
       {@required String uid, @required Follow follow}) async {
     await _service.setData(
-      path: APIPath.followersCollection(uid, follow.email),
+      path: APIPath.followerSpecific(uid, follow.email),
       data: follow.toMap(),
     );
   }
@@ -76,9 +76,17 @@ class DatabaseService {
   Future<void> addFollowing(
       {@required String uid, @required Follow follow}) async {
     await _service.setData(
-      path: APIPath.followingCollection(uid, follow.email),
+      path: APIPath.followingSpecific(uid, follow.email),
       data: follow.toMap(),
     );
+  }
+
+  Future<void> deleteFollower({@required String uid, String email}) async {
+    await _service.deleteData(path: APIPath.followerSpecific(uid, email));
+  }
+
+  Future<void> deleteFollowing({@required String uid, String email}) async {
+    await _service.deleteData(path: APIPath.followingSpecific(uid, email));
   }
 
   Stream<List<Follow>> followingStream(

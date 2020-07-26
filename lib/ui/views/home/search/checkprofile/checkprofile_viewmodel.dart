@@ -126,9 +126,12 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
             followers: othersProfileInfo.followers + 1));
   }
 
-  Future<void> addOtherFollowers() async {
-    _database.addFollowers(
-        uid: profile.uid, follow: Follow(email: _user.email));
+  Future<void> addOtherFollower() async {
+    _database.addFollower(uid: profile.uid, follow: Follow(email: _user.email));
+  }
+
+  Future<void> deleteOtherFollower() async {
+    _database.deleteFollower(uid: profile.uid, email: _user.email);
   }
 
   Future<void> addUserFollowing() async {
@@ -136,13 +139,34 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
         uid: _user.uid, follow: Follow(email: profile.email));
   }
 
+  Future<void> deleteUserFollowing() async {
+    _database.deleteFollowing(uid: _user.uid, email: profile.email);
+  }
+
   Future<void> followingUser() async {
     setBusy(true);
     addUserFollowing();
-    addOtherFollowers();
+    addOtherFollower();
     updateUserFollowingCount(toUnfollow: isFollowed);
     updateOtherFollowersCount(toUnFollow: isFollowed);
+    print('finished followed');
     setBusy(false);
+  }
+
+  Future<void> unfollowingUser() async {
+    setBusy(true);
+    deleteUserFollowing();
+    deleteOtherFollower();
+    updateUserFollowingCount(toUnfollow: isFollowed);
+    updateOtherFollowersCount(toUnFollow: isFollowed);
+    print('finished unfollow');
+    setBusy(false);
+  }
+
+  Function onPressed() {
+    return isVisitingOwnProfile()
+        ? null
+        : isFollowed ? unfollowingUser : followingUser;
   }
 
   String buttonText() {
