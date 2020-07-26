@@ -90,9 +90,9 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
 
     toFollow
         ? _database.setProfile(currentProfileInfo.copyWith(
-            posts: currentProfileInfo.following + 1))
+            following: currentProfileInfo.following + 1))
         : _database.setProfile(currentProfileInfo.copyWith(
-            posts: currentProfileInfo.following - 1));
+            following: currentProfileInfo.following - 1));
   }
 
   Future<void> updateOtherFollowersCount({@required bool toFollow}) async {
@@ -102,21 +102,15 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
         .then((value) => othersProfileInfo = value.first);
 
     toFollow
-        ? _database.setProfile(
-            othersProfileInfo.copyWith(posts: othersProfileInfo.followers + 1))
-        : _database.setProfile(
-            othersProfileInfo.copyWith(posts: othersProfileInfo.followers - 1));
+        ? _database.setProfile(othersProfileInfo.copyWith(
+            followers: othersProfileInfo.followers + 1))
+        : _database.setProfile(othersProfileInfo.copyWith(
+            followers: othersProfileInfo.followers - 1));
   }
 
-  Future<void> followUser() async {
-    updateUserFollowingCount(toFollow: true);
-    updateOtherFollowersCount(toFollow: true);
-    futureToRun();
-  }
-
-  Future<void> unfollowUser() async {
-    updateUserFollowingCount(toFollow: false);
-    updateOtherFollowersCount(toFollow: false);
-    futureToRun();
+  Future<void> followingUser() async {
+    bool toFollow = true;
+    updateUserFollowingCount(toFollow: toFollow);
+    updateOtherFollowersCount(toFollow: toFollow);
   }
 }
