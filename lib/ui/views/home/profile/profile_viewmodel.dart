@@ -71,6 +71,7 @@ class ProfileViewModel extends StreamViewModel<Profile> {
   Profile get profile {
     return (data == null)
         ? Profile(
+            caseSearch: [],
             uid: '',
             photoUrl: '',
             displayName: '',

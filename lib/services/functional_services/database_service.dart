@@ -64,6 +64,22 @@ class DatabaseService {
             query.where('caseSearch', arrayContains: searchInput));
   }
 
+  Future<void> addFollowers(
+      {@required String uid, @required String email}) async {
+    await _service.setData(
+      path: APIPath.followers(uid, email),
+      data: {'email': email},
+    );
+  }
+
+  Future<void> addFollowings(
+      {@required String uid, @required String email}) async {
+    await _service.setData(
+      path: APIPath.following(uid, email),
+      data: {'email': email},
+    );
+  }
+
   Future<void> addChatroom({@required Chatroom chatroom}) async {
     await _service.setData(
       path: APIPath.chatroom(chatroom.chatroomID),

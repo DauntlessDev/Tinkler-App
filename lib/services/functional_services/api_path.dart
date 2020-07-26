@@ -4,6 +4,11 @@ class APIPath {
 
   static String profilePic(String uid) => 'profilePics/$uid';
 
+  static String followers(String uid, String email) =>
+      'followers/$uid/followers/$email';
+  static String following(String uid, String email) =>
+      'followings/$uid/followings/$email';
+
   static String chatroom(String chatroomId) => 'chatrooms/$chatroomId';
   static String chatrooms() => 'chatrooms/';
 

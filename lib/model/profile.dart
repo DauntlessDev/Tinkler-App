@@ -20,7 +20,7 @@ class Profile {
     @required this.posts,
     @required this.followers,
     @required this.following,
-    this.caseSearch,
+    @required this.caseSearch,
   });
 
   Profile copyWith({
