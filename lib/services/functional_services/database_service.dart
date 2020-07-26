@@ -87,7 +87,7 @@ class DatabaseService {
       path: APIPath.following(uid),
       isReversed: true,
       builder: (data) => Follow.fromMap(data),
-      queryBuilder: (query) => query.where('following', arrayContains: email),
+      queryBuilder: (query) => query.where('email', isEqualTo: email),
     );
   }
 

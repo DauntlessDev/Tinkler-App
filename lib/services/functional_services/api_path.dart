@@ -9,7 +9,7 @@ class APIPath {
   static String followingCollection(String uid, String email) =>
       'following/$uid/following/$email';
 
-  static String following(String uid) => 'following/$uid/';
+  static String following(String uid) => 'following/$uid/following';
 
   static String chatroom(String chatroomId) => 'chatrooms/$chatroomId';
   static String chatrooms() => 'chatrooms/';

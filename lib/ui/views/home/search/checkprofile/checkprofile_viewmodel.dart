@@ -51,8 +51,24 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
   Future<List<Post>> ownPostFuture() async =>
       await _database.specificPostFuture(_visitProfile.email);
   List<Post> ownPostList = [];
+
+  bool isFollowed = false;
+  void checkIfFollowed() {
+    _database
+        .followingStream(uid: _user.uid, email: _visitProfile.email)
+        .listen((followingList) {
+      if (followingList != null) {
+        print('following list : $followingList');
+        isFollowed = followingList.isNotEmpty;
+        print(isFollowed);
+        notifyListeners();
+      }
+    });
+  }
+
   @override
   Future<Profile> futureToRun() async {
+    checkIfFollowed();
     ownPostList = await ownPostFuture();
     Profile profile = await profileFuture().then((value) => value);
     setPosts(ownPostList, profile);
@@ -83,49 +99,53 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
   }
 
   bool isVisitingOwnProfile() => profile.email == _user.email;
-  bool isFollowed() => false;
 
-  void updateUserFollowingCount({@required bool toFollow}) async {
+  void updateUserFollowingCount({@required bool toUnfollow}) async {
     Profile currentProfileInfo;
     await _database
         .profileFuture(email: _user.email)
         .then((value) => currentProfileInfo = value.first);
 
-    toFollow
+    toUnfollow
         ? _database.setProfile(currentProfileInfo.copyWith(
-            following: currentProfileInfo.following + 1))
+            following: currentProfileInfo.following - 1))
         : _database.setProfile(currentProfileInfo.copyWith(
-            following: currentProfileInfo.following - 1));
+            following: currentProfileInfo.following + 1));
   }
 
-  Future<void> updateOtherFollowersCount({@required bool toFollow}) async {
+  Future<void> updateOtherFollowersCount({@required bool toUnFollow}) async {
     Profile othersProfileInfo;
     await _database
         .profileFuture(email: profile.email)
         .then((value) => othersProfileInfo = value.first);
 
-    toFollow
+    toUnFollow
         ? _database.setProfile(othersProfileInfo.copyWith(
-            followers: othersProfileInfo.followers + 1))
+            followers: othersProfileInfo.followers - 1))
         : _database.setProfile(othersProfileInfo.copyWith(
-            followers: othersProfileInfo.followers - 1));
+            followers: othersProfileInfo.followers + 1));
   }
 
   Future<void> addOtherFollowers() async {
-    _database.addFollowers(uid: profile.uid, follow: Follow(email: _user.email));
+    _database.addFollowers(
+        uid: profile.uid, follow: Follow(email: _user.email));
   }
 
   Future<void> addUserFollowing() async {
-    _database.addFollowing(uid: _user.uid, follow: Follow(email: profile.email));
+    _database.addFollowing(
+        uid: _user.uid, follow: Follow(email: profile.email));
   }
 
   Future<void> followingUser() async {
     setBusy(true);
-    bool toFollow = true;
     addUserFollowing();
     addOtherFollowers();
-    updateUserFollowingCount(toFollow: toFollow);
-    updateOtherFollowersCount(toFollow: toFollow);
+    updateUserFollowingCount(toUnfollow: isFollowed);
+    updateOtherFollowersCount(toUnFollow: isFollowed);
     setBusy(false);
+  }
+
+  String buttonText() {
+    return isFollowed ? 'unfollow' : 'follow';
   }
 }

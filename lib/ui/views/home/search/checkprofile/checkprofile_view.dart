@@ -43,7 +43,7 @@ class _MainContent extends ViewModelWidget<CheckProfileViewModel> {
         ),
       ),
       body: ProfileContent(
-          buttonText: 'Follow',
+          buttonText: model.buttonText(),
           onPressed: model.isVisitingOwnProfile() ? null : model.followingUser,
           ownPostsList: model.ownPostProfileList,
           profile: model.profile),
