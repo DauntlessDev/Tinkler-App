@@ -102,7 +102,7 @@ class ProfileViewModel extends StreamViewModel<Profile> {
       File _image = await _database.getImage();
       String downloadUrl = await _database.uploadProfilePic(image: _image);
 
-      await _database.addProfile(profile.copyWith(photoUrl: downloadUrl));
+      await _database.setProfile(profile.copyWith(photoUrl: downloadUrl));
       notifyListeners();
     } on PlatformException catch (e) {
       _dialog.showDialog(title: 'Profile', description: e.message);

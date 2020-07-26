@@ -77,7 +77,7 @@ class PostBottomsheetViewModel extends BaseViewModel {
           .profileFuture(email: _user.email)
           .then((value) => currentProfileInfo = value.first);
 
-      _database.addProfile(
+      _database.setProfile(
           currentProfileInfo.copyWith(posts: currentProfileInfo.posts + 1));
 
       fileReset();

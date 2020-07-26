@@ -33,15 +33,7 @@ class DatabaseService {
     return _service.uploadPic(image: image, path: APIPath.postPicture(postId));
   }
 
-  Future<void> addProfile(Profile profile) async {
-    String _uid = _user.uid;
-    await _service.setData(
-      path: APIPath.userInfo(_uid),
-      data: profile.toMap(),
-    );
-  }
-
-  Future<void> updateOtherProfile(Profile profile) async {
+  Future<void> setProfile(Profile profile) async {
     await _service.setData(
       path: APIPath.userInfo(profile.uid),
       data: profile.toMap(),

@@ -72,7 +72,7 @@ class SignupViewModel extends BaseViewModel {
           return caseSearchList;
         }
 
-        await _database.addProfile(
+        await _database.setProfile(
           Profile(
             uid: user.uid,
             email: _email,

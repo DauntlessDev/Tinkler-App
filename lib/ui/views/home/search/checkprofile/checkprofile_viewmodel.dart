@@ -89,9 +89,9 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
         .then((value) => currentProfileInfo = value.first);
 
     toFollow
-        ? _database.addProfile(currentProfileInfo.copyWith(
+        ? _database.setProfile(currentProfileInfo.copyWith(
             posts: currentProfileInfo.following + 1))
-        : _database.addProfile(currentProfileInfo.copyWith(
+        : _database.setProfile(currentProfileInfo.copyWith(
             posts: currentProfileInfo.following - 1));
   }
 
@@ -102,9 +102,9 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
         .then((value) => othersProfileInfo = value.first);
 
     toFollow
-        ? _database.addProfile(
+        ? _database.setProfile(
             othersProfileInfo.copyWith(posts: othersProfileInfo.followers + 1))
-        : _database.addProfile(
+        : _database.setProfile(
             othersProfileInfo.copyWith(posts: othersProfileInfo.followers - 1));
   }
 
