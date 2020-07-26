@@ -40,28 +40,31 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
           child: Icon(Icons.add),
         ),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text('Latest Posts', style: TextStyle(fontSize: 16)),
-                        SizedBox(height: 20),
-                        Expanded(
-                          child: PostListBuilder(),
-                        ),
-                      ],
+          child: RefreshIndicator(
+            onRefresh: model.reloadPage,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('Latest Posts', style: TextStyle(fontSize: 16)),
+                          SizedBox(height: 20),
+                          Expanded(
+                            child: PostListBuilder(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ));

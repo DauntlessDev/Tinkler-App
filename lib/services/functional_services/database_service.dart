@@ -99,6 +99,22 @@ class DatabaseService {
     );
   }
 
+  Stream<List<String>> allFollowingStream({@required String uid}) {
+    return _service.collectionStreamNoID(
+      path: APIPath.following(uid),
+      isReversed: true,
+      builder: (data) => Follow.fromMap(data).email,
+    );
+  }
+
+  Future<List<String>> allFollowingFuture({@required String uid}) {
+    return _service.collectionFuture(
+      path: APIPath.following(uid),
+      isReversed: true,
+      builder: (data) => Follow.fromMap(data).email,
+    );
+  }
+
   Future<void> addChatroom({@required Chatroom chatroom}) async {
     await _service.setData(
       path: APIPath.chatroom(chatroom.chatroomID),
@@ -181,6 +197,20 @@ class DatabaseService {
       isReversed: true,
     );
   }
+
+  // Stream<List<Post>> followedPostStream(List<String> followedList) {
+  //   return _service.collectionStreamNoID(
+  //     path: APIPath.posts(),
+  //     builder: (data) => Post.fromMap(data),
+  //     sort: (a, b) => a.time.compareTo(b.time),
+  //     queryBuilder: (query) {
+  //       for (String email in followedList) {
+  //         return query.where('posterEmail', isEqualTo: email);
+  //       }
+  //     },
+  //     isReversed: true,
+  //   );
+  // }
 
   Future<List<Post>> specificPostFuture(String email) {
     return _service.collectionFuture(

@@ -3,21 +3,34 @@ import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
 
-class PostsViewModel extends StreamViewModel {
+class PostsViewModel extends FutureViewModel {
   final _database = locator<DatabaseService>();
   final _formatter = locator<FormatterService>();
+  final _user = locator<CurrentUserService>();
 
   @override
-  Stream get stream => _getPostStream();
+  Future futureToRun() => _setUpPostView();
 
-  Stream<List<Post>> _getPostStream() {
-    _database.postStream().listen((event) {
-      if (event != null) setPosts(event);
+  Future<void> _setUpPostView() async {
+    List<String> followedEmailList = [_user.email];
+    followedEmailList.addAll(
+      await _database.allFollowingFuture(uid: _user.uid),
+    );
+
+    _database.postStream().listen((postList) {
+      List<Post> followedPostList = [];
+      if (postList != null) {
+        for (Post post in postList) {
+          if (followedEmailList.contains(post.posterEmail)) {
+            followedPostList.add(post);
+          }
+        }
+      }
+      setPosts(followedPostList);
     });
-
-    return _database.postStream();
   }
 
   List<PostProfile> _postprofileList = [];
@@ -49,4 +62,6 @@ class PostsViewModel extends StreamViewModel {
 
   List<PostProfile> get postprofileList => _postprofileList;
   String formatTime(String time) => _formatter.formatDate(time);
+
+  Future<void> reloadPage() async => await futureToRun();
 }
