@@ -25,6 +25,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
   Profile get profile {
     return (data == null)
         ? Profile(
+            uid: '',
             photoUrl: '',
             displayName: '',
             email: '',
@@ -33,6 +34,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
             posts: 0,
           )
         : Profile(
+            uid: data.uid,
             photoUrl: data.photoUrl ?? '',
             email: data.email,
             displayName: data.displayName,

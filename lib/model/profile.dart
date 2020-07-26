@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class Profile {
+  final String uid;
   final String email;
   final String displayName;
   final String photoUrl;
@@ -12,6 +13,7 @@ class Profile {
   final List<String> caseSearch;
 
   Profile({
+    @required this.uid,
     @required this.email,
     @required this.displayName,
     @required this.photoUrl,
@@ -22,6 +24,7 @@ class Profile {
   });
 
   Profile copyWith({
+    String uid,
     String email,
     String displayName,
     String photoUrl,
@@ -31,6 +34,7 @@ class Profile {
     List<String> caseSearch,
   }) {
     return Profile(
+      uid: uid ?? this.uid,
       email: email ?? this.email,
       displayName: displayName ?? this.displayName,
       photoUrl: photoUrl ?? this.photoUrl,
@@ -43,6 +47,7 @@ class Profile {
 
   Map<String, dynamic> toMap() {
     return {
+      'uid': uid,
       'email': email,
       'displayName': displayName,
       'photoUrl': photoUrl,
@@ -57,6 +62,7 @@ class Profile {
     if (map == null) return null;
 
     return Profile(
+      uid: map['uid'],
       email: map['email'],
       displayName: map['displayName'],
       photoUrl: map['photoUrl'],
@@ -73,7 +79,7 @@ class Profile {
 
   @override
   String toString() {
-    return 'Profile(email: $email, displayName: $displayName, photoUrl: $photoUrl, posts: $posts, followers: $followers, following: $following, caseSearch: $caseSearch)';
+    return 'Profile(uid: $uid, email: $email, displayName: $displayName, photoUrl: $photoUrl, posts: $posts, followers: $followers, following: $following, caseSearch: $caseSearch)';
   }
 
   @override
@@ -81,6 +87,7 @@ class Profile {
     if (identical(this, o)) return true;
 
     return o is Profile &&
+        o.uid == uid &&
         o.email == email &&
         o.displayName == displayName &&
         o.photoUrl == photoUrl &&
@@ -92,7 +99,8 @@ class Profile {
 
   @override
   int get hashCode {
-    return email.hashCode ^
+    return uid.hashCode ^
+        email.hashCode ^
         displayName.hashCode ^
         photoUrl.hashCode ^
         posts.hashCode ^

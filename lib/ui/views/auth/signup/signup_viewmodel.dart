@@ -3,6 +3,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 
@@ -58,7 +59,7 @@ class SignupViewModel extends BaseViewModel {
         print('$_displayName , $_email , $_password , $_confirmPassword ');
         setBusy(true);
 
-        await _auth.createWithEmailAndPassword(
+        User user = await _auth.createWithEmailAndPassword(
             email: _email, password: _password);
 
         setSearchParam(String caseNumber) {
@@ -73,6 +74,7 @@ class SignupViewModel extends BaseViewModel {
 
         await _database.addProfile(
           Profile(
+            uid: user.uid,
             email: _email,
             photoUrl: '',
             displayName: _displayName,

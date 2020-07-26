@@ -41,6 +41,13 @@ class DatabaseService {
     );
   }
 
+  Future<void> updateOtherProfile(Profile profile) async {
+    await _service.setData(
+      path: APIPath.userInfo(profile.uid),
+      data: profile.toMap(),
+    );
+  }
+
   Stream<Profile> profileStream() {
     String _uid = _user.uid;
     return _service.documentStreamNoID(
@@ -157,5 +164,4 @@ class DatabaseService {
       isReversed: true,
     );
   }
-
 }
