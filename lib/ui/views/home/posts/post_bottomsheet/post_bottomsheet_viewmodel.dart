@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
+import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 
@@ -31,7 +32,7 @@ class PostBottomsheetViewModel extends BaseViewModel {
   void fileReset() {
     inputClear();
     imagePathClear();
-    selectedImageClear();
+    if (_selectedImage != null) selectedImageClear();
   }
 
   Future<void> addImage() async {
@@ -70,6 +71,15 @@ class PostBottomsheetViewModel extends BaseViewModel {
         commentsCount: 0,
         likesCount: 0,
       ));
+
+      Profile currentProfileInfo;
+      await _database
+          .profileFuture(email: _user.email)
+          .then((value) => currentProfileInfo = value.first);
+
+      _database.addProfile(
+          currentProfileInfo.copyWith(posts: currentProfileInfo.posts + 1));
+
       fileReset();
       notifyListeners();
       setBusy(false);

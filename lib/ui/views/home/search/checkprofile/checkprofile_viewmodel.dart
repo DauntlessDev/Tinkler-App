@@ -84,4 +84,6 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
   void followUser() {
     print('follow userssss');
   }
+
+  
 }
