@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/follow.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
@@ -111,11 +112,11 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
   }
 
   Future<void> addOtherFollowers() async {
-    _database.addFollowers(uid: profile.uid, email: _user.email);
+    _database.addFollowers(uid: profile.uid, follow: Follow(email: _user.email));
   }
 
   Future<void> addUserFollowing() async {
-    _database.addFollowings(uid: _user.uid, email: profile.email);
+    _database.addFollowing(uid: _user.uid, follow: Follow(email: profile.email));
   }
 
   Future<void> followingUser() async {

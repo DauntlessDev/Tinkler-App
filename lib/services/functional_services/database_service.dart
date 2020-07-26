@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/chatroom.dart';
+import 'package:tinkler/model/follow.dart';
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/profile.dart';
@@ -65,18 +66,28 @@ class DatabaseService {
   }
 
   Future<void> addFollowers(
-      {@required String uid, @required String email}) async {
+      {@required String uid, @required Follow follow}) async {
     await _service.setData(
-      path: APIPath.followers(uid, email),
-      data: {'email': email},
+      path: APIPath.followersCollection(uid, follow.email),
+      data: follow.toMap(),
     );
   }
 
-  Future<void> addFollowings(
-      {@required String uid, @required String email}) async {
+  Future<void> addFollowing(
+      {@required String uid, @required Follow follow}) async {
     await _service.setData(
-      path: APIPath.following(uid, email),
-      data: {'email': email},
+      path: APIPath.followingCollection(uid, follow.email),
+      data: follow.toMap(),
+    );
+  }
+
+  Stream<List<Follow>> followingStream(
+      {@required String uid, @required String email}) {
+    return _service.collectionStreamNoID(
+      path: APIPath.following(uid),
+      isReversed: true,
+      builder: (data) => Follow.fromMap(data),
+      queryBuilder: (query) => query.where('following', arrayContains: email),
     );
   }
 
