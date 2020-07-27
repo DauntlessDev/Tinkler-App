@@ -115,6 +115,14 @@ class DatabaseService {
     );
   }
 
+  Future<List<String>> allFollowersFuture({@required String uid}) {
+    return _service.collectionFuture(
+      path: APIPath.followers(uid),
+      isReversed: true,
+      builder: (data) => Record.fromMap(data).email,
+    );
+  }
+
   Future<void> addChatroom({@required Chatroom chatroom}) async {
     await _service.setData(
       path: APIPath.chatroom(chatroom.chatroomID),

@@ -30,18 +30,18 @@ class _FollowTileBuilder extends ViewModelWidget<FollowerInfoViewModel> {
 
   @override
   Widget build(BuildContext context, FollowerInfoViewModel model) {
-    if (model.followedProfileList == null) return Container();
-    if (model.followedProfileList.isEmpty)
+    if (model.followersProfileList == null) return Container();
+    if (model.followersProfileList.isEmpty)
       return EmptyContent(
-          title: 'Empty Result', message: 'The name entered is not found.');
+          title: 'Empty Result', message: 'You are not followed by anyone.');
 
     return ListView.builder(
       itemBuilder: (context, index) => FollowTile(
-        profile: model.followedProfileList[index],
+        profile: model.followersProfileList[index],
         visitProfile: () =>
-            model.visitProfile(model.followedProfileList[index].email),
+            model.visitProfile(model.followersProfileList[index].email),
       ),
-      itemCount: model.followedProfileList.length,
+      itemCount: model.followersProfileList.length,
     );
   }
 }

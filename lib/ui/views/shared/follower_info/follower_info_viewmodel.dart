@@ -11,32 +11,32 @@ class FollowerInfoViewModel extends FutureViewModel<List<Profile>> {
   final _database = locator<DatabaseService>();
   final _navigation = locator<NavigationService>();
 
-  Future<List<Profile>> checkFollowing() async {
+  Future<List<Profile>> checkFollowers() async {
     String userUid = '';
     await _database
         .profileFuture(email: _visitProfile.email)
         .then((value) => userUid = value.first.uid);
 
-    List<String> followingEmailList =
-        await _database.allFollowingFuture(uid: userUid);
+    List<String> followersEmailList =
+        await _database.allFollowersFuture(uid: userUid);
 
-    List<Profile> followingProfileList = [];
-    for (String email in followingEmailList) {
+    List<Profile> followersProfileList = [];
+    for (String email in followersEmailList) {
       Profile currentProfile;
       await _database
           .profileFuture(email: email)
           .then((value) => currentProfile = value.first);
 
-      followingProfileList.add(currentProfile);
+      followersProfileList.add(currentProfile);
     }
-    print(followingProfileList);
-    return followingProfileList;
+    print(followersProfileList);
+    return followersProfileList;
   }
 
   @override
-  Future<List<Profile>> futureToRun() => checkFollowing();
+  Future<List<Profile>> futureToRun() => checkFollowers();
 
-  List<Profile> get followedProfileList => data;
+  List<Profile> get followersProfileList => data;
 
   Future<void> visitProfile(String email) async {
     _visitProfile.updateVisitProfileEmail(email);

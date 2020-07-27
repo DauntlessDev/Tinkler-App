@@ -6,6 +6,9 @@ class APIPath {
 
   static String followerSpecific(String uid, String email) =>
       'followers/$uid/followers/$email';
+  static String followers(String uid) =>
+      'followers/$uid/followers/';
+      
   static String followingSpecific(String uid, String email) =>
       'following/$uid/following/$email';
 

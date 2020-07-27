@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/views/shared/fullpicture/fullpicture_viewmodel.dart';
+import 'package:tinkler/ui/widgets/empty_content.dart';
+import 'package:tinkler/ui/widgets/smartwidgets/follow_tile/follow_tile.dart';
 
 import 'following_info_viewmodel.dart';
 
@@ -15,8 +17,31 @@ class FollowingInfoView extends StatelessWidget {
               backgroundColor:
                   Theme.of(context).backgroundColor.withOpacity(0.3)),
           body: SafeArea(
-            child: Container(),
+            child: _FollowTileBuilder(),
           ),
         ),
       );
+}
+
+class _FollowTileBuilder extends ViewModelWidget<FollowingInfoViewModel> {
+  _FollowTileBuilder({
+    Key key,
+  }) : super(key: key, reactive: true);
+
+  @override
+  Widget build(BuildContext context, FollowingInfoViewModel model) {
+    if (model.followedProfileList == null) return Container();
+    if (model.followedProfileList.isEmpty)
+      return EmptyContent(
+          title: 'Empty Result', message: 'You don\'t follow anyone.');
+
+    return ListView.builder(
+      itemBuilder: (context, index) => FollowTile(
+        profile: model.followedProfileList[index],
+        visitProfile: () =>
+            model.visitProfile(model.followedProfileList[index].email),
+      ),
+      itemCount: model.followedProfileList.length,
+    );
+  }
 }
