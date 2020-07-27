@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:tinkler/ui/views/auth/login/login_view.dart';
 import 'package:tinkler/ui/views/auth/signup/signup_view.dart';
-import 'package:tinkler/ui/views/fullpicture/fullpicture_view.dart';
+import 'package:tinkler/ui/views/shared/fullpicture/fullpicture_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatroom/chatroom_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatsearch/chatsearch_view.dart';
 import 'package:tinkler/ui/views/home/home_view.dart';

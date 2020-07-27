@@ -14,7 +14,7 @@ import 'package:tinkler/ui/views/auth/signup/signup_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatsearch/chatsearch_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatroom/chatroom_view.dart';
 import 'package:tinkler/ui/views/home/search/checkprofile/checkprofile_view.dart';
-import 'package:tinkler/ui/views/fullpicture/fullpicture_view.dart';
+import 'package:tinkler/ui/views/shared/fullpicture/fullpicture_view.dart';
 
 abstract class Routes {
   static const landingViewRoute = '/';

@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
-import 'package:tinkler/ui/shared/avatar.dart';
-import 'package:tinkler/ui/shared/post_tile.dart';
+
+import 'avatar.dart';
+import 'post_tile.dart';
 
 class ProfileContent extends StatelessWidget {
   const ProfileContent({

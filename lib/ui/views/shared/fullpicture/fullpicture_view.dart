@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/views/fullpicture/fullpicture_viewmodel.dart';
+import 'package:tinkler/ui/views/shared/fullpicture/fullpicture_viewmodel.dart';
 
 class FullPictureView extends StatelessWidget {
   @override

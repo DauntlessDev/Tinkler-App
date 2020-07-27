@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/shared/profile_content.dart';
+import 'package:tinkler/ui/widgets/profile_content.dart';
 
 import 'checkprofile_viewmodel.dart';
 

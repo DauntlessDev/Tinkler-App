@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/profile.dart';
-import 'package:tinkler/ui/shared/empty_content.dart';
-import 'package:tinkler/ui/shared/avatar.dart';
+import 'package:tinkler/ui/widgets/empty_content.dart';
+import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'chatsearch_viewmodel.dart';
 

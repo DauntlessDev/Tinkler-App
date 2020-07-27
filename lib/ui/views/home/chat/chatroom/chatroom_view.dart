@@ -5,7 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
 import 'package:tinkler/model/message.dart';
-import 'package:tinkler/ui/shared/avatar.dart';
+import 'package:tinkler/ui/widgets/avatar.dart';
 
 import 'chatroom_viewmodel.dart';
 

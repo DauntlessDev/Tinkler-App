@@ -4,7 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
-import 'package:tinkler/ui/shared/profile_content.dart';
+import 'package:tinkler/ui/widgets/profile_content.dart';
 
 import 'profile_viewmodel.dart';
 
