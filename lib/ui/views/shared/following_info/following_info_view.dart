@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tinkler/ui/views/shared/fullpicture/fullpicture_viewmodel.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
 import 'package:tinkler/ui/widgets/smartwidgets/follow_tile/follow_tile.dart';
 

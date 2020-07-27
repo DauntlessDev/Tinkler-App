@@ -39,7 +39,7 @@ class FollowingInfoViewModel extends FutureViewModel<List<Profile>> {
   List<Profile> get followedProfileList => data;
 
   Future<void> visitProfile(String email) async {
-    _visitProfile.updateVisitProfileEmail(email);
+    _visitProfile.addVisitProfileEmail(email);
     _navigation.navigateTo(Routes.checkProfileViewRoute);
   }
 }

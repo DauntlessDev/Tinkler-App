@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
 import 'package:tinkler/ui/widgets/smartwidgets/follow_tile/follow_tile.dart';
-import 'package:tinkler/ui/widgets/smartwidgets/profile_list_builder/profile_list_builder.dart';
 
 import 'follower_info_viewmodel.dart';
 

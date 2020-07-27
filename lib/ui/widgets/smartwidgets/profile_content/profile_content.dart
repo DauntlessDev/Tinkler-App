@@ -1,14 +1,16 @@
 //view class
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
+import 'package:tinkler/services/state_services/visit_profile_service.dart';
 import 'package:tinkler/ui/widgets/smartwidgets/profile_content/profile_content_viewmodel.dart';
 
 import '../../avatar.dart';
 import '../post_tile/post_tile.dart';
 
-class ProfileContent extends StatelessWidget {
+class ProfileContent extends StatefulWidget {
   const ProfileContent({
     Key key,
     @required this.profile,
@@ -23,6 +25,19 @@ class ProfileContent extends StatelessWidget {
   final Color buttonColor;
   final Function onPressed;
   final List<PostProfile> ownPostsList;
+
+  @override
+  _ProfileContentState createState() => _ProfileContentState();
+}
+
+class _ProfileContentState extends State<ProfileContent> {
+  @override
+  void dispose() {
+    final _visitProfile = locator<VisitProfileService>();
+    _visitProfile.removeVIsitProfileEmail();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileContentViewModel>.reactive(
@@ -34,10 +49,10 @@ class ProfileContent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: _ProfileHeader(
-                buttonText: buttonText,
-                onPressed: onPressed,
-                profile: profile,
-                buttonColor: buttonColor,
+                buttonText: widget.buttonText,
+                onPressed: widget.onPressed,
+                profile: widget.profile,
+                buttonColor: widget.buttonColor,
               ),
             ),
             Align(
@@ -54,7 +69,7 @@ class ProfileContent extends StatelessWidget {
                 height: 1,
               ),
             ),
-            OwnPostListBuilder(ownPostsList: ownPostsList),
+            OwnPostListBuilder(ownPostsList: widget.ownPostsList),
           ],
         ),
       ),

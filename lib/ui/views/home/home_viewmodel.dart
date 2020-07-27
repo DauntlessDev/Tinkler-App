@@ -13,7 +13,7 @@ class HomeViewModel extends BaseViewModel {
   void select(TabItem value, navigatorKeyValue) {
     if (value != _currentTab) {
       if (value == TabItem.profile)
-        _visitProfile.updateVisitProfileEmail(_user.email);
+        _visitProfile.addVisitProfileEmail(_user.email);
         
       _currentTab = value;
       notifyListeners();
