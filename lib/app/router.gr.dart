@@ -14,6 +14,7 @@ import 'package:tinkler/ui/views/auth/signup/signup_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatsearch/chatsearch_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatroom/chatroom_view.dart';
 import 'package:tinkler/ui/views/home/search/checkprofile/checkprofile_view.dart';
+import 'package:tinkler/ui/views/fullpicture/fullpicture_view.dart';
 
 abstract class Routes {
   static const landingViewRoute = '/';
@@ -23,6 +24,7 @@ abstract class Routes {
   static const chatsearchViewRoute = '/chatsearch-view-route';
   static const chatroomViewRoute = '/chatroom-view-route';
   static const checkProfileViewRoute = '/check-profile-view-route';
+  static const fullPictureViewRoute = '/full-picture-view-route';
   static const all = {
     landingViewRoute,
     homeViewRoute,
@@ -31,6 +33,7 @@ abstract class Routes {
     chatsearchViewRoute,
     chatroomViewRoute,
     checkProfileViewRoute,
+    fullPictureViewRoute,
   };
 }
 
@@ -78,6 +81,11 @@ class Router extends RouterBase {
       case Routes.checkProfileViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => CheckProfileView(),
+          settings: settings,
+        );
+      case Routes.fullPictureViewRoute:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => FullPictureView(),
           settings: settings,
         );
       default:

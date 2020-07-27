@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/postprofile.dart';
+import 'package:tinkler/services/state_services/current_picture_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
 
 import 'avatar.dart';
@@ -10,10 +12,11 @@ class PostTile extends StatelessWidget {
   PostTile({
     Key key,
     @required this.postprofile,
-  });
+  }) : super(key: key);
 
   final PostProfile postprofile;
   final _formatter = locator<FormatterService>();
+  final _currentPicture = locator<CurrentPictureService>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,8 @@ class PostTile extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.topLeft,
                     child: Avatar(
-                        radius: 25, photoUrl: postprofile.posterProfile.photoUrl)),
+                        radius: 25,
+                        photoUrl: postprofile.posterProfile.photoUrl)),
               ),
               SizedBox(width: 15),
               Column(
@@ -60,11 +64,18 @@ class PostTile extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   if (postprofile.post.pictureUrl.isNotEmpty)
-                    Image(
-                      image: NetworkImage(postprofile.post.pictureUrl),
-                      fit: BoxFit.fitWidth,
-                      width: 250,
-                      height: 200,
+                    GestureDetector(
+                      onTap: () {
+                        _currentPicture
+                            .updateCurrentImageUrl(postprofile.post.pictureUrl);
+                        _currentPicture.navigateToPictureView();
+                      },
+                      child: Image(
+                        image: NetworkImage(postprofile.post.pictureUrl),
+                        fit: BoxFit.fitWidth,
+                        width: 250,
+                        height: 200,
+                      ),
                     ),
                   SizedBox(height: 10),
                   Row(
