@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
-import 'package:tinkler/ui/widgets/post_tile.dart';
+import 'package:tinkler/ui/widgets/smartwidgets/post_tile/post_tile.dart';
 import 'package:tinkler/ui/views/home/posts/post_bottomsheet/post_bottomsheet_view.dart';
 
 import 'posts_viewmodel.dart';

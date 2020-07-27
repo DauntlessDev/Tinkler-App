@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
 
-import 'avatar.dart';
-import 'post_tile.dart';
+import '../avatar.dart';
+import 'post_tile/post_tile.dart';
 
 class ProfileContent extends StatelessWidget {
   const ProfileContent({
@@ -135,8 +135,14 @@ class _ProfileHeader extends StatelessWidget {
                 // crossAxisAlignment: CrossAx,
                 children: <Widget>[
                   _ProfileStats(number: profile.posts, label: 'posts'),
-                  _ProfileStats(number: profile.followers, label: 'followers'),
-                  _ProfileStats(number: profile.following, label: 'following'),
+                  GestureDetector(
+                      onTap: () {},
+                      child: _ProfileStats(
+                          number: profile.followers, label: 'followers')),
+                  GestureDetector(
+                      onTap: () {},
+                      child: _ProfileStats(
+                          number: profile.following, label: 'following')),
                 ],
               ),
               SizedBox(height: 12),
