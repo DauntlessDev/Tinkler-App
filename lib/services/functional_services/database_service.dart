@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/chatroom.dart';
-import 'package:tinkler/model/follow.dart';
+import 'package:tinkler/model/record.dart';
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/profile.dart';
@@ -66,7 +66,7 @@ class DatabaseService {
   }
 
   Future<void> addFollower(
-      {@required String uid, @required Follow follow}) async {
+      {@required String uid, @required Record follow}) async {
     await _service.setData(
       path: APIPath.followerSpecific(uid, follow.email),
       data: follow.toMap(),
@@ -74,7 +74,7 @@ class DatabaseService {
   }
 
   Future<void> addFollowing(
-      {@required String uid, @required Follow follow}) async {
+      {@required String uid, @required Record follow}) async {
     await _service.setData(
       path: APIPath.followingSpecific(uid, follow.email),
       data: follow.toMap(),
@@ -89,12 +89,12 @@ class DatabaseService {
     await _service.deleteData(path: APIPath.followingSpecific(uid, email));
   }
 
-  Stream<List<Follow>> followingStream(
+  Stream<List<Record>> followingStream(
       {@required String uid, @required String email}) {
     return _service.collectionStreamNoID(
       path: APIPath.following(uid),
       isReversed: true,
-      builder: (data) => Follow.fromMap(data),
+      builder: (data) => Record.fromMap(data),
       queryBuilder: (query) => query.where('email', isEqualTo: email),
     );
   }
@@ -103,7 +103,7 @@ class DatabaseService {
     return _service.collectionStreamNoID(
       path: APIPath.following(uid),
       isReversed: true,
-      builder: (data) => Follow.fromMap(data).email,
+      builder: (data) => Record.fromMap(data).email,
     );
   }
 
@@ -111,7 +111,7 @@ class DatabaseService {
     return _service.collectionFuture(
       path: APIPath.following(uid),
       isReversed: true,
-      builder: (data) => Follow.fromMap(data).email,
+      builder: (data) => Record.fromMap(data).email,
     );
   }
 

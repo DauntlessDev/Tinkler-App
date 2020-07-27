@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-class Follow {
+class Record {
   final String email;
-  Follow({
+  Record({
     this.email,
   });
 
-  Follow copyWith({
+  Record copyWith({
     String email,
   }) {
-    return Follow(
+    return Record(
       email: email ?? this.email,
     );
   }
@@ -20,17 +20,17 @@ class Follow {
     };
   }
 
-  static Follow fromMap(Map<String, dynamic> map) {
+  static Record fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return Follow(
+    return Record(
       email: map['email'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  static Follow fromJson(String source) => fromMap(json.decode(source));
+  static Record fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() => 'Follow(email: $email)';
@@ -39,7 +39,7 @@ class Follow {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is Follow && o.email == email;
+    return o is Record && o.email == email;
   }
 
   @override
