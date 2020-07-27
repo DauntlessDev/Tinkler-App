@@ -15,6 +15,8 @@ import 'package:tinkler/ui/views/home/chat/chatsearch/chatsearch_view.dart';
 import 'package:tinkler/ui/views/home/chat/chatroom/chatroom_view.dart';
 import 'package:tinkler/ui/views/home/search/checkprofile/checkprofile_view.dart';
 import 'package:tinkler/ui/views/shared/fullpicture/fullpicture_view.dart';
+import 'package:tinkler/ui/views/shared/follower_info/follower_info_view.dart';
+import 'package:tinkler/ui/views/shared/following_info/following_info_view.dart';
 
 abstract class Routes {
   static const landingViewRoute = '/';
@@ -25,6 +27,8 @@ abstract class Routes {
   static const chatroomViewRoute = '/chatroom-view-route';
   static const checkProfileViewRoute = '/check-profile-view-route';
   static const fullPictureViewRoute = '/full-picture-view-route';
+  static const followerInfoViewRoute = '/follower-info-view-route';
+  static const followingInfoViewRoute = '/following-info-view-route';
   static const all = {
     landingViewRoute,
     homeViewRoute,
@@ -34,6 +38,8 @@ abstract class Routes {
     chatroomViewRoute,
     checkProfileViewRoute,
     fullPictureViewRoute,
+    followerInfoViewRoute,
+    followingInfoViewRoute,
   };
 }
 
@@ -86,6 +92,16 @@ class Router extends RouterBase {
       case Routes.fullPictureViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => FullPictureView(),
+          settings: settings,
+        );
+      case Routes.followerInfoViewRoute:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => FollowerInfoView(),
+          settings: settings,
+        );
+      case Routes.followingInfoViewRoute:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => FollowingInfoView(),
           settings: settings,
         );
       default:

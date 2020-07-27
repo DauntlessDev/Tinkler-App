@@ -1,10 +1,12 @@
 //view class
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
+import 'package:tinkler/ui/widgets/smartwidgets/profile_content/profile_content_viewmodel.dart';
 
-import '../avatar.dart';
-import 'post_tile/post_tile.dart';
+import '../../avatar.dart';
+import '../post_tile/post_tile.dart';
 
 class ProfileContent extends StatelessWidget {
   const ProfileContent({
@@ -23,35 +25,38 @@ class ProfileContent extends StatelessWidget {
   final List<PostProfile> ownPostsList;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 0, 7, 7),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: _ProfileHeader(
-              buttonText: buttonText,
-              onPressed: onPressed,
-              profile: profile,
-              buttonColor: buttonColor,
+    return ViewModelBuilder<ProfileContentViewModel>.reactive(
+      viewModelBuilder: () => ProfileContentViewModel(),
+      builder: (context, model, child) => Padding(
+        padding: const EdgeInsets.fromLTRB(15, 0, 7, 7),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: _ProfileHeader(
+                buttonText: buttonText,
+                onPressed: onPressed,
+                profile: profile,
+                buttonColor: buttonColor,
+              ),
             ),
-          ),
-          Align(
-              alignment: Alignment.bottomLeft,
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.pages),
-                  Text(' Posts'),
-                ],
-              )),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: SizedBox(
-              height: 1,
+            Align(
+                alignment: Alignment.bottomLeft,
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.pages),
+                    Text(' Posts'),
+                  ],
+                )),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: SizedBox(
+                height: 1,
+              ),
             ),
-          ),
-          OwnPostListBuilder(ownPostsList: ownPostsList),
-        ],
+            OwnPostListBuilder(ownPostsList: ownPostsList),
+          ],
+        ),
       ),
     );
   }
@@ -88,7 +93,7 @@ class OwnPostListBuilder extends StatelessWidget {
   }
 }
 
-class _ProfileHeader extends StatelessWidget {
+class _ProfileHeader extends ViewModelWidget<ProfileContentViewModel> {
   const _ProfileHeader({
     Key key,
     @required this.profile,
@@ -103,7 +108,7 @@ class _ProfileHeader extends StatelessWidget {
   final Function onPressed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ProfileContentViewModel model) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -136,11 +141,11 @@ class _ProfileHeader extends StatelessWidget {
                 children: <Widget>[
                   _ProfileStats(number: profile.posts, label: 'posts'),
                   GestureDetector(
-                      onTap: () {},
+                      onTap: model.navigateToFollowersInfo,
                       child: _ProfileStats(
                           number: profile.followers, label: 'followers')),
                   GestureDetector(
-                      onTap: () {},
+                      onTap: model.navigateToFollowingInfo,
                       child: _ProfileStats(
                           number: profile.following, label: 'following')),
                 ],
