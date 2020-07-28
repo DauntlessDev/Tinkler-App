@@ -37,10 +37,7 @@ class PostsViewModel extends FutureViewModel {
   Future<void> setPosts(List<Post> event) async {
     setBusy(true);
     _postprofileList.clear();
-    print('event : $event');
-
     for (Post post in event) {
-      print('postsss: $post');
       _postprofileList.add(PostProfile(
           post: Post(
             description: post.description,

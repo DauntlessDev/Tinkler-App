@@ -143,7 +143,6 @@ class FirebaseService {
     PickedFile pickImage =
         await _imagePicker.getImage(source: ImageSource.gallery);
 
-    print('Image Path $pickImage');
     File image = File(pickImage.path);
     return image;
   }

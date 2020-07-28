@@ -42,7 +42,6 @@ class PostBottomsheetViewModel extends BaseViewModel {
       _imagePath = _image.path;
       _selectedImage = _image;
       notifyListeners();
-      print('image path : $_imagePath');
     } on PlatformException catch (e) {
       _dialog.showDialog(title: 'Profile', description: e.message);
     } catch (e) {}

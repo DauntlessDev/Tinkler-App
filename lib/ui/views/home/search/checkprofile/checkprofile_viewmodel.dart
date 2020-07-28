@@ -50,9 +50,10 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
       await _database.specificPostFuture(_visitProfile.email);
   List<Post> ownPostList = [];
 
+  bool isFollowed = false;
   @override
   Future<Profile> futureToRun() async {
-    _visitProfile.checkIfFollowed();
+    isFollowed = await _visitProfile.isProfileFollowed(_visitProfile.email);
 
     ownPostList = await ownPostFuture();
     Profile profile = await profileFuture().then((value) => value);
@@ -85,16 +86,27 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     setBusy(false);
   }
 
-  bool isVisitingOwnProfile() => profile.email == _user.email;
+  bool get isVisitingOwnProfile => _visitProfile.email == _user.email;
 
-  Function onPressed() {
-    return isVisitingOwnProfile()
-        ? null
-        : _visitProfile.isFollowed
-            ? _visitProfile.unfollowingUser
-            : _visitProfile.followingUser;
+  Function onPressed({String email, String uid}) {
+    return () async {
+      buttonFunction(email: email, uid: uid);
+      isFollowed = await _visitProfile.isProfileFollowed(_visitProfile.email);
+      print(isFollowed);
+      notifyListeners();
+    };
   }
 
-  String get buttonText => _visitProfile.buttonText();
-  bool get isFollowed => _visitProfile.isFollowed;
+  Function buttonFunction({String email, String uid}) {
+    print('visit own? L  $isVisitingOwnProfile');
+    return isVisitingOwnProfile
+        ? null
+        : isFollowed
+            ? () =>
+                _visitProfile.unfollowingUser(otherEmail: email, otherUid: uid)
+            : () =>
+                _visitProfile.followingUser(otherEmail: email, otherUid: uid);
+  }
+
+  String get buttonText => _visitProfile.buttonText(isFollowed);
 }

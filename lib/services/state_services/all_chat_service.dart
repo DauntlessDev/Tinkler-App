@@ -18,13 +18,8 @@ class AllChatService with ReactiveServiceMixin {
 
   void setLastMessageOfSpecificChat({String email, Message message}) {
     for (Chat chat in _listOfAllChats.value) {
-      print(
-          'setLastMessage() => ${chat.profile.email} == $email : ${chat.profile.email == email}');
       if (chat.profile.email == email) {
         chat.lastMessage = message;
-        for (Chat chat in _listOfAllChats.value) {
-          print('_listOfAllChats : ${chat.lastMessage}');
-        }
         notifyListeners();
       }
     }
@@ -32,13 +27,11 @@ class AllChatService with ReactiveServiceMixin {
 
   void addChatInList(Chat chat) {
     _listOfAllChats.value.add(chat);
-    print('_listOfAllChats : $_listOfAllChats');
     notifyListeners();
   }
 
   void clear() {
     _listOfAllChats.value.clear();
-    print('_listOfAllChats : $_listOfAllChats');
     notifyListeners();
   }
 }

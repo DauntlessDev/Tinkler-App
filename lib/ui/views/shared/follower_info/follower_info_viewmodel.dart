@@ -42,4 +42,5 @@ class FollowerInfoViewModel extends FutureViewModel<List<Profile>> {
     _visitProfile.addVisitProfileEmail(email);
     _navigation.navigateTo(Routes.checkProfileViewRoute);
   }
+
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
 import 'package:tinkler/ui/widgets/smartwidgets/follow_tile/follow_tile.dart';
 
@@ -35,11 +36,14 @@ class _FollowTileBuilder extends ViewModelWidget<FollowingInfoViewModel> {
           title: 'Empty Result', message: 'You don\'t follow anyone.');
 
     return ListView.builder(
-      itemBuilder: (context, index) => FollowTile(
-        profile: model.followedProfileList[index],
-        visitProfile: () =>
-            model.visitProfile(model.followedProfileList[index].email),
-      ),
+      itemBuilder: (context, index) {
+        Profile currentProfile = model.followedProfileList[index];
+
+        return FollowTile(
+          profile: currentProfile,
+          visitProfile: () => model.visitProfile(currentProfile.email),
+        );
+      },
       itemCount: model.followedProfileList.length,
     );
   }

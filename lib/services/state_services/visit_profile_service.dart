@@ -24,18 +24,26 @@ class VisitProfileService extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isFollowed = false;
-  void checkIfFollowed() {
-    _database
-        .followingStream(uid: _user.uid, email: _email.last)
-        .listen((followingList) {
-      if (followingList != null) {
-        print('following list : $followingList');
-        isFollowed = followingList.isNotEmpty;
-        print(isFollowed);
-        notifyListeners();
-      }
-    });
+  Future<List<String>> checkUserFollowing() async {
+    return await _database.allFollowingFuture(uid: _user.uid);
+
+    // List<Profile> followingProfileList = [];
+    // for (String email in followingEmailList) {
+    //   Profile currentProfile;
+    //   await _database
+    //       .profileFuture(email: email)
+    //       .then((value) => currentProfile = value.first);
+
+    //   followingProfileList.add(currentProfile);
+    // }
+    // print('list of following: $followingEmailList');
+    // return followingProfileList;
+  }
+
+  Future<bool> isProfileFollowed(String email) async {
+    List<String> followingEmailList = await checkUserFollowing();
+    print('$email is follow: ${followingEmailList.contains(email)}');
+    return followingEmailList.contains(email);
   }
 
   void updateUserFollowingCount({@required bool toUnfollow}) async {
@@ -83,20 +91,20 @@ class VisitProfileService extends ChangeNotifier {
   Future<void> followingUser({String otherEmail, String otherUid}) async {
     addUserFollowing(otherEmail);
     addOtherFollower(otherUid);
-    updateUserFollowingCount(toUnfollow: isFollowed);
-    updateOtherFollowersCount(toUnFollow: isFollowed);
+    updateUserFollowingCount(toUnfollow: false);
+    updateOtherFollowersCount(toUnFollow: false);
     print('finished followed');
   }
 
   Future<void> unfollowingUser({String otherEmail, String otherUid}) async {
     deleteUserFollowing(otherEmail);
     deleteOtherFollower(otherUid);
-    updateUserFollowingCount(toUnfollow: isFollowed);
-    updateOtherFollowersCount(toUnFollow: isFollowed);
+    updateUserFollowingCount(toUnfollow: true);
+    updateOtherFollowersCount(toUnFollow: true);
     print('finished unfollow');
   }
 
-  String buttonText() {
+  String buttonText(bool isFollowed) {
     return isFollowed ? 'unfollow' : 'follow';
   }
 }

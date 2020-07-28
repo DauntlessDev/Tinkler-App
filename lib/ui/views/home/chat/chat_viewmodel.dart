@@ -38,7 +38,6 @@ class ChatViewModel extends StreamViewModel {
     // setBusy(true);
     try {
       listOfAllChats.clear();
-      print('all user convo: $allUserConversations');
       if (allUserConversations != null) {
         for (Chatroom chatroom in allUserConversations) {
           Message lastMessage;

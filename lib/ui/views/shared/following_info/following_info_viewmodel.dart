@@ -11,7 +11,7 @@ class FollowingInfoViewModel extends FutureViewModel<List<Profile>> {
   final _database = locator<DatabaseService>();
   final _navigation = locator<NavigationService>();
 
-  Future<List<Profile>> checkFollowing() async {
+  Future<List<Profile>> checkOtherFollowing() async {
     String userUid = '';
     await _database
         .profileFuture(email: _visitProfile.email)
@@ -34,7 +34,7 @@ class FollowingInfoViewModel extends FutureViewModel<List<Profile>> {
   }
 
   @override
-  Future<List<Profile>> futureToRun() => checkFollowing();
+  Future<List<Profile>> futureToRun() => checkOtherFollowing();
 
   List<Profile> get followedProfileList => data;
 

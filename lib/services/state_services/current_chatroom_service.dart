@@ -14,7 +14,6 @@ class CurrentChatroomService extends ChangeNotifier {
     _chatroomId = chatroom.chatroomID;
     _chatroomUsers = chatroom.users;
 
-    print('current chatroom : $chatroom');
     notifyListeners();
   }
 
@@ -36,7 +35,6 @@ class CurrentChatroomService extends ChangeNotifier {
   }
 
   String getChatRoomId(String a, String b) {
-    print('a:$a b: $b');
     if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
       return "$b\_$a";
     } else {

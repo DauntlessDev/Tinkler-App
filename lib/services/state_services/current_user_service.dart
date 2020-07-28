@@ -13,7 +13,6 @@ class CurrentUserService extends ChangeNotifier {
   Future<void> updateCurrentUserInfo(User user) async {
     _uid = user.uid;
     _email = user.email;
-    print('current user : $user');
 
     notifyListeners();
   }

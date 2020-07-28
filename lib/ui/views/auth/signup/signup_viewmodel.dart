@@ -56,7 +56,6 @@ class SignupViewModel extends BaseViewModel {
             code: 'NAME_TOO_SHORT',
             message: 'Name is too short, please change.');
       } else {
-        print('$_displayName , $_email , $_password , $_confirmPassword ');
         setBusy(true);
 
         User user = await _auth.createWithEmailAndPassword(
