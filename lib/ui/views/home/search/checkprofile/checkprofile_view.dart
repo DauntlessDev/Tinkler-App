@@ -43,7 +43,7 @@ class _MainContent extends ViewModelWidget<CheckProfileViewModel> {
         ),
       ),
       body: ProfileContent(
-        buttonText: model.buttonText(),
+        buttonText: model.buttonText,
         onPressed: model.onPressed(),
         ownPostsList: model.ownPostProfileList,
         profile: model.profile,

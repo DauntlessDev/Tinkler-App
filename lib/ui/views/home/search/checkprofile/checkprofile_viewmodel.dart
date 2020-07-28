@@ -1,8 +1,6 @@
-import 'package:meta/meta.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:tinkler/app/locator.dart';
-import 'package:tinkler/model/record.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
@@ -52,26 +50,15 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
       await _database.specificPostFuture(_visitProfile.email);
   List<Post> ownPostList = [];
 
-  bool isFollowed = false;
-  void checkIfFollowed() {
-    _database
-        .followingStream(uid: _user.uid, email: _visitProfile.email)
-        .listen((followingList) {
-      if (followingList != null) {
-        print('following list : $followingList');
-        isFollowed = followingList.isNotEmpty;
-        print(isFollowed);
-        notifyListeners();
-      }
-    });
-  }
-
   @override
   Future<Profile> futureToRun() async {
-    checkIfFollowed();
+    _visitProfile.checkIfFollowed();
+
     ownPostList = await ownPostFuture();
     Profile profile = await profileFuture().then((value) => value);
+
     setPosts(ownPostList, profile);
+
     return profile;
   }
 
@@ -100,76 +87,14 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
 
   bool isVisitingOwnProfile() => profile.email == _user.email;
 
-  void updateUserFollowingCount({@required bool toUnfollow}) async {
-    Profile currentProfileInfo;
-    await _database
-        .profileFuture(email: _user.email)
-        .then((value) => currentProfileInfo = value.first);
-
-    toUnfollow
-        ? _database.setProfile(currentProfileInfo.copyWith(
-            following: currentProfileInfo.following - 1))
-        : _database.setProfile(currentProfileInfo.copyWith(
-            following: currentProfileInfo.following + 1));
-  }
-
-  Future<void> updateOtherFollowersCount({@required bool toUnFollow}) async {
-    Profile othersProfileInfo;
-    await _database
-        .profileFuture(email: profile.email)
-        .then((value) => othersProfileInfo = value.first);
-
-    toUnFollow
-        ? _database.setProfile(othersProfileInfo.copyWith(
-            followers: othersProfileInfo.followers - 1))
-        : _database.setProfile(othersProfileInfo.copyWith(
-            followers: othersProfileInfo.followers + 1));
-  }
-
-  Future<void> addOtherFollower() async {
-    _database.addFollower(uid: profile.uid, follow: Record(email: _user.email));
-  }
-
-  Future<void> deleteOtherFollower() async {
-    _database.deleteFollower(uid: profile.uid, email: _user.email);
-  }
-
-  Future<void> addUserFollowing() async {
-    _database.addFollowing(
-        uid: _user.uid, follow: Record(email: profile.email));
-  }
-
-  Future<void> deleteUserFollowing() async {
-    _database.deleteFollowing(uid: _user.uid, email: profile.email);
-  }
-
-  Future<void> followingUser() async {
-    setBusy(true);
-    addUserFollowing();
-    addOtherFollower();
-    updateUserFollowingCount(toUnfollow: isFollowed);
-    updateOtherFollowersCount(toUnFollow: isFollowed);
-    print('finished followed');
-    setBusy(false);
-  }
-
-  Future<void> unfollowingUser() async {
-    setBusy(true);
-    deleteUserFollowing();
-    deleteOtherFollower();
-    updateUserFollowingCount(toUnfollow: isFollowed);
-    updateOtherFollowersCount(toUnFollow: isFollowed);
-    print('finished unfollow');
-    setBusy(false);
-  }
-
   Function onPressed() {
     return isVisitingOwnProfile()
         ? null
-        : isFollowed ? unfollowingUser : followingUser;
+        : _visitProfile.isFollowed
+            ? _visitProfile.unfollowingUser
+            : _visitProfile.followingUser;
   }
 
-  String buttonText() {
-    return isFollowed ? 'unfollow' : 'follow';
-  }
+  String get buttonText => _visitProfile.buttonText();
+  bool get isFollowed => _visitProfile.isFollowed;
 }
