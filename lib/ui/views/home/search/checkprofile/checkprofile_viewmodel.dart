@@ -87,24 +87,32 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     setBusy(false);
   }
 
-  Function onPressed({String email, String uid}) {
-    return () async {
-      buttonFunction(email: email, uid: uid);
-      isFollowed = await _visitProfile.isProfileFollowed(_visitProfile.email);
-      print(isFollowed);
-      notifyListeners();
-    };
-  }
-
   bool get isVisitingOwnProfile => _visitProfile.email == _user.email;
   Function buttonFunction({String email, String uid}) {
     return isVisitingOwnProfile
         ? null
         : isFollowed
-            ? () =>
-                _visitProfile.unfollowingUser(otherEmail: email, otherUid: uid)
-            : () =>
-                _visitProfile.followingUser(otherEmail: email, otherUid: uid);
+            ? () => unfollowingUser(otherEmail: email, otherUid: uid)
+            : () => followingUser(otherEmail: email, otherUid: uid);
+  }
+
+  Future<void> unfollowingUser({String otherEmail, String otherUid}) async {
+    setBusy(true);
+    await _visitProfile.unfollowingUser(
+        otherEmail: otherEmail, otherUid: otherUid);
+    isFollowed = await _visitProfile.isProfileFollowed(otherEmail);
+    print(isFollowed);
+    notifyListeners();
+    setBusy(false);
+  }
+
+  Future<void> followingUser({String otherEmail, String otherUid}) async {
+    setBusy(true);
+    await _visitProfile.followingUser(
+        otherEmail: otherEmail, otherUid: otherUid);
+    isFollowed = await _visitProfile.isProfileFollowed(otherEmail);
+    notifyListeners();
+    setBusy(false);
   }
 
   String get buttonText => _visitProfile.buttonText(isFollowed);

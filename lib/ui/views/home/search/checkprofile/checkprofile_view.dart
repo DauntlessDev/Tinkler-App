@@ -44,7 +44,7 @@ class _MainContent extends ViewModelWidget<CheckProfileViewModel> {
       ),
       body: ProfileContent(
           buttonText: model.buttonText,
-          onPressed: model.onPressed(
+          onPressed: model.buttonFunction(
               email: model.profile.email, uid: model.profile.uid),
           ownPostsList: model.ownPostProfileList,
           profile: model.profile,

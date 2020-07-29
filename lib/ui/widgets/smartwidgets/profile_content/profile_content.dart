@@ -1,11 +1,11 @@
 //view class
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/app/router.gr.dart';
 import 'package:tinkler/model/postprofile.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/state_services/visit_profile_service.dart';
-import 'package:tinkler/ui/widgets/smartwidgets/profile_content/profile_content_viewmodel.dart';
 
 import '../../avatar.dart';
 import '../post_tile/post_tile.dart';
@@ -40,38 +40,35 @@ class _ProfileContentState extends State<ProfileContent> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<ProfileContentViewModel>.reactive(
-      viewModelBuilder: () => ProfileContentViewModel(),
-      builder: (context, model, child) => Padding(
-        padding: const EdgeInsets.fromLTRB(15, 0, 7, 7),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: _ProfileHeader(
-                buttonText: widget.buttonText,
-                onPressed: widget.onPressed,
-                profile: widget.profile,
-                buttonColor: widget.buttonColor,
-              ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(15, 0, 7, 7),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: _ProfileHeader(
+              buttonText: widget.buttonText,
+              onPressed: widget.onPressed,
+              profile: widget.profile,
+              buttonColor: widget.buttonColor,
             ),
-            Align(
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                  children: <Widget>[
-                    Icon(Icons.pages),
-                    Text(' Posts'),
-                  ],
-                )),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
-              child: SizedBox(
-                height: 1,
-              ),
+          ),
+          Align(
+              alignment: Alignment.bottomLeft,
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.pages),
+                  Text(' Posts'),
+                ],
+              )),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: SizedBox(
+              height: 1,
             ),
-            OwnPostListBuilder(ownPostsList: widget.ownPostsList),
-          ],
-        ),
+          ),
+          OwnPostListBuilder(ownPostsList: widget.ownPostsList),
+        ],
       ),
     );
   }
@@ -108,8 +105,8 @@ class OwnPostListBuilder extends StatelessWidget {
   }
 }
 
-class _ProfileHeader extends ViewModelWidget<ProfileContentViewModel> {
-  const _ProfileHeader({
+class _ProfileHeader extends StatelessWidget {
+  _ProfileHeader({
     Key key,
     @required this.profile,
     @required this.buttonText,
@@ -122,8 +119,9 @@ class _ProfileHeader extends ViewModelWidget<ProfileContentViewModel> {
   final Color buttonColor;
   final Function onPressed;
 
+  final _navigation = locator<NavigationService>();
   @override
-  Widget build(BuildContext context, ProfileContentViewModel model) {
+  Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -156,11 +154,13 @@ class _ProfileHeader extends ViewModelWidget<ProfileContentViewModel> {
                 children: <Widget>[
                   _ProfileStats(number: profile.posts, label: 'posts'),
                   GestureDetector(
-                      onTap: model.navigateToFollowersInfo,
+                      onTap: () =>
+                          _navigation.navigateTo(Routes.followerInfoViewRoute),
                       child: _ProfileStats(
                           number: profile.followers, label: 'followers')),
                   GestureDetector(
-                      onTap: model.navigateToFollowingInfo,
+                      onTap: () =>
+                          _navigation.navigateTo(Routes.followingInfoViewRoute),
                       child: _ProfileStats(
                           number: profile.following, label: 'following')),
                 ],
