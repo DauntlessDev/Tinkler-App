@@ -41,7 +41,6 @@ class _FollowTileBuilder extends ViewModelWidget<FollowerInfoViewModel> {
 
         return FollowTile(
           profile: currentProfile,
-          visitProfile: () => model.visitProfile(currentProfile.email),
         );
       },
       itemCount: model.followersProfileList.length,

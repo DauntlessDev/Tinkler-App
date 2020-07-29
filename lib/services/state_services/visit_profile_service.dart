@@ -30,18 +30,6 @@ class VisitProfileService extends ChangeNotifier {
       followingEmailList = event;
       notifyListeners();
     });
-
-    // List<Profile> followingProfileList = [];
-    // for (String email in followingEmailList) {
-    //   Profile currentProfile;
-    //   await _database
-    //       .profileFuture(email: email)
-    //       .then((value) => currentProfile = value.first);
-
-    //   followingProfileList.add(currentProfile);
-    // }
-    // print('list of following: $followingEmailList');
-    // return followingProfileList;
   }
 
   bool isProfileFollowed(String email) {

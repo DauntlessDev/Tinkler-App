@@ -10,20 +10,20 @@ class FollowTile extends StatelessWidget {
   const FollowTile({
     Key key,
     @required this.profile,
-    @required this.visitProfile,
   }) : super(key: key);
 
   final Profile profile;
-  final Function visitProfile;
-
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<FollowTileViewModel>.reactive(
       viewModelBuilder: () => FollowTileViewModel(),
       builder: (context, model, child) => ListTile(
-        onTap: visitProfile,
-        leading: Avatar(photoUrl: profile.photoUrl, radius: 30),
-        title: Text(profile.displayName),
+        leading: GestureDetector(
+            onTap: () => model.visitProfile(profile.email),
+            child: Avatar(photoUrl: profile.photoUrl, radius: 30)),
+        title: GestureDetector(
+            onTap: () => model.visitProfile(profile.email),
+            child: Text(profile.displayName)),
         subtitle: Text(profile.email),
         trailing: Container(
           color: model.isProfileFollowed(profile.email)
@@ -31,11 +31,10 @@ class FollowTile extends StatelessWidget {
               : Theme.of(context).primaryColor,
           height: 50,
           child: FlatButton(
-            onPressed: model.onPressed(
-                email: profile.email,
-                uid: profile.uid),
+            onPressed:
+                model.buttonFunction(email: profile.email, uid: profile.uid),
             child: Text(
-              model.buttonText(),
+              model.buttonText,
               style: TextStyle(color: Colors.white),
             ),
           ),
