@@ -90,11 +90,13 @@ class PostTile extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
-                                Icon(MdiIcons.heart,
-                                    color: model.isLiked
-                                        ? Theme.of(context).iconTheme.color
-                                        : Colors.grey,
-                                    size: 18),
+                                model.isLiked
+                                    ? Icon(MdiIcons.heart,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                        size: 18)
+                                    : Icon(MdiIcons.heartOutline,
+                                        color: Colors.grey, size: 18),
                                 SizedBox(width: 2),
                                 SizedBox(
                                   width: 40,
