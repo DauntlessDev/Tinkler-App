@@ -26,9 +26,11 @@ class FollowTile extends StatelessWidget {
             child: Text(profile.displayName)),
         subtitle: Text(profile.email),
         trailing: Container(
-          color: model.isProfileFollowed(profile.email)
-              ? Colors.blue[300]
-              : Theme.of(context).primaryColor,
+          color: model.isVisitingOwnProfile(profile.email)
+              ? Colors.grey[600]
+              : model.isProfileFollowed(profile.email)
+                  ? Colors.blue[300]
+                  : Theme.of(context).primaryColor,
           height: 50,
           child: FlatButton(
             onPressed:
