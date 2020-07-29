@@ -48,7 +48,7 @@ class _MainContent extends ViewModelWidget<CheckProfileViewModel> {
               email: model.profile.email, uid: model.profile.uid),
           ownPostsList: model.ownPostProfileList,
           profile: model.profile,
-          buttonColor: model.isVisitingOwnProfile()
+          buttonColor: model.isVisitingOwnProfile
               ? Colors.grey[400]
               : model.isFollowed
                   ? Colors.blue[300]
