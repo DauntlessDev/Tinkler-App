@@ -24,8 +24,12 @@ class VisitProfileService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<String>> checkUserFollowing() async {
-    return await _database.allFollowingFuture(uid: _user.uid);
+  List<String> followingEmailList = [];
+  void checkUserFollowing() async {
+    _database.allFollowingStream(uid: _user.uid).listen((event) {
+      followingEmailList = event;
+      notifyListeners();
+    });
 
     // List<Profile> followingProfileList = [];
     // for (String email in followingEmailList) {
@@ -41,7 +45,6 @@ class VisitProfileService extends ChangeNotifier {
   }
 
   Future<bool> isProfileFollowed(String email) async {
-    List<String> followingEmailList = await checkUserFollowing();
     print('$email is follow: ${followingEmailList.contains(email)}');
     return followingEmailList.contains(email);
   }

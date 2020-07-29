@@ -53,6 +53,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
   bool isFollowed = false;
   @override
   Future<Profile> futureToRun() async {
+    _visitProfile.checkUserFollowing();
     isFollowed = await _visitProfile.isProfileFollowed(_visitProfile.email);
 
     ownPostList = await ownPostFuture();
@@ -86,8 +87,6 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     setBusy(false);
   }
 
-  bool get isVisitingOwnProfile => _visitProfile.email == _user.email;
-
   Function onPressed({String email, String uid}) {
     return () async {
       buttonFunction(email: email, uid: uid);
@@ -97,8 +96,8 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     };
   }
 
+  bool get isVisitingOwnProfile => _visitProfile.email == _user.email;
   Function buttonFunction({String email, String uid}) {
-    print('visit own? L  $isVisitingOwnProfile');
     return isVisitingOwnProfile
         ? null
         : isFollowed
