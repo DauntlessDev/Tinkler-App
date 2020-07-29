@@ -20,7 +20,7 @@ class PostsViewModel extends FutureViewModel {
       await _database.allFollowingFuture(uid: _user.uid),
     );
 
-    _database.postStream().listen((postList) {
+    _database.postFuture().then((postList) {
       List<Post> followedPostList = [];
       if (postList != null) {
         for (Post post in postList) {
@@ -52,8 +52,9 @@ class PostsViewModel extends FutureViewModel {
               .profileFuture(email: post.posterEmail)
               .then((value) => value.first)));
     }
-    setBusy(false);
+
     notifyListeners();
+    setBusy(false);
     print('model isbusy: $isBusy');
   }
 

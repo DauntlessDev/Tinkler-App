@@ -102,7 +102,7 @@ class PostTile extends StatelessWidget {
                                   width: 40,
                                   child: Text(
                                       model.likesText(
-                                          postprofile.post.likesCount),
+                                          model.likesCount),
                                       style: TextStyle(
                                           color: model.isLiked
                                               ? Theme.of(context)

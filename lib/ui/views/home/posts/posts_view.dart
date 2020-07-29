@@ -14,9 +14,7 @@ class PostsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PostsViewModel>.reactive(
-      builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.isBusy,
-          child: model.isBusy ? Container() : const _MainContent()),
+      builder: (context, model, child) => _MainContent(),
       viewModelBuilder: () => PostsViewModel(),
     );
   }
@@ -25,7 +23,7 @@ class PostsView extends StatelessWidget {
 class _MainContent extends ViewModelWidget<PostsViewModel> {
   const _MainContent({
     Key key,
-  }) : super(key: key, reactive: false);
+  }) : super(key: key, reactive: true);
 
   @override
   Widget build(BuildContext context, PostsViewModel model) {
@@ -57,7 +55,9 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
                           Text('Latest Posts', style: TextStyle(fontSize: 16)),
                           SizedBox(height: 20),
                           Expanded(
-                            child: PostListBuilder(),
+                            child: model.isBusy
+                                ? Center(child: CircularProgressIndicator())
+                                : PostListBuilder(),
                           ),
                         ],
                       ),

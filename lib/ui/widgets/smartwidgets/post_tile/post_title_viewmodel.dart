@@ -20,14 +20,14 @@ class PostTileViewModel extends BaseViewModel {
 
   void navigateToPictureView() => _currentPicture.navigateToPictureView();
 
+  int likesCount = 0;
   bool isLiked = false;
   Future<void> checkIfLike(String postId, Post post) async {
     List<String> listOfLikes = await _database.allLikesFuture(postId: postId);
     isLiked = listOfLikes.contains(_user.email);
+
+    likesCount = post.likesCount;
     notifyListeners();
-    print('IsLiked $isLiked');
-    print(
-        '${post.description} listOfLikes.contains(_user.email) : ${listOfLikes.contains(_user.email)}');
   }
 
   Function onPressedLikeButton(Post post) {
@@ -39,6 +39,7 @@ class PostTileViewModel extends BaseViewModel {
     _database.addLike(
         postId: post.postId, likerEmail: Record(email: _user.email));
     _database.addPost(post: post.copyWith(likesCount: post.likesCount + 1));
+    likesCount++;
     isLiked = true;
     notifyListeners();
   }
@@ -47,6 +48,7 @@ class PostTileViewModel extends BaseViewModel {
     print('deleteLike called');
     _database.deleteLike(postId: post.postId, email: _user.email);
     _database.addPost(post: post.copyWith(likesCount: post.likesCount - 1));
+    likesCount--;
 
     isLiked = false;
     notifyListeners();
