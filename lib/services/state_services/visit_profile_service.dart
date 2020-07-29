@@ -44,8 +44,7 @@ class VisitProfileService extends ChangeNotifier {
     // return followingProfileList;
   }
 
-  Future<bool> isProfileFollowed(String email) async {
-    print('$email is follow: ${followingEmailList.contains(email)}');
+  bool isProfileFollowed(String email) {
     return followingEmailList.contains(email);
   }
 

@@ -54,7 +54,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
   @override
   Future<Profile> futureToRun() async {
     _visitProfile.checkUserFollowing();
-    isFollowed = await _visitProfile.isProfileFollowed(_visitProfile.email);
+    isFollowed =  _visitProfile.isProfileFollowed(_visitProfile.email);
 
     ownPostList = await ownPostFuture();
     Profile profile = await profileFuture().then((value) => value);
@@ -100,7 +100,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     setBusy(true);
     await _visitProfile.unfollowingUser(
         otherEmail: otherEmail, otherUid: otherUid);
-    isFollowed = await _visitProfile.isProfileFollowed(otherEmail);
+    isFollowed = _visitProfile.isProfileFollowed(otherEmail);
     print(isFollowed);
     notifyListeners();
     setBusy(false);
@@ -110,7 +110,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     setBusy(true);
     await _visitProfile.followingUser(
         otherEmail: otherEmail, otherUid: otherUid);
-    isFollowed = await _visitProfile.isProfileFollowed(otherEmail);
+    isFollowed = _visitProfile.isProfileFollowed(otherEmail);
     notifyListeners();
     setBusy(false);
   }

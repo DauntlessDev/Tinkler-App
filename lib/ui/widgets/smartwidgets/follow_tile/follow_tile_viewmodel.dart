@@ -20,15 +20,17 @@ class FollowTileViewModel extends BaseViewModel {
   }
 
   Function onPressed({String email, String uid}) {
-    return () async {
+    return () {
       buttonFunction(email: email, uid: uid);
-      isFollowed = await _visitProfile.isProfileFollowed(email);
+      isFollowed = _visitProfile.isProfileFollowed(email);
     };
   }
 
   bool isFollowed = false;
-  Future<bool> isProfileFollowed(String email) async =>
-      await _visitProfile.isProfileFollowed(email);
+  bool isProfileFollowed(String email) {
+    isFollowed = _visitProfile.isProfileFollowed(email);
+    return isFollowed;
+  }
 
   String get buttonText => _visitProfile.buttonText(isFollowed);
 }
