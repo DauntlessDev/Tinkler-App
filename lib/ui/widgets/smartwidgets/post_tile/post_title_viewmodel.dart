@@ -36,10 +36,13 @@ class PostTileViewModel extends BaseViewModel {
 
   void addLike(Post post) {
     print('addlike called');
+
     _database.addLike(
         postId: post.postId, likerEmail: Record(email: _user.email));
-    _database.addPost(post: post.copyWith(likesCount: post.likesCount + 1));
+
     likesCount++;
+    _database.addPost(post: post.copyWith(likesCount: likesCount));
+
     isLiked = true;
     notifyListeners();
   }
@@ -47,8 +50,9 @@ class PostTileViewModel extends BaseViewModel {
   void deleteLike(Post post) {
     print('deleteLike called');
     _database.deleteLike(postId: post.postId, email: _user.email);
-    _database.addPost(post: post.copyWith(likesCount: post.likesCount - 1));
+
     likesCount--;
+    _database.addPost(post: post.copyWith(likesCount: likesCount));
 
     isLiked = false;
     notifyListeners();
