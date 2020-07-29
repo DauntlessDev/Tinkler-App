@@ -17,6 +17,10 @@ class PostTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PostTileViewModel>.reactive(
+      onModelReady: (model) => model.checkIfLike(
+        postprofile.post.postId,
+        postprofile.post,
+      ),
       viewModelBuilder: () => PostTileViewModel(),
       builder: (context, model, child) => Padding(
         padding: const EdgeInsets.all(15.0),
@@ -79,18 +83,34 @@ class PostTile extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Icon(MdiIcons.heart,
-                                  color: Theme.of(context).iconTheme.color,
-                                  size: 18),
-                              Text(' 25 Likes',
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 10)),
-                            ],
+                        FlatButton(
+                          onPressed:
+                              model.onPressedLikeButton(postprofile.post),
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Icon(MdiIcons.heart,
+                                    color: model.isLiked
+                                        ? Theme.of(context).iconTheme.color
+                                        : Colors.grey,
+                                    size: 18),
+                                SizedBox(width: 2),
+                                SizedBox(
+                                  width: 40,
+                                  child: Text(
+                                      model.likesText(
+                                          postprofile.post.likesCount),
+                                      style: TextStyle(
+                                          color: model.isLiked
+                                              ? Theme.of(context)
+                                                  .iconTheme
+                                                  .color
+                                              : Colors.grey,
+                                          fontSize: 10)),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(width: 10),
@@ -102,6 +122,7 @@ class PostTile extends StatelessWidget {
                                   color:
                                       Theme.of(context).colorScheme.onSecondary,
                                   size: 18),
+                              SizedBox(width: 2),
                               Text('13 Comments',
                                   style: TextStyle(
                                       color: Theme.of(context)

@@ -65,6 +65,26 @@ class DatabaseService {
             query.where('caseSearch', arrayContains: searchInput));
   }
 
+  Future<void> addLike(
+      {@required String postId, @required Record likerEmail}) async {
+    await _service.setData(
+      path: APIPath.likesSpecific(postId, likerEmail.email),
+      data: likerEmail.toMap(),
+    );
+  }
+
+  Future<void> deleteLike({@required String postId, String email}) async {
+    await _service.deleteData(path: APIPath.likesSpecific(postId, email));
+  }
+
+  Future<List<String>> allLikesFuture({@required String postId}) {
+    return _service.collectionFuture(
+      path: APIPath.likes(postId),
+      isReversed: true,
+      builder: (data) => Record.fromMap(data).email,
+    );
+  }
+
   Future<void> addFollower(
       {@required String uid, @required Record follow}) async {
     await _service.setData(

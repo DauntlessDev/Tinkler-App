@@ -4,11 +4,15 @@ class APIPath {
 
   static String profilePic(String uid) => 'profilePics/$uid';
 
+  static String likesSpecific(String postId, String email) =>
+      'likes/$postId/likes/$email';
+
+  static String likes(String postId) => 'likes/$postId/likes/';
+
   static String followerSpecific(String uid, String email) =>
       'followers/$uid/followers/$email';
-  static String followers(String uid) =>
-      'followers/$uid/followers/';
-      
+  static String followers(String uid) => 'followers/$uid/followers/';
+
   static String followingSpecific(String uid, String email) =>
       'following/$uid/following/$email';
 
