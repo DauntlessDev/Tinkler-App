@@ -19,7 +19,7 @@ class ChatroomView extends StatelessWidget {
         child: model.data == null
             ? Container()
             : Scaffold(
-                backgroundColor: Colors.grey[200],
+                backgroundColor: Theme.of(context).backgroundColor,
                 appBar: AppBar(
                   title: Row(children: [
                     Avatar(photoUrl: model.otherPhotoUrl, radius: 20),
@@ -35,6 +35,7 @@ class ChatroomView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       MessageBuilder(),
+                      SizedBox(height: 10),
                       InputMessage(),
                     ],
                   ),
@@ -54,17 +55,23 @@ class InputMessage extends HookViewModelWidget<ChatroomViewModel> {
   Widget buildViewModelWidget(BuildContext context, ChatroomViewModel model) {
     var messageTextController = useTextEditingController();
     return Container(
-      color: Colors.white,
       padding: EdgeInsets.all(2),
+      color: Theme.of(context).colorScheme.onSurface,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, bottom: 3.0),
-              child: TextField(
-                controller: messageTextController,
-                onChanged: model.setInput,
+              padding: const EdgeInsets.only(left: 10),
+              child: Container(
+                child: TextField(
+                  controller: messageTextController,
+                  onChanged: model.setInput,
+                  decoration: InputDecoration(
+                    fillColor: Theme.of(context).colorScheme.onSurface,
+                    hintStyle: TextStyle(color: Colors.grey),
+                  ),
+                ),
               ),
             ),
           ),
