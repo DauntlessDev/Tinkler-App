@@ -49,17 +49,25 @@ class VisitProfileService extends ChangeNotifier {
             following: currentProfileInfo.following + 1));
   }
 
-  Future<void> updateOtherFollowersCount({@required bool toUnFollow}) async {
+  Future<void> updateOtherFollowersCount(
+      {@required bool toUnFollow,
+      @required String otherEmail,
+      int optionalFollowersCount}) async {
     Profile othersProfileInfo;
     await _database
-        .profileFuture(email: _email.last)
+        .profileFuture(email: otherEmail)
         .then((value) => othersProfileInfo = value.first);
 
-    toUnFollow
-        ? _database.setProfile(othersProfileInfo.copyWith(
-            followers: othersProfileInfo.followers - 1))
-        : _database.setProfile(othersProfileInfo.copyWith(
-            followers: othersProfileInfo.followers + 1));
+    if (optionalFollowersCount == null) {
+      toUnFollow
+          ? _database.setProfile(othersProfileInfo.copyWith(
+              followers: othersProfileInfo.followers - 1))
+          : _database.setProfile(othersProfileInfo.copyWith(
+              followers: othersProfileInfo.followers + 1));
+    } else {
+      _database.setProfile(
+          othersProfileInfo.copyWith(followers: optionalFollowersCount));
+    }
   }
 
   Future<void> addOtherFollower(String uid) async {
@@ -79,19 +87,27 @@ class VisitProfileService extends ChangeNotifier {
     await _database.deleteFollowing(uid: _user.uid, email: otherEmail);
   }
 
-  Future<void> followingUser({String otherEmail, String otherUid}) async {
+  Future<void> followingUser(
+      {String otherEmail, String otherUid, int optionalFollowersCount}) async {
     await addUserFollowing(otherEmail);
     await addOtherFollower(otherUid);
     updateUserFollowingCount(toUnfollow: false);
-    updateOtherFollowersCount(toUnFollow: false);
+    updateOtherFollowersCount(
+        toUnFollow: false,
+        otherEmail: otherEmail,
+        optionalFollowersCount: optionalFollowersCount);
     print('finished followed');
   }
 
-  Future<void> unfollowingUser({String otherEmail, String otherUid}) async {
+  Future<void> unfollowingUser(
+      {String otherEmail, String otherUid, int optionalFollowersCount}) async {
     await deleteUserFollowing(otherEmail);
     await deleteOtherFollower(otherUid);
     updateUserFollowingCount(toUnfollow: true);
-    updateOtherFollowersCount(toUnFollow: true);
+    updateOtherFollowersCount(
+        toUnFollow: true,
+        otherEmail: otherEmail,
+        optionalFollowersCount: optionalFollowersCount);
     print('finished unfollow');
   }
 

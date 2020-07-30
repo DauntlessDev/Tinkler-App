@@ -16,6 +16,7 @@ class FollowTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<FollowTileViewModel>.reactive(
+      onModelReady: (model) => model.isProfileFollowed(profile.email),
       viewModelBuilder: () => FollowTileViewModel(),
       builder: (context, model, child) => ListTile(
         leading: GestureDetector(
@@ -26,9 +27,9 @@ class FollowTile extends StatelessWidget {
             child: Text(profile.displayName)),
         subtitle: Text(profile.email),
         trailing: Container(
-          color: model.isVisitingOwnProfile(profile.email)
+          color: model.isOwnProfile
               ? Colors.grey[600]
-              : model.isProfileFollowed(profile.email)
+              : model.isFollowed
                   ? Colors.blue[300]
                   : Theme.of(context).primaryColor,
           height: 50,

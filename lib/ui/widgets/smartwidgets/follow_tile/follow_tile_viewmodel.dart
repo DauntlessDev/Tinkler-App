@@ -9,46 +9,40 @@ class FollowTileViewModel extends BaseViewModel {
   final _visitProfile = locator<VisitProfileService>();
   final _user = locator<CurrentUserService>();
   final _navigation = locator<NavigationService>();
-  
+
   Future<void> visitProfile(String email) async {
     _visitProfile.addVisitProfileEmail(email);
     _navigation.navigateTo(Routes.checkProfileViewRoute);
   }
 
   bool isFollowed = false;
-  bool isProfileFollowed(String email) {
+  bool isOwnProfile = false;
+  void isProfileFollowed(String email) {
     isFollowed = _visitProfile.isProfileFollowed(email);
-    return isFollowed;
+    isOwnProfile = isVisitingOwnProfile(email);
+    notifyListeners();
   }
 
   bool isVisitingOwnProfile(String otherEmail) => otherEmail == _user.email;
   Function buttonFunction({String email, String uid}) {
     print('isvisitng $email : ${isVisitingOwnProfile(email)}');
-    return isVisitingOwnProfile(email)
+    return isOwnProfile
         ? null
         : isFollowed
             ? () => unfollowingUser(otherEmail: email, otherUid: uid)
             : () => followingUser(otherEmail: email, otherUid: uid);
   }
 
-  Future<void> unfollowingUser({String otherEmail, String otherUid}) async {
-    setBusy(true);
-    await _visitProfile.unfollowingUser(
-        otherEmail: otherEmail, otherUid: otherUid);
-    isFollowed = _visitProfile.isProfileFollowed(otherEmail);
-    print('isFollowed : $isFollowed');
+  void unfollowingUser({String otherEmail, String otherUid}) {
+    _visitProfile.unfollowingUser(otherEmail: otherEmail, otherUid: otherUid);
+    isFollowed = false;
     notifyListeners();
-    setBusy(false);
   }
 
-  Future<void> followingUser({String otherEmail, String otherUid}) async {
-    setBusy(true);
-    await _visitProfile.followingUser(
-        otherEmail: otherEmail, otherUid: otherUid);
-    isFollowed = _visitProfile.isProfileFollowed(otherEmail);
-    print('isFollowed : $isFollowed');
+  void followingUser({String otherEmail, String otherUid}) {
+    _visitProfile.followingUser(otherEmail: otherEmail, otherUid: otherUid);
+    isFollowed = true;
     notifyListeners();
-    setBusy(false);
   }
 
   String get buttonText => _visitProfile.buttonText(isFollowed);

@@ -47,7 +47,8 @@ class _MainContent extends ViewModelWidget<CheckProfileViewModel> {
           onPressed: model.buttonFunction(
               email: model.profile.email, uid: model.profile.uid),
           ownPostsList: model.ownPostProfileList,
-          profile: model.profile,
+          profile:
+              model.profile.copyWith(followers: model.visitedFollowersCount),
           buttonColor: model.isVisitingOwnProfile
               ? Colors.grey[400]
               : model.isFollowed

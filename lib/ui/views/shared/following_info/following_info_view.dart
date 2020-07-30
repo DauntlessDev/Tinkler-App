@@ -30,6 +30,7 @@ class _FollowTileBuilder extends ViewModelWidget<FollowingInfoViewModel> {
 
   @override
   Widget build(BuildContext context, FollowingInfoViewModel model) {
+    print('follow tile built');
     if (model.followedProfileList == null) return Container();
     if (model.followedProfileList.isEmpty)
       return EmptyContent(

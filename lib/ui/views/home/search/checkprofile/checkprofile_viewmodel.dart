@@ -21,6 +21,12 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     return profileList.first;
   }
 
+  int visitedFollowersCount = 0;
+  void setFollowersCount(int followersCount) {
+    visitedFollowersCount = followersCount;
+    notifyListeners();
+  }
+
   Profile get profile {
     return (data == null)
         ? Profile(
@@ -54,11 +60,12 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
   @override
   Future<Profile> futureToRun() async {
     _visitProfile.checkUserFollowing();
-    isFollowed =  _visitProfile.isProfileFollowed(_visitProfile.email);
+    isFollowed = _visitProfile.isProfileFollowed(_visitProfile.email);
 
     ownPostList = await ownPostFuture();
     Profile profile = await profileFuture().then((value) => value);
 
+    setFollowersCount(profile.followers);
     setPosts(ownPostList, profile);
 
     return profile;
@@ -96,23 +103,24 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
             : () => followingUser(otherEmail: email, otherUid: uid);
   }
 
-  Future<void> unfollowingUser({String otherEmail, String otherUid}) async {
-    setBusy(true);
-    await _visitProfile.unfollowingUser(
-        otherEmail: otherEmail, otherUid: otherUid);
-    isFollowed = _visitProfile.isProfileFollowed(otherEmail);
-    print(isFollowed);
+  void unfollowingUser({String otherEmail, String otherUid}) {
+    isFollowed = false;
+    visitedFollowersCount -= 1;
+    _visitProfile.unfollowingUser(
+        otherEmail: otherEmail,
+        otherUid: otherUid,
+        optionalFollowersCount: visitedFollowersCount);
     notifyListeners();
-    setBusy(false);
   }
 
-  Future<void> followingUser({String otherEmail, String otherUid}) async {
-    setBusy(true);
-    await _visitProfile.followingUser(
-        otherEmail: otherEmail, otherUid: otherUid);
-    isFollowed = _visitProfile.isProfileFollowed(otherEmail);
+  void followingUser({String otherEmail, String otherUid}) {
+    isFollowed = true;
+    visitedFollowersCount += 1;
+    _visitProfile.followingUser(
+        otherEmail: otherEmail,
+        otherUid: otherUid,
+        optionalFollowersCount: visitedFollowersCount);
     notifyListeners();
-    setBusy(false);
   }
 
   String get buttonText => _visitProfile.buttonText(isFollowed);
