@@ -17,7 +17,9 @@ class FollowTileViewModel extends BaseViewModel {
 
   bool isFollowed = false;
   bool isOwnProfile = false;
-  void isProfileFollowed(String email) {
+  int followersCount = 0;
+  void isProfileFollowed(String email, int inputFollowersCount) {
+    followersCount = inputFollowersCount;
     isFollowed = _visitProfile.isProfileFollowed(email);
     isOwnProfile = isVisitingOwnProfile(email);
     notifyListeners();
@@ -34,13 +36,21 @@ class FollowTileViewModel extends BaseViewModel {
   }
 
   void unfollowingUser({String otherEmail, String otherUid}) {
-    _visitProfile.unfollowingUser(otherEmail: otherEmail, otherUid: otherUid);
+    followersCount -= 1;
+    _visitProfile.unfollowingUser(
+        otherEmail: otherEmail,
+        otherUid: otherUid,
+        latestFollowersCount: followersCount);
     isFollowed = false;
     notifyListeners();
   }
 
   void followingUser({String otherEmail, String otherUid}) {
-    _visitProfile.followingUser(otherEmail: otherEmail, otherUid: otherUid);
+    followersCount += 1;
+    _visitProfile.followingUser(
+        otherEmail: otherEmail,
+        otherUid: otherUid,
+        latestFollowersCount: followersCount);
     isFollowed = true;
     notifyListeners();
   }

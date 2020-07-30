@@ -109,7 +109,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     _visitProfile.unfollowingUser(
         otherEmail: otherEmail,
         otherUid: otherUid,
-        optionalFollowersCount: visitedFollowersCount);
+        latestFollowersCount: visitedFollowersCount);
     notifyListeners();
   }
 
@@ -119,7 +119,7 @@ class CheckProfileViewModel extends FutureViewModel<Profile> {
     _visitProfile.followingUser(
         otherEmail: otherEmail,
         otherUid: otherUid,
-        optionalFollowersCount: visitedFollowersCount);
+        latestFollowersCount: visitedFollowersCount);
     notifyListeners();
   }
 
