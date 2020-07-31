@@ -126,7 +126,9 @@ class PostTile extends StatelessWidget {
                                         .onSecondary,
                                     size: 18),
                                 SizedBox(width: 2),
-                                Text('13 Comments',
+                                Text(
+                                    model.commentText(
+                                        postprofile.post.commentsCount),
                                     style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme

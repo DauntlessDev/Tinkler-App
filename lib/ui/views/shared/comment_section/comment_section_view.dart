@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tinkler/model/commentprofile.dart';
@@ -17,14 +18,17 @@ class CommentSectionView extends StatelessWidget {
               title: Text('Comments'),
               backgroundColor:
                   Theme.of(context).backgroundColor.withOpacity(0.3)),
-          body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(child: _CommentList()),
-                _InputComment(),
-              ],
+          body: ModalProgressHUD(
+            inAsyncCall: model.isBusy,
+            child: SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(child: _CommentList()),
+                  _InputComment(),
+                ],
+              ),
             ),
           ),
         ),

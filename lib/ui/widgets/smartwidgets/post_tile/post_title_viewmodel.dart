@@ -72,4 +72,12 @@ class PostTileViewModel extends BaseViewModel {
         ? 'like'
         : likesCount == 1 ? '$likesCount like' : '$likesCount likes';
   }
+
+  String commentText(int commentCount) {
+    return commentCount == 0
+        ? 'comment'
+        : commentCount == 1
+            ? '$commentCount comment'
+            : '$commentCount comments';
+  }
 }

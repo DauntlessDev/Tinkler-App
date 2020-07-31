@@ -62,8 +62,8 @@ class CommentSectionViewModel extends StreamViewModel<List<Comment>> {
 
   Future<void> sendComment() async {
     if (_input.isNotEmpty) {
-      int _commentCount = _currentPost.currentPostCommentCount;
-      _currentPost.setCommentCount(_commentCount + 1);
+      setBusy(true);
+      _currentPost.incrementCommentCount();
 
       Comment comment = Comment(
           commendId: _postId,
@@ -71,11 +71,10 @@ class CommentSectionViewModel extends StreamViewModel<List<Comment>> {
           commentTime: DateTime.now().toIso8601String(),
           senderEmail: _user.email);
 
-      setBusy(true);
       await _database.addComment(comment: comment);
       await _database.setPost(
           post: _currentPost.currentPost
-              .copyWith(commentsCount: _commentCount + 1));
+              .copyWith(commentsCount: _currentPost.currentPostCommentCount));
       setBusy(false);
 
       _input = '';

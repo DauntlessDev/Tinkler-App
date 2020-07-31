@@ -33,8 +33,8 @@ class CurrentPostService with ReactiveServiceMixin {
   String get currentPostId => _currentPost.value.postId;
   int get currentPostCommentCount => _currentPost.value.commentsCount;
 
-  void setCommentCount(int value) {
-    _currentPost.value.commentsCount = value;
+  void incrementCommentCount() {
+    _currentPost.value.commentsCount += 1;
     notifyListeners();
   }
 
