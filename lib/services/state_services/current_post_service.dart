@@ -3,8 +3,8 @@ import 'package:stacked/stacked.dart';
 import 'package:observable_ish/value/value.dart';
 
 @lazySingleton
-class CommentSectionService with ReactiveServiceMixin {
-  CommentSectionService() {
+class CurrentPostService with ReactiveServiceMixin {
+  CurrentPostService() {
     listenToReactiveValues([_commentCount]);
   }
 

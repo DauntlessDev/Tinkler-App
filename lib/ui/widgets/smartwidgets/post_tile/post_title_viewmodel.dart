@@ -14,6 +14,7 @@ class PostTileViewModel extends BaseViewModel {
   final _database = locator<DatabaseService>();
   final _user = locator<CurrentUserService>();
   final _commentSection = locator<CommentSectionService>();
+  final _currentPost = locator<CurrentPostService>();
 
   String formatDate(String firstTime) => _formatter.formatPostDate(firstTime);
 
@@ -21,7 +22,11 @@ class PostTileViewModel extends BaseViewModel {
       _currentPicture.updateCurrentImageUrl(imageUrl);
 
   void navigateToPictureView() => _currentPicture.navigateToPictureView();
-  void navigateToCommentSection() => _commentSection.navigateToCommentSectionView();
+  void navigateToCommentSection() {
+    _currentPost
+
+    _commentSection.navigateToCommentSectionView();
+  }
 
   int likesCount = 0;
   bool isLiked = false;
