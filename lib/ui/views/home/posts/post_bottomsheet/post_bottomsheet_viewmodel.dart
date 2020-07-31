@@ -60,7 +60,7 @@ class PostBottomsheetViewModel extends BaseViewModel {
             image: _selectedImage, postId: _postId);
       }
 
-      _database.addPost(
+      _database.setPost(
           post: Post(
         posterEmail: _user.email,
         postId: _postId,

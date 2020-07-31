@@ -2,9 +2,10 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/app/router.gr.dart';
+import 'package:tinkler/model/commentprofile.dart';
 import 'package:tinkler/model/comments.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
-import 'package:tinkler/services/state_services/current_picture_service.dart';
+import 'package:tinkler/services/state_services/current_post_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
 import 'package:tinkler/services/state_services/visit_profile_service.dart';
@@ -15,13 +16,45 @@ class CommentSectionViewModel extends StreamViewModel<List<Comment>> {
   final _visitProfile = locator<VisitProfileService>();
   final _user = locator<CurrentUserService>();
   final _formatter = locator<FormatterService>();
+  final _currentPost = locator<CurrentPostService>();
+
+  String _postId;
 
   @override
   Stream<List<Comment>> get stream => getCommentsStream();
   Stream<List<Comment>> getCommentsStream() {
-    return _database.getCommentsStream(postId: 'postId');
+    _postId = _currentPost.currentPostId;
+
+    _database.getCommentsStream(postId: _postId).listen((event) {
+      setPosts(event);
+    });
+    return _database.getCommentsStream(postId: _postId);
   }
+
   List<Comment> get commentList => data;
+
+  List<CommentProfile> commentprofileList = [];
+  Future<void> setPosts(List<Comment> event) async {
+    setBusy(true);
+    print('commentlist : $event');
+    commentprofileList.clear();
+    for (Comment comment in event) {
+      commentprofileList.add(CommentProfile(
+          comment: Comment(
+            commendId: comment.commendId,
+            commentContent: comment.commentContent,
+            commentTime: comment.commentTime,
+            senderEmail: comment.senderEmail,
+          ),
+          profile: await _database
+              .profileFuture(email: comment.senderEmail)
+              .then((value) => value.first)));
+    }
+
+    notifyListeners();
+    setBusy(false);
+    print('model isbusy: $isBusy');
+  }
 
   String _input = '';
   String get input => _input;
@@ -29,13 +62,21 @@ class CommentSectionViewModel extends StreamViewModel<List<Comment>> {
 
   Future<void> sendComment() async {
     if (_input.isNotEmpty) {
+      int _commentCount = _currentPost.currentPostCommentCount;
+      _currentPost.setCommentCount(_commentCount + 1);
+
       Comment comment = Comment(
-          commendId: 'postId',
+          commendId: _postId,
           commentContent: _input,
           commentTime: DateTime.now().toIso8601String(),
           senderEmail: _user.email);
 
+      setBusy(true);
       await _database.addComment(comment: comment);
+      await _database.setPost(
+          post: _currentPost.currentPost
+              .copyWith(commentsCount: _commentCount + 1));
+      setBusy(false);
 
       _input = '';
       notifyListeners();

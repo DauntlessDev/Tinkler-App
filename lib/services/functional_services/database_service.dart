@@ -146,14 +146,14 @@ class DatabaseService {
 
   Future<void> addComment({@required Comment comment}) async {
     await _service.setData(
-      path: APIPath.comment(comment.commendId),
+      path: APIPath.comment(comment.commendId, comment.commentTime),
       data: comment.toMap(),
     );
   }
 
   Stream<List<Comment>> getCommentsStream({@required String postId}) {
     return _service.collectionStreamNoID(
-      path: APIPath.comment(postId),
+      path: APIPath.comments(postId),
       builder: (data) => Comment.fromMap(data),
     );
   }
@@ -215,7 +215,7 @@ class DatabaseService {
     await _service.deleteData(path: APIPath.chatroom(chatroomId));
   }
 
-  Future<void> addPost({@required Post post}) async {
+  Future<void> setPost({@required Post post}) async {
     await _service.setData(
       path: APIPath.post(post.postId),
       data: post.toMap(),

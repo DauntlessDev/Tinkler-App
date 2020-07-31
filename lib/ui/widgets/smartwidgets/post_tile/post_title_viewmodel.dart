@@ -23,22 +23,19 @@ class PostTileViewModel extends BaseViewModel {
   void navigateToPictureView() => _currentPicture.navigateToPictureView();
 
   void navigateToCommentSection() {
-    _currentPost.setPostId(postId);
-    _currentPost.setCommentCount(commentsCount);
+    _currentPost.setCurrentPost(currentPost);
     _currentPost.navigateToCommentSectionView();
   }
 
-  String postId = '';
-  int commentsCount = 0;
+  Post currentPost;
   int likesCount = 0;
   bool isLiked = false;
   Future<void> checkIfLike(String postId, Post post) async {
     List<String> listOfLikes = await _database.allLikesFuture(postId: postId);
     isLiked = listOfLikes.contains(_user.email);
-
-    postId = post.postId;
-    commentsCount = post.commentsCount;
     likesCount = post.likesCount;
+
+    currentPost = post;
     notifyListeners();
   }
 
@@ -53,7 +50,7 @@ class PostTileViewModel extends BaseViewModel {
         postId: post.postId, likerEmail: Record(email: _user.email));
 
     likesCount++;
-    _database.addPost(post: post.copyWith(likesCount: likesCount));
+    _database.setPost(post: post.copyWith(likesCount: likesCount));
 
     isLiked = true;
     notifyListeners();
@@ -64,7 +61,7 @@ class PostTileViewModel extends BaseViewModel {
     _database.deleteLike(postId: post.postId, email: _user.email);
 
     likesCount--;
-    _database.addPost(post: post.copyWith(likesCount: likesCount));
+    _database.setPost(post: post.copyWith(likesCount: likesCount));
 
     isLiked = false;
     notifyListeners();

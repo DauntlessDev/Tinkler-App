@@ -1,13 +1,11 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tinkler/model/commentprofile.dart';
-import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/views/shared/comment_section/comment_section_viewmodel.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
+import 'package:tinkler/ui/widgets/empty_content.dart';
 
 class CommentSectionView extends StatelessWidget {
   @override
@@ -24,7 +22,7 @@ class CommentSectionView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Text('yes'),
+                Expanded(child: _CommentList()),
                 _InputComment(),
               ],
             ),
@@ -33,23 +31,22 @@ class CommentSectionView extends StatelessWidget {
       );
 }
 
-// class MessageList extends ViewModelWidget<ChatViewModel> {
-//   const MessageList({
-//     Key key,
-//   }) : super(key: key, reactive: true);
+class _CommentList extends ViewModelWidget<CommentSectionViewModel> {
+  const _CommentList({
+    Key key,
+  }) : super(key: key, reactive: true);
 
-//   @override
-//   Widget build(BuildContext context, ChatViewModel model) {
-//     if (model.listOfAllChats == null) return EmptyContent();
-//     return ListView.builder(
-//       itemCount: model.listOfAllChats.length,
-//       itemBuilder: (context, index) => MessageTile(
-//         chat: model.listOfAllChats[index],
-//         startConversation: model.startConversation,
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context, CommentSectionViewModel model) {
+    if (model.commentprofileList == null) return EmptyContent();
+    return ListView.builder(
+      itemCount: model.commentprofileList.length,
+      itemBuilder: (context, index) => _CommentTile(
+        commentProfile: model.commentprofileList[index],
+      ),
+    );
+  }
+}
 
 class _CommentTile extends ViewModelWidget<CommentSectionViewModel> {
   const _CommentTile({
@@ -64,24 +61,23 @@ class _CommentTile extends ViewModelWidget<CommentSectionViewModel> {
     return ListTile(
       onTap: () => model.visitProfile(commentProfile.profile.email),
       leading: Avatar(
-        radius: 20,
+        radius: 25,
         photoUrl: commentProfile.profile.photoUrl,
       ),
-      title: RichText(
-        text: TextSpan(children: [
-          TextSpan(
-            text: commentProfile.profile.displayName,
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-          ),
-          TextSpan(
-            text: commentProfile.comment.commentContent,
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
-          ),
-        ]),
-      ),
+      title: Row(children: [
+        Text(
+          commentProfile.profile.displayName,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(width: 10),
+        Text(
+          commentProfile.comment.commentContent,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+        ),
+      ]),
       subtitle: Text(
         ' ${model.formatDate(commentProfile.comment.commentTime)}',
-        style: TextStyle(color: Colors.grey, fontSize: 11),
+        style: TextStyle(color: Colors.grey, fontSize: 10),
       ),
     );
   }
