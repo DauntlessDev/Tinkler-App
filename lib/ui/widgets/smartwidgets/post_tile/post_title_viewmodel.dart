@@ -3,6 +3,7 @@ import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/record.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
+import 'package:tinkler/services/state_services/comment_section_service.dart';
 import 'package:tinkler/services/state_services/current_picture_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
@@ -12,6 +13,7 @@ class PostTileViewModel extends BaseViewModel {
   final _currentPicture = locator<CurrentPictureService>();
   final _database = locator<DatabaseService>();
   final _user = locator<CurrentUserService>();
+  final _commentSection = locator<CommentSectionService>();
 
   String formatDate(String firstTime) => _formatter.formatPostDate(firstTime);
 
@@ -19,6 +21,7 @@ class PostTileViewModel extends BaseViewModel {
       _currentPicture.updateCurrentImageUrl(imageUrl);
 
   void navigateToPictureView() => _currentPicture.navigateToPictureView();
+  void navigateToCommentSection() => _commentSection.navigateToCommentSectionView();
 
   int likesCount = 0;
   bool isLiked = false;

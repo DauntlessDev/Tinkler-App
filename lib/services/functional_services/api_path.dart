@@ -29,5 +29,8 @@ class APIPath {
   static String post(String postId) => 'posts/$postId';
   static String posts() => 'posts/';
 
+  static String comment(String commentId) => 'comment/$commentId';
+  static String comments() => 'comment/';
+
   static String postPicture(String postId) => 'posts/$postId';
 }

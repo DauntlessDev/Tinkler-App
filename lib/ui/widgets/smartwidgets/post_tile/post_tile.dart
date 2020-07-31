@@ -100,9 +100,7 @@ class PostTile extends StatelessWidget {
                                 SizedBox(width: 2),
                                 SizedBox(
                                   width: 40,
-                                  child: Text(
-                                      model.likesText(
-                                          model.likesCount),
+                                  child: Text(model.likesText(model.likesCount),
                                       style: TextStyle(
                                           color: model.isLiked
                                               ? Theme.of(context)
@@ -116,22 +114,26 @@ class PostTile extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 10),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Icon(MdiIcons.chatOutline,
-                                  color:
-                                      Theme.of(context).colorScheme.onSecondary,
-                                  size: 18),
-                              SizedBox(width: 2),
-                              Text('13 Comments',
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                      fontSize: 10)),
-                            ],
+                        FlatButton(
+                          onPressed: model.navigateToCommentSection,
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Icon(MdiIcons.chatOutline,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                    size: 18),
+                                SizedBox(width: 2),
+                                Text('13 Comments',
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                        fontSize: 10)),
+                              ],
+                            ),
                           ),
                         ),
                       ],

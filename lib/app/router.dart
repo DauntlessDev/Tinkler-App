@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:tinkler/ui/views/auth/login/login_view.dart';
 import 'package:tinkler/ui/views/auth/signup/signup_view.dart';
+import 'package:tinkler/ui/views/shared/comment_section/comment_section_view.dart';
 import 'package:tinkler/ui/views/shared/follower_info/follower_info_view.dart';
 import 'package:tinkler/ui/views/shared/following_info/following_info_view.dart';
 import 'package:tinkler/ui/views/shared/fullpicture/fullpicture_view.dart';
@@ -23,4 +24,5 @@ class $Router {
   FullPictureView fullPictureViewRoute;
   FollowerInfoView followerInfoViewRoute;
   FollowingInfoView followingInfoViewRoute;
+  CommentSectionView commentSectionViewRoute;
 }

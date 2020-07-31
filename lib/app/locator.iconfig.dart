@@ -7,6 +7,7 @@
 import 'package:tinkler/services/state_services/all_chat_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
+import 'package:tinkler/services/state_services/comment_section_service.dart';
 import 'package:tinkler/services/state_services/current_chatroom_service.dart';
 import 'package:tinkler/services/state_services/current_picture_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
@@ -23,6 +24,7 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerLazySingleton<AllChatService>(() => AllChatService());
   g.registerLazySingleton<AppThemeService>(() => AppThemeService());
   g.registerLazySingleton<AuthenticationService>(() => AuthenticationService());
+  g.registerLazySingleton<CommentSectionService>(() => CommentSectionService());
   g.registerLazySingleton<CurrentChatroomService>(
       () => CurrentChatroomService());
   g.registerLazySingleton<CurrentPictureService>(() => CurrentPictureService());
