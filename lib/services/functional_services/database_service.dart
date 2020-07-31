@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/chatroom.dart';
+import 'package:tinkler/model/comments.dart';
 import 'package:tinkler/model/record.dart';
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/model/post.dart';
@@ -140,6 +141,20 @@ class DatabaseService {
       path: APIPath.followers(uid),
       isReversed: true,
       builder: (data) => Record.fromMap(data).email,
+    );
+  }
+
+  Future<void> addComment({@required Comment comment}) async {
+    await _service.setData(
+      path: APIPath.comment(comment.commendId),
+      data: comment.toMap(),
+    );
+  }
+
+  Stream<List<Comment>> getCommentsStream({@required String postId}) {
+    return _service.collectionStreamNoID(
+      path: APIPath.comment(postId),
+      builder: (data) => Comment.fromMap(data),
     );
   }
 
