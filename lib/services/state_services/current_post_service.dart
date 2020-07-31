@@ -41,4 +41,7 @@ class CurrentPostService with ReactiveServiceMixin {
   void navigateToCommentSectionView() {
     _navigation.navigateTo(Routes.commentSectionViewRoute);
   }
+
+
+  
 }

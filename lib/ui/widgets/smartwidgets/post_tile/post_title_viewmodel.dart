@@ -74,10 +74,11 @@ class PostTileViewModel extends BaseViewModel {
   }
 
   String commentText(int commentCount) {
-    return commentCount == 0
-        ? 'comment'
-        : commentCount == 1
-            ? '$commentCount comment'
-            : '$commentCount comments';
+    return 'comment';
+    // return commentCount == 0
+    //     ? 'comment'
+    //     : commentCount == 1
+    //         ? '$commentCount comment'
+    //         : '$commentCount comments';
   }
 }
