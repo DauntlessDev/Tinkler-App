@@ -1,9 +1,14 @@
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 import 'package:observable_ish/value/value.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/app/router.gr.dart';
 
 @lazySingleton
 class CurrentPostService with ReactiveServiceMixin {
+  final _navigation = locator<NavigationService>();
+
   CurrentPostService() {
     listenToReactiveValues([_commentCount]);
   }
@@ -18,5 +23,9 @@ class CurrentPostService with ReactiveServiceMixin {
   void setCommentCount(int value) {
     _commentCount.value = value;
     notifyListeners();
+  }
+
+  void navigateToCommentSectionView() {
+    _navigation.navigateTo(Routes.commentSectionViewRoute);
   }
 }

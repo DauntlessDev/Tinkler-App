@@ -3,8 +3,8 @@ import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/record.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
-import 'package:tinkler/services/state_services/comment_section_service.dart';
 import 'package:tinkler/services/state_services/current_picture_service.dart';
+import 'package:tinkler/services/state_services/current_post_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
 
@@ -13,7 +13,6 @@ class PostTileViewModel extends BaseViewModel {
   final _currentPicture = locator<CurrentPictureService>();
   final _database = locator<DatabaseService>();
   final _user = locator<CurrentUserService>();
-  final _commentSection = locator<CommentSectionService>();
   final _currentPost = locator<CurrentPostService>();
 
   String formatDate(String firstTime) => _formatter.formatPostDate(firstTime);
@@ -22,18 +21,23 @@ class PostTileViewModel extends BaseViewModel {
       _currentPicture.updateCurrentImageUrl(imageUrl);
 
   void navigateToPictureView() => _currentPicture.navigateToPictureView();
-  void navigateToCommentSection() {
-    _currentPost
 
-    _commentSection.navigateToCommentSectionView();
+  void navigateToCommentSection() {
+    _currentPost.setPostId(postId);
+    _currentPost.setCommentCount(commentsCount);
+    _currentPost.navigateToCommentSectionView();
   }
 
+  String postId = '';
+  int commentsCount = 0;
   int likesCount = 0;
   bool isLiked = false;
   Future<void> checkIfLike(String postId, Post post) async {
     List<String> listOfLikes = await _database.allLikesFuture(postId: postId);
     isLiked = listOfLikes.contains(_user.email);
 
+    postId = post.postId;
+    commentsCount = post.commentsCount;
     likesCount = post.likesCount;
     notifyListeners();
   }
