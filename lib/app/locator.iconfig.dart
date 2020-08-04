@@ -16,6 +16,7 @@ import 'package:tinkler/services/functional_services/third_party_services_module
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/services/functional_services/firebase_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
+import 'package:tinkler/services/functional_services/push_notification_service.dart';
 import 'package:tinkler/services/state_services/visit_profile_service.dart';
 import 'package:get_it/get_it.dart';
 
@@ -36,6 +37,8 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerLazySingleton<FormatterService>(() => FormatterService());
   g.registerLazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
+  g.registerLazySingleton<PushNotificationService>(
+      () => PushNotificationService());
   g.registerLazySingleton<VisitProfileService>(() => VisitProfileService());
 }
 

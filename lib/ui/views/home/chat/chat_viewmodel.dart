@@ -35,7 +35,7 @@ class ChatViewModel extends StreamViewModel {
 
   List<Chat> get listOfAllChats => _chat.getNonEmptyChats;
   Future<void> getChatInfo(List<Chatroom> allUserConversations) async {
-    // setBusy(true);
+    print('all user convo: $allUserConversations');
     try {
       listOfAllChats.clear();
       if (allUserConversations != null) {
@@ -86,6 +86,8 @@ class ChatViewModel extends StreamViewModel {
 
           notifyListeners();
         }
+
+        print('all user all chatss: ${_chat.getListOfAllChats}');
       }
     } on PlatformException catch (e) {
       print('Chatviewmodel: chatInfo error message => ${e.message} ');
