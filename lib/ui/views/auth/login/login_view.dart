@@ -69,7 +69,7 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
               color: Theme.of(context).colorScheme.primary,
             ),
             RoundedButton(
-              onPressed: () {},
+              onPressed: model.signinWithFacebook,
               text: 'Continue with Facebook',
               color: Theme.of(context).colorScheme.secondary,
             ),
