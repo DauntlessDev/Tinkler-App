@@ -39,7 +39,6 @@ class AuthenticationService {
     return _userFromFirebase(authResult.user);
   }
 
-  @override
   Future<User> signInWithFacebook() async {
     final facebookLogin = FacebookLogin();
     final result = await facebookLogin.logIn(['public_User']);
