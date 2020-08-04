@@ -42,9 +42,8 @@ class LoginViewModel extends BaseViewModel {
 
   Future signinWithFacebook() async {
     try {
-        setBusy(true);
-        await _auth.signInWithFacebook();
-      
+      setBusy(true);
+      await _auth.signInWithFacebook();
     } on PlatformException catch (e) {
       await _dialog.showDialog(title: 'Login Failed', description: e.message);
     } finally {
