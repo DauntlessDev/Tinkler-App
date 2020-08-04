@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tinkler/model/user.dart';
 
@@ -38,24 +39,24 @@ class AuthenticationService {
     return _userFromFirebase(authResult.user);
   }
 
-  // @override
-  // Future<User> signInWithFacebook() async {
-  //   final facebookLogin = FacebookLogin();
-  //   final result = await facebookLogin.logIn(['public_User']);
+  @override
+  Future<User> signInWithFacebook() async {
+    final facebookLogin = FacebookLogin();
+    final result = await facebookLogin.logIn(['public_User']);
 
-  //   if (result != null) {
-  //     final authResult = await _firebaseAuth.signInWithCredential(
-  //       FacebookAuthProvider.getCredential(
-  //           accessToken: result.accessToken.token),
-  //     );
-  //     return _userFromFirebase(authResult.user);
-  //   }
-  //   return null;
-  // }
+    if (result != null) {
+      final authResult = await _firebaseAuth.signInWithCredential(
+        FacebookAuthProvider.getCredential(
+            accessToken: result.accessToken.token),
+      );
+      return _userFromFirebase(authResult.user);
+    }
+    return null;
+  }
 
   Future<void> signOut() async {
-    // final facebookLogin = FacebookLogin();
-    // await facebookLogin.logOut();
+    final facebookLogin = FacebookLogin();
+    await facebookLogin.logOut();
     await _firebaseAuth.signOut();
   }
 }
