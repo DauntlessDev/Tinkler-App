@@ -37,7 +37,7 @@ class ChatViewModel extends StreamViewModel {
   Future<void> getChatInfo(List<Chatroom> allUserConversations) async {
     print('all user convo: $allUserConversations');
     try {
-      listOfAllChats.clear();
+      _chat.getNonEmptyChats.clear();
       if (allUserConversations != null) {
         for (Chatroom chatroom in allUserConversations) {
           Message lastMessage;
