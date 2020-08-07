@@ -14,14 +14,14 @@ class EmptyContent extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontSize: 13, color: Colors.black),
+            style: TextStyle(fontSize: 13),
           ),
           Text(
             message,
             style: TextStyle(
-                fontSize: 11,
-                // fontWeight: FontWeight.bold,
-                color: Colors.black38),
+              fontSize: 11,
+              // fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),

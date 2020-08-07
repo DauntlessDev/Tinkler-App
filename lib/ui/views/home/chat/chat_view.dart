@@ -60,8 +60,9 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
   @override
   Widget build(BuildContext context, ChatViewModel model) {
     print('all chats ${model.listOfAllChats}');
-    if (model.listOfAllChats == null) return EmptyContent();
-    if (model.listOfAllChats.isEmpty) return EmptyContent();
+    if (model.listOfAllChats.isEmpty)
+      return EmptyContent(
+          title: 'Empty Chat', message: 'Start chatting friends now.');
     return ListView.builder(
       itemCount: model.listOfAllChats.length,
       itemBuilder: (context, index) {

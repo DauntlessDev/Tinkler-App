@@ -8,6 +8,7 @@ import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/services/state_services/visit_profile_service.dart';
 
 import '../../avatar.dart';
+import '../../empty_content.dart';
 import '../post_tile/post_tile.dart';
 
 class ProfileContent extends StatefulWidget {
@@ -84,6 +85,18 @@ class OwnPostListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('ownPOstsLsist : ${ownPostsList.isEmpty}');
+    if (ownPostsList.isEmpty) {
+      return Expanded(
+        child: SizedBox(
+          height: 500,
+          child: EmptyContent(
+            title: 'Empty Posts',
+            message: 'The user don\'t have any post.',
+          ),
+        ),
+      );
+    }
     return Expanded(
       child: SizedBox(
         height: 500,

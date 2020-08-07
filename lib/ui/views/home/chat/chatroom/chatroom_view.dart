@@ -6,6 +6,7 @@ import 'package:stacked_hooks/stacked_hooks.dart';
 
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
+import 'package:tinkler/ui/widgets/empty_content.dart';
 
 import 'chatroom_viewmodel.dart';
 
@@ -98,6 +99,12 @@ class MessageBuilder extends ViewModelWidget<ChatroomViewModel> {
   @override
   Widget build(BuildContext context, ChatroomViewModel model) {
     List<Message> messages = model.messages;
+
+    if (messages.isEmpty)
+      return Expanded(
+        child: EmptyContent(
+            title: 'Empty Chatroom', message: 'Send your first message now.'),
+      );
 
     return Expanded(
       child: ListView.builder(
