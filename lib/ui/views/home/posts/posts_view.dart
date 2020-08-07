@@ -32,7 +32,7 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
           onPressed: () => showModalBottomSheet(
               context: context,
               builder: (context) {
-                return PostBottomsheetView();
+                return PostBottomsheetView(reloadPost: model.reloadPage);
               }),
           child: Icon(Icons.add),
         ),

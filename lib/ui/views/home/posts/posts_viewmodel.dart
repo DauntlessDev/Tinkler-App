@@ -16,6 +16,7 @@ class PostsViewModel extends FutureViewModel {
 
   Future<void> _setUpPostView() async {
     List<String> followedEmailList = [_user.email];
+
     followedEmailList.addAll(
       await _database.allFollowingFuture(uid: _user.uid),
     );
@@ -29,6 +30,7 @@ class PostsViewModel extends FutureViewModel {
           }
         }
       }
+      print('follwedEMailList : $followedEmailList');
       setPosts(followedPostList);
     });
   }
@@ -37,6 +39,7 @@ class PostsViewModel extends FutureViewModel {
   Future<void> setPosts(List<Post> event) async {
     setBusy(true);
     _postprofileList.clear();
+    print('all post event: $event');
     for (Post post in event) {
       _postprofileList.add(PostProfile(
           post: Post(

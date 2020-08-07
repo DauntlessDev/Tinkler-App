@@ -108,6 +108,8 @@ class FirebaseService {
       });
     } catch (e) {
       print(e);
+      Future<List<T>> emptyList;
+      return emptyList;
     }
   }
 

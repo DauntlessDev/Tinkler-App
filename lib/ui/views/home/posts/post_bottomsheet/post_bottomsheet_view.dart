@@ -10,6 +10,10 @@ import 'package:stacked/stacked.dart';
 import 'post_bottomsheet_viewmodel.dart';
 
 class PostBottomsheetView extends StatelessWidget {
+  final Function reloadPost;
+  const PostBottomsheetView({Key key, @required this.reloadPost})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PostBottomsheetViewModel>.reactive(
@@ -75,6 +79,7 @@ class PostBottomsheetView extends StatelessWidget {
                           color: Theme.of(context).primaryColor,
                           child: FlatButton(
                             onPressed: () async {
+                              await reloadPost();
                               await model.proceedPost();
                               Navigator.pop(context);
                             },
