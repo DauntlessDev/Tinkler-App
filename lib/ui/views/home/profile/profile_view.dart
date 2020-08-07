@@ -16,12 +16,10 @@ class ProfileView extends StatelessWidget {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: false,
-          // inAsyncCall: model.profile.email.isEmpty || model.isBusy,
-          child: _MainContent()),
-      // child: model.profile.email.isEmpty
-      //     ? Container(color: Theme.of(context).backgroundColor)
-      //     : _MainContent()),
+          inAsyncCall: model.profile.email.isEmpty || model.isBusy,
+          child: model.profile.email.isEmpty
+              ? Container(color: Theme.of(context).backgroundColor)
+              : _MainContent()),
     );
   }
 }
