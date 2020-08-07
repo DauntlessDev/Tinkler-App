@@ -45,7 +45,7 @@ class AuthenticationService {
 
   Future<User> signInWithFacebook() async {
     final facebookLogin = FacebookLogin();
-    final result = await facebookLogin.logIn(['public_User']);
+    final result = await facebookLogin.logIn(['public_profile']);
 
     if (result != null) {
       final authResult = await _firebaseAuth.signInWithCredential(
