@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:injectable/injectable.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/model/user.dart';
@@ -54,33 +55,51 @@ class AuthenticationService {
       );
 
       final _database = locator<DatabaseService>();
-      _database.profileFuture(email: authResult.user.email).then((value) async {
-        setSearchParam(String caseNumber) {
-          List<String> caseSearchList = List();
-          String temp = "";
-          for (int i = 0; i < caseNumber.length; i++) {
-            temp = temp + caseNumber[i];
-            caseSearchList.add(temp);
+      print('authResult.user.email : ${authResult.user.email}');
+      print('authResult.user : ${authResult.user}');
+
+      print(
+          'authResult.user.email is verified? : ${authResult.user.isEmailVerified}');
+      if (authResult.user.isEmailVerified) {
+        _database
+            .profileFuture(email: authResult.user.email)
+            .then((value) async {
+          setSearchParam(String caseNumber) {
+            List<String> caseSearchList = List();
+            String temp = "";
+            for (int i = 0; i < caseNumber.length; i++) {
+              temp = temp + caseNumber[i];
+              caseSearchList.add(temp);
+            }
+            return caseSearchList;
           }
-          return caseSearchList;
-        }
 
-        if (value == null) {
-          await _database.setProfile(Profile(
-            uid: authResult.user.uid,
-            displayName: authResult.user.displayName,
-            email: authResult.user.email,
-            photoUrl: authResult.user.photoUrl,
-            caseSearch:
-                setSearchParam(authResult.user.displayName.toLowerCase()),
-            followers: 0,
-            following: 0,
-            posts: 0,
-          ));
-        }
-      });
+          print('fb user? : $value');
+          if (value == null) {
+            await _database.setProfile(Profile(
+              uid: authResult.user.uid,
+              displayName: authResult.user.displayName,
+              email: authResult.user.email,
+              photoUrl: authResult.user.photoUrl,
+              caseSearch:
+                  setSearchParam(authResult.user.displayName.toLowerCase()),
+              followers: 0,
+              following: 0,
+              posts: 0,
+            ));
+          }
+        });
 
-      return _userFromFirebase(authResult.user);
+        print('authresult user: ${authResult.user}');
+        return _userFromFirebase(authResult.user);
+      } else {
+        signOut();
+
+        final _dialog = locator<DialogService>();
+        _dialog.showDialog(
+            title: 'Login Failed',
+            description: 'Facebook email address is not verified.');
+      }
     }
     return null;
   }

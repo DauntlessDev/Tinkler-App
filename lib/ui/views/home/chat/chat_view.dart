@@ -61,12 +61,16 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
   Widget build(BuildContext context, ChatViewModel model) {
     print('all chats ${model.listOfAllChats}');
     if (model.listOfAllChats == null) return EmptyContent();
+    if (model.listOfAllChats.isEmpty) return EmptyContent();
     return ListView.builder(
       itemCount: model.listOfAllChats.length,
-      itemBuilder: (context, index) => MessageTile(
-        chat: model.listOfAllChats[index],
-        startConversation: model.startConversation,
-      ),
+      itemBuilder: (context, index) {
+        print('current CHat : ${model.listOfAllChats[index]}');
+        return MessageTile(
+          chat: model.listOfAllChats[index],
+          startConversation: model.startConversation,
+        );
+      },
     );
   }
 }

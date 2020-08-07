@@ -11,6 +11,7 @@ class CurrentUserService extends ChangeNotifier {
   String get email => _email;
 
   Future<void> updateCurrentUserInfo(User user) async {
+    print('currentUser $user');
     _uid = user.uid;
     _email = user.email;
 

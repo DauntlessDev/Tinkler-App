@@ -16,10 +16,12 @@ class ProfileView extends StatelessWidget {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
-          inAsyncCall: model.profile.email.isEmpty || model.isBusy,
-          child: model.profile.email.isEmpty
-              ? Container(color: Theme.of(context).backgroundColor)
-              : _MainContent()),
+          inAsyncCall: false,
+          // inAsyncCall: model.profile.email.isEmpty || model.isBusy,
+          child: _MainContent()),
+      // child: model.profile.email.isEmpty
+      //     ? Container(color: Theme.of(context).backgroundColor)
+      //     : _MainContent()),
     );
   }
 }
@@ -46,10 +48,12 @@ class _MainContent extends ViewModelWidget<ProfileViewModel> {
         actions: <Widget>[ProfileMenu()],
       ),
       body: ProfileContent(
-          buttonText: 'Change Picture',
-          onPressed: model.changeProfile,
-          ownPostsList: model.ownPostProfileList,
-          profile: model.profile, buttonColor: Theme.of(context).primaryColor,),
+        buttonText: 'Change Picture',
+        onPressed: model.changeProfile,
+        ownPostsList: model.ownPostProfileList,
+        profile: model.profile,
+        buttonColor: Theme.of(context).primaryColor,
+      ),
     );
   }
 }

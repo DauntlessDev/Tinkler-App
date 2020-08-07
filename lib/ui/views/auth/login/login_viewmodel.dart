@@ -3,11 +3,14 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/app/router.gr.dart';
+import 'package:tinkler/model/user.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
+import 'package:tinkler/services/state_services/current_user_service.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _auth = locator<AuthenticationService>();
   final _dialog = locator<DialogService>();
+  final _currentUser = locator<CurrentUserService>();
 
   Future navigateToSignup() async {
     final _navigationService = locator<NavigationService>();
@@ -43,7 +46,10 @@ class LoginViewModel extends BaseViewModel {
   Future signinWithFacebook() async {
     try {
       setBusy(true);
-      await _auth.signInWithFacebook();
+      User user = await _auth.signInWithFacebook();
+      if (user != null) {
+        await _currentUser.updateCurrentUserInfo(user);
+      }
     } on PlatformException catch (e) {
       await _dialog.showDialog(title: 'Login Failed', description: e.message);
     } finally {

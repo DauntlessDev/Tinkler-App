@@ -12,9 +12,8 @@ class AllChatService with ReactiveServiceMixin {
 
   RxValue<List<Chat>> _listOfAllChats = RxValue<List<Chat>>(initial: []);
   List<Chat> get getListOfAllChats => _listOfAllChats.value;
-  List<Chat> get getNonEmptyChats => _listOfAllChats.value
-      .where((chat) => chat.lastMessage.sender.isNotEmpty)
-      .toList();
+  List<Chat> get getNonEmptyChats =>
+      _listOfAllChats.value.where((chat) => chat.lastMessage != null).toList();
 
   void setLastMessageOfSpecificChat({String email, Message message}) {
     for (Chat chat in _listOfAllChats.value) {

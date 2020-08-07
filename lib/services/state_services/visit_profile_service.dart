@@ -88,6 +88,7 @@ class VisitProfileService extends ChangeNotifier {
     updateOtherFollowersCount(
         otherEmail: otherEmail, latestFollowersCount: latestFollowersCount);
     print('finished followed');
+    
   }
 
   Future<void> unfollowingUser(

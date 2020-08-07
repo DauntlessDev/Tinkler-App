@@ -87,24 +87,28 @@ class FirebaseService {
     if (queryBuilder != null) {
       query = queryBuilder(query);
     }
-    final Future<QuerySnapshot> snapshots = query.getDocuments();
-    return snapshots.then((snapshot) {
-      final result = snapshot.documents
-          .map((snapshot) => builder(snapshot.data))
-          .where((value) => value != null)
-          .toList();
+    try {
+      final Future<QuerySnapshot> snapshots = query.getDocuments();
+      return snapshots.then((snapshot) {
+        final result = snapshot.documents
+            .map((snapshot) => builder(snapshot.data))
+            .where((value) => value != null)
+            .toList();
 
-      if (sort != null) {
-        result.sort(sort);
-      }
+        if (sort != null) {
+          result.sort(sort);
+        }
 
-      if (isReversed) {
-        List<T> reversedResult = result.reversed.toList();
-        return reversedResult;
-      } else {
-        return result;
-      }
-    });
+        if (isReversed) {
+          List<T> reversedResult = result.reversed.toList();
+          return reversedResult;
+        } else {
+          return result;
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   Stream<T> documentStream<T>({
