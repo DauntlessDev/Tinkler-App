@@ -28,7 +28,7 @@ class ChatViewModel extends StreamViewModel {
   Stream get stream {
     _chat.addListener(() => notifyListeners());
     _database.chatroomsStream().listen((event) {
-      if (event.isNotEmpty) getChatInfo(event);
+      if (event.isNotEmpty) runBusyFuture(getChatInfo(event));
     });
     return _database.chatroomsStream();
   }

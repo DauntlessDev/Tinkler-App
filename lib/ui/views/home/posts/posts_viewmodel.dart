@@ -12,7 +12,7 @@ class PostsViewModel extends FutureViewModel {
   final _user = locator<CurrentUserService>();
 
   @override
-  Future futureToRun() => _setUpPostView();
+  Future futureToRun() => runBusyFuture(_setUpPostView());
 
   Future<void> _setUpPostView() async {
     List<String> followedEmailList = [_user.email];

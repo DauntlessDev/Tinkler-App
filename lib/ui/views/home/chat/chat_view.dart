@@ -15,10 +15,7 @@ class ChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChatViewModel>.reactive(
       viewModelBuilder: () => ChatViewModel(),
-      builder: (context, model, child) => ModalProgressHUD(
-        inAsyncCall: model.isBusy,
-        child: _MainContent(),
-      ),
+      builder: (context, model, child) => _MainContent(),
     );
   }
 }
@@ -42,7 +39,9 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
         ),
       ),
       // body: Container(),
-      body: MessageList(),
+      body: model.isBusy
+          ? Center(child: CircularProgressIndicator())
+          : MessageList(),
       floatingActionButton: FloatingActionButton(
         heroTag: "chatFab",
         onPressed: model.navigateToSearch,
