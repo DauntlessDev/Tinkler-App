@@ -7,27 +7,27 @@ import 'package:tinkler/model/commentprofile.dart';
 import 'package:tinkler/ui/views/shared/comment_section/comment_section_viewmodel.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
+import 'package:tinkler/ui/widgets/independent_scale.dart';
 
 class CommentSectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       ViewModelBuilder<CommentSectionViewModel>.reactive(
         viewModelBuilder: () => CommentSectionViewModel(),
-        builder: (context, model, child) => Scaffold(
-          appBar: AppBar(
-              title: Text('Comments'),
-              backgroundColor:
-                  Theme.of(context).backgroundColor.withOpacity(0.3)),
-          body: ModalProgressHUD(
-            inAsyncCall: model.isBusy,
-            child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Expanded(child: _CommentList()),
-                  _InputComment(),
-                ],
+        builder: (context, model, child) => IndependentScale(
+          child: Scaffold(
+            appBar: AppBar(title: Text('Comments')),
+            body: ModalProgressHUD(
+              inAsyncCall: model.isBusy,
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(child: _CommentList()),
+                    _InputComment(),
+                  ],
+                ),
               ),
             ),
           ),

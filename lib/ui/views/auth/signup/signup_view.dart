@@ -3,6 +3,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/widgets/auth_textforfield.dart';
+import 'package:tinkler/ui/widgets/independent_scale.dart';
 import 'package:tinkler/ui/widgets/rounded_button.dart';
 import 'package:tinkler/ui/widgets/tappable_richtext.dart';
 import 'package:tinkler/ui/widgets/top_background.dart';
@@ -17,14 +18,16 @@ class SignupView extends StatelessWidget {
       builder: (context, model, child) {
         return ModalProgressHUD(
           inAsyncCall: model.isBusy,
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              child: Stack(
-                children: [
-                  const TopBackground(),
-                  const _MainContent(),
-                ],
+          child: IndependentScale(
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: SafeArea(
+                child: Stack(
+                  children: [
+                    const TopBackground(),
+                    const _MainContent(),
+                  ],
+                ),
               ),
             ),
           ),

@@ -184,7 +184,10 @@ class _ProfileHeader extends StatelessWidget {
                 child: Container(
                   width: double.maxFinite,
                   height: 50,
-                  color: onPressed == null ? Colors.grey : buttonColor,
+                  decoration: BoxDecoration(
+                      color: onPressed == null ? Colors.grey : buttonColor,
+                      borderRadius:
+                          BorderRadius.all(const Radius.circular(3.0))),
                   child: FlatButton(
                     onPressed: onPressed,
                     child: Text(
@@ -218,10 +221,10 @@ class _ProfileStats extends StatelessWidget {
       children: <Widget>[
         Text('$number',
             style: TextStyle(
-              fontSize: 17,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             )),
-        Text(label, style: TextStyle(fontSize: 11)),
+        Text(label, style: TextStyle(fontSize: 13)),
       ],
     );
   }

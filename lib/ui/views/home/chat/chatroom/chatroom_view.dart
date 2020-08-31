@@ -7,6 +7,7 @@ import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
+import 'package:tinkler/ui/widgets/independent_scale.dart';
 
 import 'chatroom_viewmodel.dart';
 
@@ -19,26 +20,28 @@ class ChatroomView extends StatelessWidget {
         inAsyncCall: model.isBusy,
         child: model.data == null
             ? Container()
-            : Scaffold(
-                backgroundColor: Theme.of(context).backgroundColor,
-                appBar: AppBar(
-                  title: Row(children: [
-                    Avatar(photoUrl: model.otherPhotoUrl, radius: 20),
-                    SizedBox(
-                      width: 10,
+            : IndependentScale(
+                child: Scaffold(
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  appBar: AppBar(
+                    title: Row(children: [
+                      Avatar(photoUrl: model.otherPhotoUrl, radius: 20),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(model.otherDisplayName)
+                    ]),
+                  ),
+                  body: SafeArea(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        MessageBuilder(),
+                        SizedBox(height: 10),
+                        InputMessage(),
+                      ],
                     ),
-                    Text(model.otherDisplayName)
-                  ]),
-                ),
-                body: SafeArea(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      MessageBuilder(),
-                      SizedBox(height: 10),
-                      InputMessage(),
-                    ],
                   ),
                 ),
               ),
@@ -167,7 +170,7 @@ class MessageBubble extends ViewModelWidget<ChatroomViewModel> {
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
             child: Text(
               model.formatDate(time),
-              style: TextStyle(color: Colors.grey, fontSize: 12),
+              style: TextStyle(color: Colors.grey, fontSize: 15),
             ),
           ),
         Padding(

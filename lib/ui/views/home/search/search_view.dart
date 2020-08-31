@@ -104,7 +104,7 @@ class _SearchTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: visitProfile,
-      leading: Avatar(photoUrl: profile.photoUrl, radius: 30),
+      leading: Avatar(photoUrl: profile.photoUrl, radius: 25),
       title: Text(profile.displayName),
       subtitle: Text(profile.email),
     );

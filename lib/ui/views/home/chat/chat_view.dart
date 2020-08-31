@@ -106,16 +106,18 @@ class MessageTile extends ViewModelWidget<ChatViewModel> {
         ),
         title: Text(
           chat.profile.displayName,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         subtitle: RichText(
           text: TextSpan(
             style: Theme.of(context).primaryTextTheme.subtitle1,
             children: [
-              TextSpan(text: chat.lastMessage.message),
+              TextSpan(
+                  text: chat.lastMessage.message,
+                  style: TextStyle(fontSize: 13)),
               TextSpan(
                 text: ' • ${model.formatDate(chat.lastMessage.time)}',
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(color: Colors.grey, fontSize: 13),
               )
             ],
           ),

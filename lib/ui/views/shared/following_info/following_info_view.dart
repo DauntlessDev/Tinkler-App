@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
+import 'package:tinkler/ui/widgets/independent_scale.dart';
 import 'package:tinkler/ui/widgets/smartwidgets/follow_tile/follow_tile.dart';
 
 import 'following_info_viewmodel.dart';
@@ -11,13 +12,12 @@ class FollowingInfoView extends StatelessWidget {
   Widget build(BuildContext context) =>
       ViewModelBuilder<FollowingInfoViewModel>.reactive(
         viewModelBuilder: () => FollowingInfoViewModel(),
-        builder: (context, model, child) => Scaffold(
-          appBar: AppBar(
-              title: Text('Following'),
-              backgroundColor:
-                  Theme.of(context).backgroundColor.withOpacity(0.3)),
-          body: SafeArea(
-            child: _FollowTileBuilder(),
+        builder: (context, model, child) => IndependentScale(
+                  child: Scaffold(
+            appBar: AppBar(title: Text('Following')),
+            body: SafeArea(
+              child: _FollowTileBuilder(),
+            ),
           ),
         ),
       );
@@ -34,7 +34,7 @@ class _FollowTileBuilder extends ViewModelWidget<FollowingInfoViewModel> {
     if (model.followedProfileList == null) return Container();
     if (model.followedProfileList.isEmpty)
       return EmptyContent(
-          title: 'Empty Result', message: 'You don\'t follow anyone.');
+          title: 'Empty Result', message: 'User is not following anyone.');
 
     return ListView.builder(
       itemBuilder: (context, index) {

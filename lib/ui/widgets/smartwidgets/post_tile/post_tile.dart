@@ -46,23 +46,23 @@ class PostTile extends StatelessWidget {
                         Text(
                           postprofile.posterProfile.displayName,
                           style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 11),
+                              fontWeight: FontWeight.w700, fontSize: 13),
                         ),
                         Text(
                           ' • ${model.formatDate(postprofile.post.time)}',
-                          style: TextStyle(color: Colors.grey, fontSize: 10),
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
                         ),
                       ],
                     ),
                     SizedBox(height: 2),
                     Text(
                       postprofile.posterProfile.email,
-                      style: TextStyle(color: Colors.grey, fontSize: 10),
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                     SizedBox(height: 10),
                     Text(
                       postprofile.post.description,
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 14),
                     ),
                     SizedBox(height: 10),
                     if (postprofile.post.pictureUrl.isNotEmpty)
@@ -72,11 +72,14 @@ class PostTile extends StatelessWidget {
                               postprofile.post.pictureUrl);
                           model.navigateToPictureView();
                         },
-                        child: Image(
-                          image: NetworkImage(postprofile.post.pictureUrl),
-                          fit: BoxFit.fitWidth,
-                          width: 250,
-                          height: 200,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(3.0),
+                          child: Image(
+                            image: NetworkImage(postprofile.post.pictureUrl),
+                            fit: BoxFit.fitWidth,
+                            width: 250,
+                            height: 200,
+                          ),
                         ),
                       ),
                     SizedBox(height: 10),
@@ -107,7 +110,7 @@ class PostTile extends StatelessWidget {
                                                   .iconTheme
                                                   .color
                                               : Colors.grey,
-                                          fontSize: 10)),
+                                          fontSize: 12)),
                                 ),
                               ],
                             ),
@@ -133,7 +136,7 @@ class PostTile extends StatelessWidget {
                                         color: Theme.of(context)
                                             .colorScheme
                                             .onSecondary,
-                                        fontSize: 10)),
+                                        fontSize: 12)),
                               ],
                             ),
                           ),

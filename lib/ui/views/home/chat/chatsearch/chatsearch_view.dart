@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 import 'package:tinkler/model/profile.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
 import 'package:tinkler/ui/widgets/avatar.dart';
+import 'package:tinkler/ui/widgets/independent_scale.dart';
 
 import 'chatsearch_viewmodel.dart';
 
@@ -12,30 +13,32 @@ class ChatSearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChatSearchViewModel>.reactive(
       viewModelBuilder: () => ChatSearchViewModel(),
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: TextField(
-            decoration: InputDecoration(
-              hintText: 'Enter name',
-              hintStyle: TextStyle(color: Colors.grey),
-            ),
-            onChanged: model.setInput,
-            onEditingComplete: model.searchUsers,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: model.searchUsers,
-              child: Icon(
-                Icons.search,
+      builder: (context, model, child) => IndependentScale(
+        child: Scaffold(
+          appBar: AppBar(
+            title: TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter name',
+                hintStyle: TextStyle(color: Colors.grey),
               ),
-            )
-          ],
-        ),
-        body: ModalProgressHUD(
-          inAsyncCall: model.isBusy,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: _SearchTileBuilder(),
+              onChanged: model.setInput,
+              onEditingComplete: model.searchUsers,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: model.searchUsers,
+                child: Icon(
+                  Icons.search,
+                ),
+              )
+            ],
+          ),
+          body: ModalProgressHUD(
+            inAsyncCall: model.isBusy,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: _SearchTileBuilder(),
+            ),
           ),
         ),
       ),
@@ -79,7 +82,7 @@ class _SearchTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: sendMessage,
-      leading: Avatar(photoUrl: profile.photoUrl, radius: 30),
+      leading: Avatar(photoUrl: profile.photoUrl, radius: 23),
       title: Text(profile.displayName),
     );
   }
