@@ -16,7 +16,7 @@ class LoginView extends StatelessWidget {
       builder: (context, model, child) => ModalProgressHUD(
         inAsyncCall: model.isBusy,
         child: Scaffold(
-          // resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: false,
           body: Stack(
             fit: StackFit.loose,
             children: <Widget>[

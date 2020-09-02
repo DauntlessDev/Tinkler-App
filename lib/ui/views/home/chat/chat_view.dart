@@ -65,6 +65,8 @@ class MessageList extends ViewModelWidget<ChatViewModel> {
       itemCount: model.listOfAllChats.length,
       itemBuilder: (context, index) {
         print('current CHat : ${model.listOfAllChats[index]}');
+
+        print('time : ${model.listOfAllChats[index].lastMessage.time}');
         return MessageTile(
           chat: model.listOfAllChats[index],
           startConversation: model.startConversation,

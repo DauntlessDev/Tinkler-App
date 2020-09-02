@@ -26,10 +26,12 @@ class PostTile extends StatelessWidget {
       builder: (context, model, child) => Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   child: Align(
@@ -92,56 +94,49 @@ class PostTile extends StatelessWidget {
                         FlatButton(
                           onPressed:
                               model.onPressedLikeButton(postprofile.post),
-                          child: Expanded(
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  model.isLiked
-                                      ? Icon(MdiIcons.heart,
-                                          color:
-                                              Theme.of(context).iconTheme.color,
-                                          size: 18)
-                                      : Icon(MdiIcons.heartOutline,
-                                          color: Colors.grey, size: 18),
-                                  SizedBox(width: 1),
-                                  AutoSizeText(
-                                      model.likesText(model.likesCount),
-                                      style: TextStyle(
-                                          color: model.isLiked
-                                              ? Theme.of(context)
-                                                  .iconTheme
-                                                  .color
-                                              : Colors.grey,
-                                          fontSize: 10)),
-                                ],
-                              ),
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                model.isLiked
+                                    ? Icon(MdiIcons.heart,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                        size: 18)
+                                    : Icon(MdiIcons.heartOutline,
+                                        color: Colors.grey, size: 18),
+                                SizedBox(width: 1),
+                                AutoSizeText(model.likesText(model.likesCount),
+                                    style: TextStyle(
+                                        color: model.isLiked
+                                            ? Theme.of(context).iconTheme.color
+                                            : Colors.grey,
+                                        fontSize: 10)),
+                              ],
                             ),
                           ),
                         ),
                         FlatButton(
                           onPressed: model.navigateToCommentSection,
-                          child: Expanded(
-                            child: Container(
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Icon(MdiIcons.chatOutline,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                      size: 18),
-                                  SizedBox(width: 1),
-                                  AutoSizeText(
-                                      model.commentText(
-                                          postprofile.post.commentsCount),
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondary,
-                                          fontSize: 10)),
-                                ],
-                              ),
+                          child: Container(
+                            child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Icon(MdiIcons.chatOutline,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                    size: 18),
+                                SizedBox(width: 1),
+                                AutoSizeText(
+                                    model.commentText(
+                                        postprofile.post.commentsCount),
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                        fontSize: 10)),
+                              ],
                             ),
                           ),
                         ),
