@@ -25,7 +25,14 @@ class SignupView extends StatelessWidget {
                 child: Stack(
                   children: [
                     const TopBackground(),
-                    const _MainContent(),
+                    CustomScrollView(
+                      slivers: [
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: const _MainContent(),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

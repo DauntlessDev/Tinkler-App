@@ -15,18 +15,19 @@ class LoginView extends StatelessWidget {
       viewModelBuilder: () => LoginViewModel(),
       builder: (context, model, child) => ModalProgressHUD(
         inAsyncCall: model.isBusy,
-        child: ModalProgressHUD(
-          inAsyncCall: model.isBusy,
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              child: Stack(
-                children: <Widget>[
-                  const TopBackground(),
-                  _MainContent(),
+        child: Scaffold(
+          // resizeToAvoidBottomInset: false,
+          body: Stack(
+            fit: StackFit.loose,
+            children: <Widget>[
+              const TopBackground(),
+              CustomScrollView(
+                slivers: [
+                  SliverFillRemaining(
+                      hasScrollBody: false, child: _MainContent()),
                 ],
-              ),
-            ),
+              )
+            ],
           ),
         ),
       ),

@@ -39,31 +39,31 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
         body: SafeArea(
           child: RefreshIndicator(
             onRefresh: model.reloadPage,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Latest Posts', style: TextStyle(fontSize: 16)),
-                          SizedBox(height: 20),
-                          Expanded(
-                            child: model.isBusy
-                                ? Center(child: CircularProgressIndicator())
-                                : PostListBuilder(),
-                          ),
-                        ],
-                      ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text('Latest Posts',
+                                style: TextStyle(fontSize: 16))),
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: model.isBusy
+                              ? Center(child: CircularProgressIndicator())
+                              : PostListBuilder(),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ));

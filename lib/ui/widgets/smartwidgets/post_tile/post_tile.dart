@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -77,67 +78,70 @@ class PostTile extends StatelessWidget {
                           child: Image(
                             image: NetworkImage(postprofile.post.pictureUrl),
                             fit: BoxFit.fitWidth,
-                            width: 250,
-                            height: 200,
+                            // width: double.minPositive,
+                            width: MediaQuery.of(context).size.width * .6,
+                            // height: 200,
                           ),
                         ),
                       ),
                     SizedBox(height: 10),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         FlatButton(
                           onPressed:
                               model.onPressedLikeButton(postprofile.post),
-                          child: Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                model.isLiked
-                                    ? Icon(MdiIcons.heart,
-                                        color:
-                                            Theme.of(context).iconTheme.color,
-                                        size: 18)
-                                    : Icon(MdiIcons.heartOutline,
-                                        color: Colors.grey, size: 18),
-                                SizedBox(width: 2),
-                                SizedBox(
-                                  width: 40,
-                                  child: Text(model.likesText(model.likesCount),
+                          child: Expanded(
+                            child: Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  model.isLiked
+                                      ? Icon(MdiIcons.heart,
+                                          color:
+                                              Theme.of(context).iconTheme.color,
+                                          size: 18)
+                                      : Icon(MdiIcons.heartOutline,
+                                          color: Colors.grey, size: 18),
+                                  SizedBox(width: 1),
+                                  AutoSizeText(
+                                      model.likesText(model.likesCount),
                                       style: TextStyle(
                                           color: model.isLiked
                                               ? Theme.of(context)
                                                   .iconTheme
                                                   .color
                                               : Colors.grey,
-                                          fontSize: 12)),
-                                ),
-                              ],
+                                          fontSize: 10)),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
                         FlatButton(
                           onPressed: model.navigateToCommentSection,
-                          child: Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Icon(MdiIcons.chatOutline,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary,
-                                    size: 18),
-                                SizedBox(width: 2),
-                                Text(
-                                    model.commentText(
-                                        postprofile.post.commentsCount),
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                        fontSize: 12)),
-                              ],
+                          child: Expanded(
+                            child: Container(
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Icon(MdiIcons.chatOutline,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
+                                      size: 18),
+                                  SizedBox(width: 1),
+                                  AutoSizeText(
+                                      model.commentText(
+                                          postprofile.post.commentsCount),
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                          fontSize: 10)),
+                                ],
+                              ),
                             ),
                           ),
                         ),

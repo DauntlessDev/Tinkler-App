@@ -14,6 +14,10 @@ Future<void> main() async {
   setupLocator();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   AppThemeService.isDarkModeOn = prefs.getBool('isdarkmodeon') ?? false;
+  // runApp(DevicePreview(
+  //   builder: (context) => MyApp(),
+  //   enabled: !kReleaseMode,
+  // ));
   runApp(MyApp());
 }
 
