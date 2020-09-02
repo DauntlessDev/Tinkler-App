@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -78,7 +79,7 @@ class PostTile extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(3.0),
                           child: Image(
-                            image: NetworkImage(postprofile.post.pictureUrl),
+                            image: CachedNetworkImageProvider(postprofile.post.pictureUrl),
                             fit: BoxFit.fitWidth,
                             // width: double.minPositive,
                             width: MediaQuery.of(context).size.width * .6,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/views/shared/fullpicture/fullpicture_viewmodel.dart';
@@ -15,7 +16,7 @@ class FullPictureView extends StatelessWidget {
               child: Container(
                 height: double.maxFinite,
                 width: double.maxFinite,
-                child: Image(image: NetworkImage(model.imageUrl)),
+                child: Image(image: CachedNetworkImageProvider(model.imageUrl)),
               ),
             ),
           ),
