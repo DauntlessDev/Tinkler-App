@@ -1,7 +1,9 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
 import 'package:tinkler/model/post.dart';
 import 'package:tinkler/model/postprofile.dart';
+import 'package:tinkler/services/functional_services/admob_service.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/current_user_service.dart';
 import 'package:tinkler/services/state_services/formatter_service.dart';
@@ -10,6 +12,11 @@ class PostsViewModel extends FutureViewModel {
   final _database = locator<DatabaseService>();
   final _formatter = locator<FormatterService>();
   final _user = locator<CurrentUserService>();
+  final _admob = locator<AdmobService>();
+
+  void initialize() {
+    Admob.initialize(getAppId());
+  }
 
   @override
   Future futureToRun() => runBusyFuture(_setUpPostView());
@@ -60,6 +67,9 @@ class PostsViewModel extends FutureViewModel {
     setBusy(false);
     print('model isbusy: $isBusy');
   }
+
+  String getBannerAdUnitId() => _admob.getBannerAdUnitId();
+  String getAppId() => _admob.getAppId();
 
   List<PostProfile> get postprofileList => _postprofileList;
   String formatTime(String time) => _formatter.formatDate(time);

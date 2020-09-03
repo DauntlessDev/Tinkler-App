@@ -1,4 +1,5 @@
 //view class
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:stacked/stacked.dart';
@@ -13,6 +14,7 @@ class PostsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PostsViewModel>.reactive(
+      onModelReady: (model) => model.initialize(),
       builder: (context, model, child) => _MainContent(),
       viewModelBuilder: () => PostsViewModel(),
     );
@@ -94,11 +96,23 @@ class PostListBuilder extends ViewModelWidget<PostsViewModel> {
           // startConversation: model.startConversation,
         );
       },
-      separatorBuilder: (BuildContext context, int index) => Divider(
-        color: Colors.grey,
-        thickness: .2,
-        height: .2,
-      ),
+      separatorBuilder: (BuildContext context, int index) {
+        if (index != 0 && index % 6 == 0) {
+          return Container(
+            margin: EdgeInsets.only(bottom: 20.0),
+            child: AdmobBanner(
+              adUnitId: model.getBannerAdUnitId(),
+              adSize: AdmobBannerSize.FULL_BANNER,
+            ),
+          );
+        } else {
+          return Divider(
+            color: Colors.grey,
+            thickness: .2,
+            height: .2,
+          );
+        }
+      },
     );
   }
 }

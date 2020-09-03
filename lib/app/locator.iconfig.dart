@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:tinkler/services/functional_services/admob_service.dart';
 import 'package:tinkler/services/state_services/all_chat_service.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
 import 'package:tinkler/services/functional_services/authentication_service.dart';
@@ -22,6 +23,7 @@ import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
+  g.registerLazySingleton<AdmobService>(() => AdmobService());
   g.registerLazySingleton<AllChatService>(() => AllChatService());
   g.registerLazySingleton<AppThemeService>(() => AppThemeService());
   g.registerLazySingleton<AuthenticationService>(() => AuthenticationService());
