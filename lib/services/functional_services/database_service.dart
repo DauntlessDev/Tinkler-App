@@ -207,7 +207,7 @@ class DatabaseService {
       path: APIPath.chatrooms(),
       builder: (data) => Chatroom.fromMap(data),
       queryBuilder: (query) => query.where('users', arrayContains: _user.email),
-      isReversed: true,
+      isReversed: false,
     );
   }
 
