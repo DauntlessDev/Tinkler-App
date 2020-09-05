@@ -25,6 +25,18 @@ class AllChatService with ReactiveServiceMixin {
         return result;
       }).toList();
 
+  void sort() {
+    _listOfAllChats.value.sort((b, a) {
+      DateTime firstTime = DateTime.parse(a.lastMessage.time);
+      Duration firstDifference = firstTime.difference(DateTime.now());
+
+      DateTime secondTime = DateTime.parse(b.lastMessage.time);
+      Duration secondDifference = secondTime.difference(DateTime.now());
+
+      return firstDifference.compareTo(secondDifference);
+    });
+  }
+
   void setLastMessageOfSpecificChat({String email, Message message}) {
     for (Chat chat in _listOfAllChats.value) {
       if (chat.profile.email == email) {
