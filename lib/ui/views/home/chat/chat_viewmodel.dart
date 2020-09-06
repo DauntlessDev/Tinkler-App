@@ -25,17 +25,21 @@ class ChatViewModel extends StreamViewModel {
 
   // List<Chatroom> get allUserConversations => data;
   @override
-  Stream get stream {
+  Stream get stream => refresh ? chatSetup() : chatSetup();
+
+  Stream chatSetup() {
+    _chat.clear();
     _chat.addListener(() => notifyListeners());
-    _database.chatroomsStream().listen((event) {
-      if (event.isNotEmpty) runBusyFuture(getChatInfo(event));
+    _database.chatroomsStream().listen((event) async {
+      if (event.isNotEmpty) await runBusyFuture(getChatInfo(event));
     });
+    notifyListeners();
     return _database.chatroomsStream();
   }
 
   List<Chat> get listOfAllChats => _chat.getNonEmptyChats;
   Future<void> getChatInfo(List<Chatroom> allUserConversations) async {
-    print('all user convo: $allUserConversations');
+    // print('all user convo: $allUserConversations');
     try {
       _chat.getNonEmptyChats.clear();
       if (allUserConversations != null) {
@@ -59,8 +63,8 @@ class ChatViewModel extends StreamViewModel {
           );
 
           for (String userInChat in chatroom.users) {
-            print(
-                'userInchat: $userInChat != ${_user.email} => ${userInChat != _user.email}');
+            // print(
+            //     'userInchat: $userInChat != ${_user.email} => ${userInChat != _user.email}');
             if (userInChat != _user.email) {
               await _database
                   .profileFuture(email: userInChat)
@@ -88,10 +92,24 @@ class ChatViewModel extends StreamViewModel {
         }
         _chat.sort();
 
-        print('all user all chatss: ${_chat.getListOfAllChats}');
+        // print('all user all chatss: ${_chat.getListOfAllChats}');
+
       }
     } on PlatformException catch (e) {
       print('Chatviewmodel: chatInfo error message => ${e.message} ');
+    }
+
+    print('allUserConversations.length : ${allUserConversations.length}');
+    print('_chat.getNonEmptyChats.length : ${_chat.getNonEmptyChats.length}');
+    print('_chat.getListOfAllChats.length : ${_chat.getListOfAllChats.length}');
+
+    print(
+        'check listsststs length : ${allUserConversations.length != _chat.getNonEmptyChats.length || _chat.getNonEmptyChats.length != _chat.getListOfAllChats.length}');
+    if (allUserConversations.length != _chat.getNonEmptyChats.length ||
+        _chat.getNonEmptyChats.length != _chat.getListOfAllChats.length ||
+        listOfAllChats.length != _chat.getNonEmptyChats.length) {
+      print('RELOADDDDDDDDDDDDDDDDDDDDDD');
+      reloadPage();
     }
   }
 
@@ -105,15 +123,13 @@ class ChatViewModel extends StreamViewModel {
 
   Future<void> startConversation(Profile otherProfile) async {
     try {
-      setBusy(true);
       _chatroom.updateOtherChatMate(otherProfile);
+
       final chatroom = Chatroom(
         users: [_user.email, otherProfile.email],
-        chatroomID: getChatroomID(otherProfile.email),
+        chatroomID: _chatroom.getChatRoomId(_user.email, otherProfile.email),
       );
-      await _database.addChatroom(chatroom: chatroom);
       _chatroom.updateCurrentChatroom(chatroom);
-      setBusy(false);
 
       _navigation.navigateTo(Routes.chatroomViewRoute);
     } on PlatformException catch (e) {
@@ -131,4 +147,11 @@ class ChatViewModel extends StreamViewModel {
 
   String getChatroomID(otherEmail) =>
       _chatroom.getChatRoomId(_user.email, otherEmail);
+
+  bool refresh = true;
+
+  void reloadPage() async {
+    refresh = !refresh;
+    notifySourceChanged();
+  }
 }

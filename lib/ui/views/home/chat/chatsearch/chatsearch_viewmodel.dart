@@ -14,6 +14,7 @@ class ChatSearchViewModel extends BaseViewModel {
   final _user = locator<CurrentUserService>();
   final _navigation = locator<NavigationService>();
   final _chatroom = locator<CurrentChatroomService>();
+  final _dialog = locator<DialogService>();
 
   String _input = '';
   String get input => _input;
@@ -34,16 +35,18 @@ class ChatSearchViewModel extends BaseViewModel {
   }
 
   Future<void> startConversation(Profile otherProfile) async {
-    setBusy(true);
-    _chatroom.updateOtherChatMate(otherProfile);
-    final chatroom = Chatroom(
-      users: [_user.email, otherProfile.email],
-      chatroomID: _chatroom.getChatRoomId(_user.email, otherProfile.email),
-    );
-    await _database.addChatroom(chatroom: chatroom);
-    _chatroom.updateCurrentChatroom(chatroom);
-    setBusy(false);
+    try {
+      _chatroom.updateOtherChatMate(otherProfile);
 
-    _navigation.navigateTo(Routes.chatroomViewRoute);
+      final chatroom = Chatroom(
+        users: [_user.email, otherProfile.email],
+        chatroomID: _chatroom.getChatRoomId(_user.email, otherProfile.email),
+      );
+      _chatroom.updateCurrentChatroom(chatroom);
+
+      _navigation.navigateTo(Routes.chatroomViewRoute);
+    } on PlatformException catch (e) {
+      _dialog.showDialog(title: 'Chat', description: e.message);
+    }
   }
 }

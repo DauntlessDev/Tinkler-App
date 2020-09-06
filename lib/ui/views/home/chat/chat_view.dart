@@ -40,7 +40,8 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
       // body: Container(),
       body: model.isBusy
           ? Center(child: CircularProgressIndicator())
-          : MessageList(),
+          : RefreshIndicator(
+              onRefresh: () async => model.reloadPage(), child: MessageList()),
       floatingActionButton: FloatingActionButton(
         heroTag: "chatFab",
         onPressed: model.navigateToSearch,

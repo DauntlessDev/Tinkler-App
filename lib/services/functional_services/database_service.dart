@@ -166,8 +166,9 @@ class DatabaseService {
   }
 
   Future<void> addMessage(
-      {@required String messageId, @required Message message}) async {
-    String chatroomId = _chatroom.chatroomId;
+      {@required String messageId,
+      @required Message message,
+      @required String chatroomId}) async {
     await _service.setData(
       path:
           APIPath.chatroomMessage(chatroomId: chatroomId, messageId: messageId),
@@ -177,6 +178,15 @@ class DatabaseService {
 
   Stream<List<Message>> messagesStream() {
     String chatroomId = _chatroom.chatroomId;
+    return _service.collectionStreamNoID(
+      path: APIPath.chatroomMessages(chatroomId),
+      builder: (data) => Message.fromMap(data),
+      sort: (a, b) => a.time.compareTo(b.time),
+      isReversed: true,
+    );
+  }
+
+  Stream<List<Message>> messagesStreamWithInput({@required String chatroomId}) {
     return _service.collectionStreamNoID(
       path: APIPath.chatroomMessages(chatroomId),
       builder: (data) => Message.fromMap(data),

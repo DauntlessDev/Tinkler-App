@@ -1,5 +1,6 @@
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/app/locator.dart';
+import 'package:tinkler/model/chatroom.dart';
 import 'package:tinkler/model/message.dart';
 import 'package:tinkler/services/functional_services/database_service.dart';
 import 'package:tinkler/services/state_services/all_chat_service.dart';
@@ -26,8 +27,20 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
     return _database.messagesStream();
   }
 
+  Stream<List<Message>> getMessagesWithInput() {
+    _chat.addListener(() => notifyListeners());
+    updateOtherUserInfo();
+    _database.messagesStream().listen((event) {
+      initiateShowTime(event.length);
+    });
+    return _database.messagesStreamWithInput(
+        chatroomId: _chatroom.getChatRoomId(_user.email, _chatroom.otherEmail));
+  }
+
+  bool newChatroom = false;
   @override
-  Stream<List<Message>> get stream => getMessages();
+  Stream<List<Message>> get stream =>
+      newChatroom ? getMessages() : getMessagesWithInput();
 
   List<bool> _isShowTime = [];
   List<bool> get isShowTime => _isShowTime;
@@ -55,19 +68,45 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
 
   Future<void> sendMessage() async {
     if (_input.isNotEmpty) {
-      Message lastMessage = Message(
-        sender: _user.email,
-        message: _input,
-        time: DateTime.now().toIso8601String(),
-      );
-      await _database.addMessage(
-          message: lastMessage,
-          messageId: DateTime.now().millisecondsSinceEpoch.toString());
+      String currentChatroomId = _chatroom.chatroomId;
+      String newChatroomId =
+          _chatroom.getChatRoomId(_user.email, _chatroom.otherEmail);
+      print(
+          'currentChatroomId != newChatroomId : ${currentChatroomId != newChatroomId}');
 
-      _chat.setLastMessageOfSpecificChat(
-          email: otherEmail, message: lastMessage);
+      final chatroom = Chatroom(
+        users: [_user.email, _chatroom.otherEmail],
+        chatroomID: newChatroomId,
+      );
+      await _database.addChatroom(chatroom: chatroom);
+      _chatroom.updateCurrentChatroom(chatroom);
+
+      swapSource();
+
+      print('currentChatroomId  : ${_chatroom.chatroomId}');
+      await addMessage();
     }
     _input = '';
+  }
+
+  void swapSource() {
+    newChatroom = true;
+    notifySourceChanged();
+  }
+
+  Future<void> addMessage() async {
+    Message lastMessage = Message(
+      sender: _user.email,
+      message: _input,
+      time: DateTime.now().toIso8601String(),
+    );
+    await _database.addMessage(
+      message: lastMessage,
+      messageId: DateTime.now().millisecondsSinceEpoch.toString(),
+      chatroomId: _chatroom.getChatRoomId(_user.email, _chatroom.otherEmail),
+    );
+
+    _chat.setLastMessageOfSpecificChat(email: otherEmail, message: lastMessage);
   }
 
   bool isUser(String email) {
