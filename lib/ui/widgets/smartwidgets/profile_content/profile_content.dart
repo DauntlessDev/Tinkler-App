@@ -43,33 +43,12 @@ class _ProfileContentState extends State<ProfileContent> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 0, 7, 7),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: _ProfileHeader(
-              buttonText: widget.buttonText,
-              onPressed: widget.onPressed,
-              profile: widget.profile,
-              buttonColor: widget.buttonColor,
-            ),
-          ),
-          Align(
-              alignment: Alignment.bottomLeft,
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.pages),
-                  Text(' Posts'),
-                ],
-              )),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: SizedBox(
-              height: 1,
-            ),
-          ),
-          OwnPostListBuilder(ownPostsList: widget.ownPostsList),
-        ],
+      child: OwnPostListBuilder(
+        ownPostsList: widget.ownPostsList,
+        buttonColor: widget.buttonColor,
+        buttonText: widget.buttonText,
+        onPressed: widget.onPressed,
+        profile: widget.profile,
       ),
     );
   }
@@ -78,10 +57,19 @@ class _ProfileContentState extends State<ProfileContent> {
 class OwnPostListBuilder extends StatelessWidget {
   const OwnPostListBuilder({
     Key key,
+    @required this.profile,
+    @required this.buttonText,
+    @required this.buttonColor,
+    @required this.onPressed,
     @required this.ownPostsList,
   }) : super(key: key);
 
   final List<PostProfile> ownPostsList;
+
+  final Profile profile;
+  final String buttonText;
+  final Color buttonColor;
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -98,20 +86,46 @@ class OwnPostListBuilder extends StatelessWidget {
       );
     }
     return Expanded(
-      child: SizedBox(
-        height: 500,
-        child: ListView.separated(
-          itemBuilder: (context, index) {
-            if (index == 0 || index == ownPostsList.length + 1)
-              return Container();
-            return PostTile(postprofile: ownPostsList[index - 1]);
-          },
-          itemCount: ownPostsList.length + 2,
-          separatorBuilder: (BuildContext context, int index) => Divider(
-            color: Colors.grey,
-            thickness: .2,
-            height: .2,
-          ),
+      child: ListView.separated(
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: _ProfileHeader(
+                    buttonText: buttonText,
+                    onPressed: onPressed,
+                    profile: profile,
+                    buttonColor: buttonColor,
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.pages),
+                        Text(' Posts'),
+                      ],
+                    )),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: SizedBox(
+                    height: 1,
+                  ),
+                ),
+              ],
+            );
+          }
+          if (index == 0 || index == ownPostsList.length + 1)
+            return Container();
+          return PostTile(postprofile: ownPostsList[index - 1]);
+        },
+        itemCount: ownPostsList.length + 2,
+        separatorBuilder: (BuildContext context, int index) => Divider(
+          color: Colors.grey,
+          thickness: .2,
+          height: .2,
         ),
       ),
     );

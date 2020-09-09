@@ -91,6 +91,7 @@ class ChatViewModel extends StreamViewModel {
           notifyListeners();
         }
         _chat.sort();
+        
 
         // print('all user all chatss: ${_chat.getListOfAllChats}');
 
