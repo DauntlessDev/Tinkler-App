@@ -38,7 +38,7 @@ class _MainContent extends ViewModelWidget<ChatViewModel> {
         ),
       ),
       // body: Container(),
-      body: model.isBusy
+      body: model.isBusy || model.listOfAllChats.isEmpty
           ? Center(child: CircularProgressIndicator())
           : RefreshIndicator(
               onRefresh: () async => model.reloadPage(), child: MessageList()),

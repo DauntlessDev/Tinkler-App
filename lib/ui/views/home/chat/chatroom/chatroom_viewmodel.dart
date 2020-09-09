@@ -102,24 +102,11 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
   }
 
   Future<void> addMessage(Message lastMessage) async {
-    // Message lastMessage = Message(
-    //   sender: _user.email,
-    //   message: _input,
-    //   time: DateTime.now().toIso8601String(),
-    // );
-
-    // final chatroom = Chatroom(
-    //     users: [_user.email, _chatroom.otherEmail],
-    //     chatroomID: newChatroomId,
-    //     lastMessage: lastMessage);
-
     await _database.addMessage(
       message: lastMessage,
       messageId: DateTime.now().millisecondsSinceEpoch.toString(),
       chatroomId: _chatroom.getChatRoomId(_user.email, _chatroom.otherEmail),
     );
-
-    _chat.setLastMessageOfSpecificChat(email: otherEmail, message: lastMessage);
   }
 
   bool isUser(String email) {

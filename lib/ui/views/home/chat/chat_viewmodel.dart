@@ -31,16 +31,20 @@ class ChatViewModel extends StreamViewModel {
     _chat.clear();
     _chat.addListener(() => notifyListeners());
     _database.chatroomsStream().listen((event) async {
-      if (event.isNotEmpty) await runBusyFuture(getChatInfo(event));
+      if (event.isNotEmpty) await (getChatInfo(event));
     });
     notifyListeners();
     return _database.chatroomsStream();
   }
 
   List<Chat> get listOfAllChats => _chat.getNonEmptyChats;
+
+  bool setUp = false;
   Future<void> getChatInfo(List<Chatroom> allUserConversations) async {
+    setUp = true;
     // print('all user convo: $allUserConversations');
     try {
+      List<Chat> _privateChat = [];
       _chat.getNonEmptyChats.clear();
       if (allUserConversations != null) {
         for (Chatroom chatroom in allUserConversations) {
@@ -66,7 +70,7 @@ class ChatViewModel extends StreamViewModel {
               }
             }
           }
-          _chat.addChatInList(
+          _privateChat.add(
             Chat(
               profile: otherUserProfile,
               lastMessage: lastMessage,
@@ -75,27 +79,15 @@ class ChatViewModel extends StreamViewModel {
 
           notifyListeners();
         }
+
+        _chat.updateChatList(_privateChat);
         _chat.sort();
-
-        // print('all user all chatss: ${_chat.getListOfAllChats}');
-
       }
     } on PlatformException catch (e) {
       print('Chatviewmodel: chatInfo error message => ${e.message} ');
     }
 
-    print('allUserConversations.length : ${allUserConversations.length}');
-    print('_chat.getNonEmptyChats.length : ${_chat.getNonEmptyChats.length}');
-    print('_chat.getListOfAllChats.length : ${_chat.getListOfAllChats.length}');
-
-    print(
-        'check listsststs length : ${allUserConversations.length != _chat.getNonEmptyChats.length || _chat.getNonEmptyChats.length != _chat.getListOfAllChats.length}');
-    if (allUserConversations.length != _chat.getNonEmptyChats.length ||
-        _chat.getNonEmptyChats.length != _chat.getListOfAllChats.length ||
-        listOfAllChats.length != _chat.getNonEmptyChats.length) {
-      print('RELOADDDDDDDDDDDDDDDDDDDDDD');
-      reloadPage();
-    }
+    setUp = false;
   }
 
   void navigateToSearch() {
