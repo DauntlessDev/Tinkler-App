@@ -44,23 +44,8 @@ class ChatViewModel extends StreamViewModel {
       _chat.getNonEmptyChats.clear();
       if (allUserConversations != null) {
         for (Chatroom chatroom in allUserConversations) {
-          Message lastMessage;
+          Message lastMessage = chatroom.lastMessage;
           Profile otherUserProfile;
-
-          _database
-              .messagesStreamInChat(chatroomId: chatroom.chatroomID)
-              .listen(
-            (value) {
-              if (value == null)
-                lastMessage = Message(message: '', sender: '', time: '');
-              else if (value.isEmpty)
-                lastMessage = Message(message: '', sender: '', time: '');
-              else
-                lastMessage = value.first;
-
-              return lastMessage;
-            },
-          );
 
           for (String userInChat in chatroom.users) {
             // print(
@@ -91,7 +76,6 @@ class ChatViewModel extends StreamViewModel {
           notifyListeners();
         }
         _chat.sort();
-        
 
         // print('all user all chatss: ${_chat.getListOfAllChats}');
 

@@ -74,17 +74,24 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
       print(
           'currentChatroomId != newChatroomId : ${currentChatroomId != newChatroomId}');
 
-      final chatroom = Chatroom(
-        users: [_user.email, _chatroom.otherEmail],
-        chatroomID: newChatroomId,
+      final lastMessage = Message(
+        sender: _user.email,
+        message: _input,
+        time: DateTime.now().toIso8601String(),
       );
+
+      final chatroom = Chatroom(
+          users: [_user.email, _chatroom.otherEmail],
+          chatroomID: newChatroomId,
+          lastMessage: lastMessage);
+
       await _database.addChatroom(chatroom: chatroom);
       _chatroom.updateCurrentChatroom(chatroom);
 
-      swapSource();
+      // swapSource();
 
       print('currentChatroomId  : ${_chatroom.chatroomId}');
-      await addMessage();
+      await addMessage(lastMessage);
     }
     _input = '';
   }
@@ -94,12 +101,18 @@ class ChatroomViewModel extends StreamViewModel<List<Message>> {
     notifySourceChanged();
   }
 
-  Future<void> addMessage() async {
-    Message lastMessage = Message(
-      sender: _user.email,
-      message: _input,
-      time: DateTime.now().toIso8601String(),
-    );
+  Future<void> addMessage(Message lastMessage) async {
+    // Message lastMessage = Message(
+    //   sender: _user.email,
+    //   message: _input,
+    //   time: DateTime.now().toIso8601String(),
+    // );
+
+    // final chatroom = Chatroom(
+    //     users: [_user.email, _chatroom.otherEmail],
+    //     chatroomID: newChatroomId,
+    //     lastMessage: lastMessage);
+
     await _database.addMessage(
       message: lastMessage,
       messageId: DateTime.now().millisecondsSinceEpoch.toString(),
