@@ -81,7 +81,6 @@ class ChatViewModel extends StreamViewModel {
         }
 
         _chat.updateChatList(_privateChat);
-        _chat.sort();
       }
     } on PlatformException catch (e) {
       print('Chatviewmodel: chatInfo error message => ${e.message} ');

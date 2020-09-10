@@ -24,18 +24,6 @@ class AllChatService with ReactiveServiceMixin {
         return result;
       }).toList();
 
-  void sort() {
-    _listOfAllChats.value.sort((b, a) {
-      DateTime firstTime = DateTime.parse(a.lastMessage.time);
-      Duration firstDifference = firstTime.difference(DateTime.now());
-
-      DateTime secondTime = DateTime.parse(b.lastMessage.time);
-      Duration secondDifference = secondTime.difference(DateTime.now());
-
-      return firstDifference.compareTo(secondDifference);
-    });
-  }
-
   void updateChatList(List<Chat> chatlist) {
     _listOfAllChats.value = chatlist;
     notifyListeners();
