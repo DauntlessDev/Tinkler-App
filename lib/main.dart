@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tinkler/theme/app_theme.dart';
 import 'package:tinkler/theme/app_theme_service.dart';
-import 'package:flutter/services.dart';
 
 import 'app/locator.dart';
 import 'app/router.gr.dart';
@@ -19,11 +18,7 @@ Future<void> main() async {
   //   builder: (context) => MyApp(),
   //   enabled: !kReleaseMode,
   // ));
-
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(new MyApp());
-  });
+  runApp(new MyApp());
 }
 
 class MyApp extends StatelessWidget {
