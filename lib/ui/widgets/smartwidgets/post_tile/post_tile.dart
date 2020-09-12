@@ -29,7 +29,6 @@ class PostTile extends StatelessWidget {
       builder: (context, model, child) => OptionalDismiss(
         ownPost: model.checkIfOwnPost(postprofile.post.posterEmail),
         postId: postprofile.post.postId,
-        deletePost: model.deletePost,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
@@ -165,21 +164,19 @@ class PostTile extends StatelessWidget {
   }
 }
 
-class OptionalDismiss extends StatelessWidget {
+class OptionalDismiss extends ViewModelWidget<PostTileViewModel> {
   final bool ownPost;
   final Widget child;
   final String postId;
-  final Function deletePost;
 
-  const OptionalDismiss(
-      {Key key,
-      @required this.ownPost,
-      @required this.child,
-      @required this.postId,
-      this.deletePost})
-      : super(key: key);
+  const OptionalDismiss({
+    Key key,
+    @required this.ownPost,
+    @required this.child,
+    @required this.postId,
+  }) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, PostTileViewModel model) {
     return ownPost
         ? Dismissible(
             background: Container(
@@ -195,7 +192,7 @@ class OptionalDismiss extends StatelessWidget {
                         : Theme.of(context).iconTheme.color),
               ),
             ),
-            onDismissed: (direction) => deletePost(postId),
+            onDismissed: (direction) => model.deletePost(postId),
             key: Key('post-$postId'),
             child: child)
         : Container(

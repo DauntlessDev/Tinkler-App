@@ -233,6 +233,11 @@ class DatabaseService {
     );
   }
 
+  Future<void> deletePost({@required String postId}) async {
+    await _service.deleteData(path: APIPath.post(postId));
+    print('delete $postId');
+  }
+
   Stream<List<Post>> postStream() {
     return _service.collectionStreamNoID(
       path: APIPath.posts(),

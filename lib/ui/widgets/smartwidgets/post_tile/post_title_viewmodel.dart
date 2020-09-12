@@ -82,8 +82,8 @@ class PostTileViewModel extends BaseViewModel {
     //         : '$commentCount comments';
   }
 
-  void deletePost(String postId) {
-    // do it
+  Future<void> deletePost(String postId) async {
+    await _database.deletePost(postId: postId);
   }
 
   bool checkIfOwnPost(String posterEmail) {
