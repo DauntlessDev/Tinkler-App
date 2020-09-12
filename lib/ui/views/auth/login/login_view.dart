@@ -69,11 +69,11 @@ class _MainContent extends ViewModelWidget<LoginViewModel> {
               text: 'Continue',
               color: Theme.of(context).colorScheme.primary,
             ),
-            RoundedButton(
-              onPressed: model.signinWithFacebook,
-              text: 'Continue with Facebook',
-              color: Theme.of(context).colorScheme.secondary,
-            ),
+            // RoundedButton(
+            //   onPressed: model.signinWithFacebook,
+            //   text: 'Continue with Facebook',
+            //   color: Theme.of(context).colorScheme.secondary,
+            // ),
             const SizedBox(height: 10),
             TappableRichText(
               firstString: 'Don\'t have an account? ',

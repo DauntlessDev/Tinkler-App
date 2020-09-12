@@ -48,9 +48,9 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Padding(
                             padding: const EdgeInsets.only(left: 10),
@@ -68,7 +68,7 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
                                 ),
                               ],
                             )),
-                        SizedBox(height: 20),
+                        SizedBox(height: 5),
                         Expanded(
                           child: model.isBusy
                               ? Center(child: CircularProgressIndicator())
