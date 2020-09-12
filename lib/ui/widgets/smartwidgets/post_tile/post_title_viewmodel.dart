@@ -81,4 +81,13 @@ class PostTileViewModel extends BaseViewModel {
     //         ? '$commentCount comment'
     //         : '$commentCount comments';
   }
+
+  void deletePost(String postId) {
+    // do it
+  }
+
+  bool checkIfOwnPost(String posterEmail) {
+    print('poster ownPost? : ${_user.email == posterEmail}');
+    return _user.email == posterEmail;
+  }
 }

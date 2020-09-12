@@ -2,6 +2,7 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tinkler/ui/widgets/empty_content.dart';
 import 'package:tinkler/ui/widgets/smartwidgets/post_tile/post_tile.dart';
@@ -53,8 +54,20 @@ class _MainContent extends ViewModelWidget<PostsViewModel> {
                       children: <Widget>[
                         Padding(
                             padding: const EdgeInsets.only(left: 10),
-                            child: Text('Latest Posts',
-                                style: TextStyle(fontSize: 16))),
+                            child: Row(
+                              children: [
+                                Text('Latest Posts',
+                                    style: TextStyle(fontSize: 16)),
+                                Spacer(),
+                                FlatButton(
+                                  onPressed: model.reloadPage,
+                                  padding: EdgeInsets.all(0),
+                                  child: Icon(
+                                    MdiIcons.reload,
+                                  ),
+                                ),
+                              ],
+                            )),
                         SizedBox(height: 20),
                         Expanded(
                           child: model.isBusy
