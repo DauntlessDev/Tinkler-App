@@ -12,5 +12,5 @@ I'm extremely pleased with how the project came out and it also really opened my
 
 ## UI Screenshots
 <p align="center">
-<img src="screenshots/tinkler-gif.gif" width="226"  title="tinkler gif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="screenshots/tinkler-followers.jpg" width="230" title="tinker followers">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="screenshots/tinkler-convo.jpg" width="230" title="tinkler convo">
+<img src="https://github.com/DauntlessDev/flutter-portfolio/blob/master/assets/tinkler-gif.gif" width="226"  title="tinkler gif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/DauntlessDev/flutter-portfolio/blob/master/assets/tinkler-followers.jpg" width="230" title="tinker followers">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/DauntlessDev/flutter-portfolio/blob/master/assets/tinkler-convo.jpg" width="230" title="tinkler convo">
 </p>
